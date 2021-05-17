@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
 import Home from './HomeComponent';
+import Account from './AccountComponent';
+import CreateCase from './CreateCaseComponent';
 
 
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
@@ -15,6 +17,29 @@ import SafeAreaView from 'react-native-safe-area-view';
 const HomeNavigator = createStackNavigator(
     {
         Home: { screen: Home }
+    },
+    {
+        defaultNavigationOptions:({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#FFD600'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='list'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }       
+);
+
+const CreateCaseNavigator = createStackNavigator(
+    {
+        CreateCase: { screen: CreateCase }
     },
     {
         defaultNavigationOptions:({navigation}) => ({
@@ -87,28 +112,28 @@ const HomeNavigator = createStackNavigator(
     }       
 );*/
 
-/*const ContactNavigator = createStackNavigator(
+const AccountNavigator = createStackNavigator(
     {
-        Contact: { screen: Contact }
+        Account: { screen: Account }
     },
     {
         defaultNavigationOptions:({navigation}) => ({
             headerStyle: {
-                backgroundColor: '#5637DD'
+                backgroundColor: '#FFD600'
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
                 color: '#fff'
             },
             headerLeft: <Icon
-                name='address-card'
+                name='list'
                 type='font-awesome'
                 iconStyle={styles.stackIcon}
                 onPress={() => navigation.toggleDrawer()}
             />
         })
     }       
-);*/
+);
 
 const CustomDrawerContentComponent = props => (
     //SafeAreaView is for iphone X to compensate for rounder corners and camera notch
@@ -152,9 +177,39 @@ const MainNavigator = createDrawerNavigator(
                     />
                 )
             }
+        },
+        CreateCase: {
+            screen: CreateCaseNavigator,
+            navigationOptions: {
+                drawerLabel: 'Create New Case',
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='folder'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        Account: {
+            screen: AccountNavigator,
+            navigationOptions: {
+                drawerLabel: 'Account Settings',
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='cog'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
         }
 
     },
+
+
     {
         drawerBackgroundColor: '#FFD600',
         contentComponent: CustomDrawerContentComponent
