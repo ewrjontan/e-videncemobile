@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
-import { Card, Input } from 'react-native-elements';
+import { Text, View, StyleSheet } from 'react-native';
+import { Card, Input, Button } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, ImageBackground, StyleSheet, Button } from 'react-native';
-import { Card } from 'react-native-elements';
+//import { View, Text, ScrollView, ImageBackground, StyleSheet, Button } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, StyleSheet } from 'react-native';
+import { Card, Button } from 'react-native-elements';
 
 
 
@@ -39,7 +40,6 @@ class Home extends Component {
                         <View style={styles.buttonContainer}>
                             <Button
                                 title="Login"
-                                accessibilityLabel="Button used to Login"
                                 onPress={() => console.log('login button pressed')}
                             />
                         </View>
@@ -47,7 +47,6 @@ class Home extends Component {
                         <View style={styles.buttonContainer}>
                             <Button
                                 title="Create Account"
-                                accessibilityLabel="Button used to create an account"
                                 onPress={() => console.log('create account button pressed')}
                             />
                         </View>
