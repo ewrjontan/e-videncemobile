@@ -89,7 +89,8 @@ const styles = StyleSheet.create({
     buttonTitleText: {
         textAlign: 'center',
         color: "white",
-        fontSize: 18,
+        fontSize: 20,
+        paddingHorizontal: 10,
         marginBottom: 20
     },
     buttonContainer: {
