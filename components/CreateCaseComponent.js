@@ -4,7 +4,7 @@ import { Card, Input } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 
-const Example = () => {
+/*const Example = () => {
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   
     const showDatePicker = () => {
@@ -24,6 +24,7 @@ const Example = () => {
   
     return (
       <View>
+
         <Button title="Select Date and Time of Incident" onPress={showDatePicker} />
         <DateTimePickerModal
           isVisible={isDatePickerVisible}
@@ -33,12 +34,15 @@ const Example = () => {
         />
       </View>
     );
-  };
+};*/
 
 class CreateCase extends Component {
     constructor(props){
         super(props);
         this.state = {
+            isDatePickerVisible: false,
+            setDatePickerVisibility: false,
+            incidentDateAndTime: null
         };
     }
 
@@ -51,6 +55,24 @@ class CreateCase extends Component {
             headerTitleStyle: {
                 fontWeight: 'bold',
             }
+    };
+
+    showDatePicker = () => {
+        console.log("show date picker works");
+        this.setState({setDatePickerVisibility: true});
+        this.setState({isDatePickerVisible: true});
+    };
+
+    hideDatePicker = () => {
+        this.setState({setDatePickerVisibility: false});
+        this.setState({isDatePickerVisible: false});
+
+    };
+
+    handleConfirm = (date) => {
+        console.warn("A date has been picked: ", date);
+        this.setState({incidentDateAndTime: date.toString() });
+        this.hideDatePicker();
     };
     
     render(){
@@ -71,7 +93,19 @@ class CreateCase extends Component {
                 />      
                 
 
-                <Example/>
+                <Text style={{textAlign: 'center', fontSize: 18}}>{this.state.incidentDateAndTime}</Text>
+
+                <View style={{width: '90%', margin: 20}}>
+                    <Button title="Select Date and Time of Incident" onPress={this.showDatePicker} />
+                </View>
+                
+
+                <DateTimePickerModal
+                    isVisible={this.state.isDatePickerVisible}
+                    mode="datetime"
+                    onConfirm={this.handleConfirm}
+                    onCancel={this.hideDatePicker}
+                />
 
 
             </View>
