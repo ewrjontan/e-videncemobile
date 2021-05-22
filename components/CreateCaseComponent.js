@@ -1,40 +1,8 @@
 import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import { Card, Input, Button } from 'react-native-elements';
+import { Card, Input, Button, Picker } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-
-/*const Example = () => {
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  
-    const showDatePicker = () => {
-      setDatePickerVisibility(true);
-    };
-  
-    const hideDatePicker = () => {
-      setDatePickerVisibility(false);
-    };
-  
-    const handleConfirm = (date) => {
-      console.warn("A date has been picked: ", date);
-      
-      console.log(date.toString());
-      hideDatePicker();
-    };
-  
-    return (
-      <View>
-
-        <Button title="Select Date and Time of Incident" onPress={showDatePicker} />
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="datetime"
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-        />
-      </View>
-    );
-};*/
 
 class CreateCase extends Component {
     constructor(props){
@@ -69,16 +37,20 @@ class CreateCase extends Component {
 
     };
 
-    handleConfirm = (date) => {
+    handleDateConfirm = (date) => {
         console.warn("A date has been picked: ", date);
         this.setState({incidentDateAndTime: date.toString() });
         this.hideDatePicker();
     };
+
+    handleSubmit = () => {
+        console.log("submit button clicked");
+    }
     
     render(){
     
         return (
-            <View>
+            <View style={{marginTop: 30}}>
 
                 <Input
                     placeholder='Enter Case Number'
@@ -96,14 +68,18 @@ class CreateCase extends Component {
                 <Text style={{textAlign: 'center', fontSize: 18}}>{this.state.incidentDateAndTime}</Text>
 
                 <View style={{width: '90%', margin: 20}}>
-                    <Button title="Select Date and Time of Incident" onPress={this.showDatePicker} />
+                    <Button title="Select Date and Time of Incident" onPress={this.showDatePicker} type="outline" />
+                </View>
+
+                <View style={{width: '90%', margin: 20}}>
+                    <Button title="Submit" onPress={this.handleSubmit} />
                 </View>
                 
 
                 <DateTimePickerModal
                     isVisible={this.state.isDatePickerVisible}
                     mode="datetime"
-                    onConfirm={this.handleConfirm}
+                    onConfirm={this.handleDateConfirm}
                     onCancel={this.hideDatePicker}
                 />
 

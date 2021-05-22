@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Home from './HomeComponent';
 import Account from './AccountComponent';
 import CreateCase from './CreateCaseComponent';
+import RecentCases from './RecentCasesComponent';
+
 
 
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
@@ -40,6 +42,29 @@ const HomeNavigator = createStackNavigator(
 const CreateCaseNavigator = createStackNavigator(
     {
         CreateCase: { screen: CreateCase }
+    },
+    {
+        defaultNavigationOptions:({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#FFD600'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='list'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }       
+);
+
+const RecentCasesNavigator = createStackNavigator(
+    {
+        RecentCases: { screen: RecentCases }
     },
     {
         defaultNavigationOptions:({navigation}) => ({
@@ -184,8 +209,22 @@ const MainNavigator = createDrawerNavigator(
                 drawerLabel: 'Create New Case',
                 drawerIcon: ({tintColor}) => (
                     <Icon
+                        name='folder-plus'
+                        type='font-awesome-5'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        RecentCases: {
+            screen: RecentCasesNavigator,
+            navigationOptions: {
+                drawerLabel: 'Recent Cases',
+                drawerIcon: ({tintColor}) => (
+                    <Icon
                         name='folder'
-                        type='font-awesome'
+                        type='font-awesome-5'
                         size={24}
                         color={tintColor}
                     />
