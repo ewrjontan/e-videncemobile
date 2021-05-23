@@ -5,6 +5,9 @@ import Account from './AccountComponent';
 import CreateCase from './CreateCaseComponent';
 import RecentCases from './RecentCasesComponent';
 
+import DisplayCase from './DisplayCaseComponent';
+
+
 
 
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
@@ -160,6 +163,31 @@ const AccountNavigator = createStackNavigator(
     }       
 );
 
+const DisplayCaseNavigator = createStackNavigator(
+    {
+        ViewCase: { screen: DisplayCase }
+    },
+    {
+        defaultNavigationOptions:({navigation}) => ({
+            headerStyle: {
+                backgroundColor: '#FFD600'
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                color: '#fff'
+            },
+            headerLeft: <Icon
+                name='list'
+                type='font-awesome'
+                iconStyle={styles.stackIcon}
+                onPress={() => navigation.toggleDrawer()}
+            />
+        })
+    }       
+);
+
+
+
 const CustomDrawerContentComponent = props => (
     //SafeAreaView is for iphone X to compensate for rounder corners and camera notch
     <ScrollView>
@@ -235,6 +263,20 @@ const MainNavigator = createDrawerNavigator(
             screen: AccountNavigator,
             navigationOptions: {
                 drawerLabel: 'Account Settings',
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='cog'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
+        DisplayCase: {
+            screen: DisplayCaseNavigator,
+            navigationOptions: {
+                drawerLabel: 'View Case',
                 drawerIcon: ({tintColor}) => (
                     <Icon
                         name='cog'

@@ -2,6 +2,11 @@ import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
 import { Card, Input, Button, Picker } from 'react-native-elements';
 
+import { createStackNavigator } from 'react-navigation-stack';
+import DisplayCase from './DisplayCaseComponent';
+
+
+
 import { INCIDENTDATABASE } from '../shared/incidentDatabase';
 
 
@@ -33,9 +38,16 @@ class RecentCases extends Component {
     
     render(){
 
+        const { navigate } = this.props.navigation;
+
         const renderIncidents = ({item}) => {
             return(
-                <Text>{item.incidentNumber}</Text>
+                //<Text>{item.incidentNumber}</Text>
+                <View style={styles.button}>
+                    <Button title={item.incidentNumber}
+                    onPress={() => navigate('DisplayCase', {name: 'peter'})}
+                    />
+                </View>
             )
         }
     
@@ -59,7 +71,11 @@ const styles = StyleSheet.create({
         height: 20,
         margin: 12,
         borderWidth: 1,
-
+    },
+    button: {
+        marginBottom: 10,
+        width: '90%',
+        marginHorizontal: 20
     }
 })
 
