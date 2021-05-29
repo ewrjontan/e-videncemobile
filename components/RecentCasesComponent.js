@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, FlatList } from 'react-native';
 import { Card, Input, Button, Picker } from 'react-native-elements';
 
 import { createStackNavigator } from 'react-navigation-stack';
-import ViewCase from './ViewCaseComponent';
 
 import { connect } from 'react-redux';
 import { baseUrl } from '../shared/baseUrl';
@@ -46,7 +45,7 @@ class RecentCases extends Component {
                 <View style={styles.button}>
                     <Text>item id is: {item.id}</Text>
                     <Button title={item.incidentNumber}
-                    onPress={() => navigate('ViewCase', {incidentId: item.id})}
+                    onPress={() => navigate('DisplayCase', {incidentNumber: item.incidentNumber})}
                     />
                 </View>
             );

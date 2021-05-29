@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 };
 
 
-class ViewCase extends Component{
+class DisplayCase extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -22,29 +22,36 @@ class ViewCase extends Component{
         };
     }
 
+    componentDidMount(){
+        
+        const incidentNumber = this.props.navigation.getParam('incidentNumber');
+        const incident = this.props.incidents.incidents.filter(incident => incident.incidentNumber === incidentNumber)[0];
 
-    static navigationOptions = {
-        title: 'View Case',
+        this.setState({activeIncident: incident.incidentNumber});
+
+        this.props.navigation.setParams(incidentNumber);
+
+    }
+
+    static navigationOptions = ({navigation}) => {
+        return {
+            title: navigation.state.params.incidentNumber,
         headerStyle: {
             backgroundColor: '#FFD600',
         },
             headerTintColor: '#000',
             headerTitleStyle: {
                 fontWeight: 'bold',
-            }
+            }        
+        }
     };    
 
-
-
     render(){
-        
-        const incidentId = this.props.navigation.getParam('incidentId');
-        const incident = this.props.incidents.incidents.filter(incident => incident.id === incidentId)[0];
 
-        console.log(incident);
+        console.log(this.state.activeIncident);
         return(
             <View>
-                <Text>{incident.incidentNumber}</Text>
+                <Text>{this.state.activeIncident}</Text>
             </View>
         )
     }
@@ -52,4 +59,4 @@ class ViewCase extends Component{
 
 
 
-export default connect(mapStateToProps)(ViewCase);
+export default connect(mapStateToProps)(DisplayCase);

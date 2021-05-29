@@ -6,6 +6,8 @@ import CreateCase from './CreateCaseComponent';
 import RecentCases from './RecentCasesComponent';
 
 import ViewCase from './ViewCaseComponent';
+import DisplayCase from './DisplayCaseComponent';
+
 
 
 
@@ -74,26 +76,33 @@ const CreateCaseNavigator = createStackNavigator(
 
 const RecentCasesNavigator = createStackNavigator(
     {
-        RecentCases: { screen: RecentCases }
+        RecentCases: {
+            screen: RecentCases,
+            navigationOptions: ({navigation}) => ({
+                headerLeft: <Icon
+                    name='list'
+                    type='font-awesome'
+                    iconStyle={styles.stackIcon}
+                    onPress={() => navigation.toggleDrawer()}
+                />
+            })
+        },
+        DisplayCase: { screen: DisplayCase }
     },
     {
-        defaultNavigationOptions:({navigation}) => ({
+        initialRouteName: 'RecentCases',
+        defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '#FFD600'
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
                 color: '#fff'
-            },
-            headerLeft: <Icon
-                name='list'
-                type='font-awesome'
-                iconStyle={styles.stackIcon}
-                onPress={() => navigation.toggleDrawer()}
-            />
-        })
-    }       
+            }
+        }
+    }
 );
+
 
 const AccountNavigator = createStackNavigator(
     {
