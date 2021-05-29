@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import INCIDENTDATABASE from '../shared/incidentDatabase';
 
-import { View, Text, FlatList, ScrollView } from 'react-native';
+import { View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
 
 import { connect } from 'react-redux';
@@ -58,10 +58,12 @@ class DisplayCase extends Component{
             console.log(item.id);
             return(
                 
-                <ListItem bottomDivider>
-                    <Avatar source="" />
-
+                <ListItem bottomDivider style={{marginBottom: 10}}>
                     <ListItem.Content>
+                        <ListItem.Title>Item: {item.id} </ListItem.Title>
+                        <ListItem.Title>Description: {item.description}</ListItem.Title>
+                        <ListItem.Subtitle>Type: {item.type}</ListItem.Subtitle>
+                        <ListItem.Subtitle>Location Found: {item.locationFound}</ListItem.Subtitle>
 
                     </ListItem.Content>
                 
@@ -71,19 +73,30 @@ class DisplayCase extends Component{
         };
 
         return(
-            <View>
-                <Text>Date of Incident: {incident.date}</Text>
-                <Text>Incident Location: {incident.incidentLocation}</Text>
-                <Text>Nature: {incident.nature}</Text>
+            <ScrollView>
+                <View style={styles.caseInfo}>
+                    <Text>Nature of Incident: {incident.nature}</Text>
+                    <Text>Date of Incident: {incident.date}</Text>
+                    <Text>Location of Incident: {incident.incidentLocation}</Text>
+                </View>
+                
 
                 <FlatList
                     data={incident.items}
                     renderItem={renderItem}
                     keyExtractor={item => item.id.toString()}
                 />
-            </View>
+            </ScrollView>
         )
     }
 }
+
+const styles = StyleSheet.create({
+    caseInfo: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 20
+    }
+});
 
 export default connect(mapStateToProps)(DisplayCase);
