@@ -5,7 +5,7 @@ import Account from './AccountComponent';
 import CreateCase from './CreateCaseComponent';
 import RecentCases from './RecentCasesComponent';
 
-import DisplayCase from './DisplayCaseComponent';
+import ViewCase from './ViewCaseComponent';
 
 
 
@@ -17,6 +17,13 @@ import { createAppContainer } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 import SafeAreaView from 'react-native-safe-area-view';
 
+//react-redux
+import { connect } from 'react-redux';
+import { fetchIncidents } from '../redux/ActionCreators';
+
+const mapDispatchToProps = {
+    fetchIncidents
+};
 
 
 const HomeNavigator = createStackNavigator(
@@ -88,58 +95,6 @@ const RecentCasesNavigator = createStackNavigator(
     }       
 );
 
-/*const DirectoryNavigator = createStackNavigator(
-    {
-        Directory: {
-            screen: Directory,
-            navigationOptions: ({navigation}) => ({
-                headerLeft: <Icon
-                    name='list'
-                    type='font-awesome'
-                    iconStyle={styles.stackIcon}
-                    onPress={() => navigation.toggleDrawer()}
-                />
-            })
-        },
-        CampsiteInfo: { screen: CampsiteInfo }
-    },
-    {
-        initialRouteName: 'Directory',
-        defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: '#5637DD'
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                color: '#fff'
-            }
-        }
-    }
-);*/
-
-/*const AboutNavigator = createStackNavigator(
-    {
-        About: { screen: About }
-    },
-    {
-        defaultNavigationOptions:({navigation}) => ({
-            headerStyle: {
-                backgroundColor: '#5637DD'
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-                color: '#fff'
-            },
-            headerLeft: <Icon
-                name='info-circle'
-                type='font-awesome'
-                iconStyle={styles.stackIcon}
-                onPress={() => navigation.toggleDrawer()}
-            />
-        })
-    }       
-);*/
-
 const AccountNavigator = createStackNavigator(
     {
         Account: { screen: Account }
@@ -163,9 +118,9 @@ const AccountNavigator = createStackNavigator(
     }       
 );
 
-const DisplayCaseNavigator = createStackNavigator(
+const ViewCaseNavigator = createStackNavigator(
     {
-        ViewCase: { screen: DisplayCase }
+        ViewCase: { screen: ViewCase }
     },
     {
         defaultNavigationOptions:({navigation}) => ({
@@ -245,6 +200,20 @@ const MainNavigator = createDrawerNavigator(
                 )
             }
         },
+        ViewCase: {
+            screen: ViewCaseNavigator,
+            navigationOptions: {
+                drawerLabel: 'View/Edit Case',
+                drawerIcon: ({tintColor}) => (
+                    <Icon
+                        name='cog'
+                        type='font-awesome'
+                        size={24}
+                        color={tintColor}
+                    />
+                )
+            }
+        },
         RecentCases: {
             screen: RecentCasesNavigator,
             navigationOptions: {
@@ -272,22 +241,7 @@ const MainNavigator = createDrawerNavigator(
                     />
                 )
             }
-        },
-        DisplayCase: {
-            screen: DisplayCaseNavigator,
-            navigationOptions: {
-                drawerLabel: 'View Case',
-                drawerIcon: ({tintColor}) => (
-                    <Icon
-                        name='cog'
-                        type='font-awesome'
-                        size={24}
-                        color={tintColor}
-                    />
-                )
-            }
         }
-
     },
 
 
@@ -300,6 +254,10 @@ const MainNavigator = createDrawerNavigator(
 const AppNavigator = createAppContainer(MainNavigator);
 
 class Main extends Component {
+
+    componentDidMount() {
+        this.props.fetchIncidents();
+    }
 
     render(){
         return (
@@ -344,5 +302,5 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Main;
+export default connect(null, mapDispatchToProps)(Main);
 
