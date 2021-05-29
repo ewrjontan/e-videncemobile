@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import INCIDENTDATABASE from '../shared/incidentDatabase';
 
 import { View, Text, FlatList, ScrollView } from 'react-native';
+import { ListItem, Avatar } from 'react-native-elements';
 
 import { connect } from 'react-redux';
 
@@ -56,16 +57,21 @@ class DisplayCase extends Component{
         const renderItem = ({item}) => {
             console.log(item.id);
             return(
-                <View>
-                    <Text>Item Number: {item.id}</Text>
-                    <Text>Description: {item.description}</Text>
-                </View>
-    
+                
+                <ListItem bottomDivider>
+                    <Avatar source="" />
+
+                    <ListItem.Content>
+
+                    </ListItem.Content>
+                
+                </ListItem>
+                    
             );
         };
 
         return(
-            <ScrollView>
+            <View>
                 <Text>Date of Incident: {incident.date}</Text>
                 <Text>Incident Location: {incident.incidentLocation}</Text>
                 <Text>Nature: {incident.nature}</Text>
@@ -75,7 +81,7 @@ class DisplayCase extends Component{
                     renderItem={renderItem}
                     keyExtractor={item => item.id.toString()}
                 />
-            </ScrollView>
+            </View>
         )
     }
 }
