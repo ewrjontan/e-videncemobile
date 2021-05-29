@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import INCIDENTDATABASE from '../shared/incidentDatabase';
 
 import { View, Text } from 'react-native';
+import { Input, Button } from 'react-native-elements';
 
 import { connect } from 'react-redux';
 
@@ -36,15 +37,24 @@ class ViewCase extends Component{
 
 
 
+
     render(){
         
-        const incidentId = this.props.navigation.getParam('incidentId');
-        const incident = this.props.incidents.incidents.filter(incident => incident.id === incidentId)[0];
+        const { navigate } = this.props.navigation;
 
-        console.log(incident);
         return(
             <View>
-                <Text>{incident.incidentNumber}</Text>
+                <Input
+                    placeholder='Enter Case Number'
+                    style={{marginTop: 100}}
+                />
+                <View style={{width: '90%', margin: 20}}>
+                    <Button 
+                        title="Go"  
+                        //nmake sure value is required
+                        onPress={() => navigate('DisplayCase', {incidentId: 'hello', incidentNumber: 'bye'})}
+                    />
+                </View>
             </View>
         )
     }
