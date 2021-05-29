@@ -43,9 +43,8 @@ class RecentCases extends Component {
             return(
                 //<Text>{item.incidentNumber}</Text>
                 <View style={styles.button}>
-                    <Text>item id is: {item.id}</Text>
                     <Button title={item.incidentNumber}
-                    onPress={() => navigate('DisplayCase', {incidentNumber: item.incidentNumber})}
+                    onPress={() => navigate('DisplayCase', {incidentId: item.incidentId, incidentNumber: item.incidentNumber})}
                     />
                 </View>
             );
