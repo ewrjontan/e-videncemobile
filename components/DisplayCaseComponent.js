@@ -23,7 +23,9 @@ class DisplayCase extends Component{
     }
 
     componentDidMount(){
-    
+        console.log('params: ');
+        console.log(this.props.navigation.state.params);
+
         //for static navigation options, won't work unless passed as property due to loading slowly?
         const incidentNumber = this.props.navigation.getParam('incidentNumber');
         this.props.navigation.setParams(incidentNumber);
@@ -50,9 +52,16 @@ class DisplayCase extends Component{
         const incidentId = this.props.navigation.getParam('incidentId');
         const incident = this.props.incidents.incidents.filter(incident => incident.incidentId === incidentId)[0];
 
+        console.log('display case works: ');
 
-        console.log("this is the active incident object");
-        console.log(incident);
+        console.log('params: ');
+        console.log(this.props.navigation.state.params);
+
+        //console.log('incident id: ' + incidentId);
+        //console.log(this.props.navigation.state.params);
+        //console.log("this is the active incident object");
+        //console.log(incident);
+        
 
         const renderItem = ({item}) => {
             console.log(item.id);

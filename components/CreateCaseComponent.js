@@ -52,15 +52,18 @@ class CreateCase extends Component {
         return (
             <View style={{marginTop: 30}}>
 
-                <Input
+                <Input 
+                    style={{textAlign: 'center'}}
                     placeholder='Enter Case Number'
                 />
 
-                <Input
+                <Input 
+                    style={{textAlign: 'center'}}
                     placeholder='Enter Location of Incident'
                 />  
 
-                <Input
+                <Input 
+                    style={{textAlign: 'center'}}
                     placeholder='Enter Nature of Incident'
                 />      
                 

@@ -127,27 +127,33 @@ const AccountNavigator = createStackNavigator(
     }       
 );
 
-const ViewCaseNavigator = createStackNavigator(
+const ViewCaseNavigator = createStackNavigator( 
     {
-        ViewCase: { screen: ViewCase }
+        ViewCase: {
+            screen: ViewCase,
+            navigationOptions: ({navigation}) => ({
+                headerLeft: <Icon
+                    name='list'
+                    type='font-awesome'
+                    iconStyle={styles.stackIcon}
+                    onPress={() => navigation.toggleDrawer()}
+                />
+            })
+        },
+        DisplayCase: { screen: DisplayCase }
     },
     {
-        defaultNavigationOptions:({navigation}) => ({
+        initialRouteName: 'ViewCase',
+        defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '#FFD600'
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
                 color: '#fff'
-            },
-            headerLeft: <Icon
-                name='list'
-                type='font-awesome'
-                iconStyle={styles.stackIcon}
-                onPress={() => navigation.toggleDrawer()}
-            />
-        })
-    }       
+            }
+        }
+    }
 );
 
 
