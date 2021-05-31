@@ -2,8 +2,16 @@ import React, { Component } from 'react';
 
 import INCIDENTDATABASE from '../shared/incidentDatabase';
 
-import { View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
 import { ListItem, Avatar } from 'react-native-elements';
+import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
+
+import EditCaseScreen from './EditCaseComponent';
+//import AddItemScreen from './AddItemScreen';
+
+import TabNavigator from './TabNavigatorComponent';
+
 
 import { connect } from 'react-redux';
 
@@ -83,20 +91,23 @@ class DisplayCase extends Component{
         };
 
         return(
-            <ScrollView>
-                <View style={styles.caseInfo}>
-                    <Text>Nature of Incident: {incident.nature}</Text>
-                    <Text>Date of Incident: {incident.date}</Text>
-                    <Text>Location of Incident: {incident.incidentLocation}</Text>
-                </View>
-                
+            <View>
+                <ScrollView>
+                <TabNavigator />
+                    <View style={styles.caseInfo}>
+                        <Text>Nature of Incident: {incident.nature}</Text>
+                        <Text>Date of Incident: {incident.date}</Text>
+                        <Text>Location of Incident: {incident.incidentLocation}</Text>
+                    </View>
+                    
 
-                <FlatList
-                    data={incident.items}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id.toString()}
-                />
-            </ScrollView>
+                    <FlatList
+                        data={incident.items}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                </ScrollView>
+            </View>
         )
     }
 }
