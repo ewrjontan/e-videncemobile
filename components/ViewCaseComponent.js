@@ -14,6 +14,7 @@ const mapStateToProps = state => {
 };
 
 
+
 class ViewCase extends Component{
     constructor(props){
         super(props);
