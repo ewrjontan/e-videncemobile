@@ -10,12 +10,12 @@ export const incidents = (state = { isLoading: true, errMess: null, incidents: [
 
         case ActionTypes.INCIDENTS_FAILED:
             return {...state, isLoading: false, errMess: action.payload};
-        /*
-        case ActionTypes.ADD_COMMENT:
-            const newComment = action.payload;
-            newComment.id = state.comments.length;
+        
+        case ActionTypes.CREATE_INCIDENT:
+            const newIncident = action.payload;
+            newIncident.id = state.incidents.length;
 
-            return {...state, comments: state.comments.concat(newComment)};*/
+            return {...state, incidents: state.incidents.concat(newIncident)};
 
         default:
             return state;

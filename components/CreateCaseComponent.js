@@ -2,6 +2,19 @@ import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import { Card, Input, Button, Picker } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { connect } from 'react-redux';
+
+import { postIncident } from '../redux/ActionCreators';
+
+const mapStateToProps = state => {
+    return {
+        incidents: state.incidents
+    };
+};
+
+const mapDispatchToProps = {
+    postIncident: (incidentNumber, incidentLocation, nature, date) => (postIncident(incidentNumber, incidentLocation, nature, date))
+};
 
 
 class CreateCase extends Component {
@@ -10,8 +23,18 @@ class CreateCase extends Component {
         this.state = {
             isDatePickerVisible: false,
             setDatePickerVisibility: false,
-            incidentDateAndTime: null
+            incidentNumber: '',
+            incidentLocation: '',
+            incidentNature: '',
+            incidentDateAndTime: null,
+            incidentNumberErrorMessage: '',
+            incidentLocationErrorMessage: '',
+            incidentNatureErrorMessage: ''
         };
+    }
+
+    componentDidMount(){
+        console.log(this.props);
     }
 
     static navigationOptions = {
@@ -45,6 +68,70 @@ class CreateCase extends Component {
 
     handleSubmit = () => {
         console.log("submit button clicked");
+        console.log(this.state.incidentNumber, this.state.incidentLocation, this.state.incidentNature, this.state.incidentDateAndTime);
+        
+        let inputIncidentNumber = this.state.incidentNumber;
+        let inputIncidentLocation = this.state.incidentLocation;
+        let inputIncidentNature = this.state.incidentNature;
+        let inputIncidentDateAndTime = this.state.incidentDateAndTime;
+
+        const { navigate } = this.props.navigation;
+
+        //for checking presence of special characters and spaces
+        const regExPattern = new RegExp(/^[A-Za-z0-9]+$/);
+        
+        //reset state of error message
+        this.setState({incidentNumberErrorMessage: ''});
+        this.setState({incidentLocationErrorMessage: ''});
+        this.setState({incidentNatureErrorMessage: ''});
+
+        //error messages
+        if ((inputIncidentNumber.length > 7) || (inputIncidentNumber.length < 6)){
+            return this.setState({incidentNumberErrorMessage: 'Incident number must be between 6 and 7 characters long'}); 
+        }
+        
+        if (!regExPattern.test(inputIncidentNumber)){
+            return this.setState({incidentNumberErrorMessage: 'Incident number must consist of only letters and numbers'});
+        }
+
+        //check existance of incident
+        //console.log(this.props.incidents.incidents);
+
+        let incidentArray = this.props.incidents.incidents.filter(incident => incident.incidentNumber === inputIncidentNumber);
+
+        console.log(incidentArray);
+
+        if (incidentArray.length === 1){
+            console.log('case exists!');
+            return this.setState({incidentNumberErrorMessage: 'Incident already exists, please a enter new incident'});
+        }
+
+        console.log('Checking location');
+        //check location is entered    
+        if (inputIncidentLocation !== '' ){
+            console.log('location is valid');
+        }else{
+            return this.setState({incidentLocationErrorMessage: 'Please enter incident location'});
+        }
+
+        //check nature is entered    
+        if (inputIncidentNature !== '' ){
+            console.log('Nature is valid');
+        }else{
+            return this.setState({incidentNatureErrorMessage: 'Please enter incident nature'});
+        }
+
+        //check date and time is selected    
+        if (inputIncidentDateAndTime !== null ){
+            console.log('date and time is selected');
+        }else{
+            return this.setState({incidentNatureErrorMessage: 'Please select the date and time of incident'});
+        }
+
+        //navigate('DisplayCase', {incidentId: incidentId, incidentNumber: inputIncidentNumber})
+        this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
+        console.log('case created!');
+
     }
     
     render(){
@@ -54,17 +141,25 @@ class CreateCase extends Component {
 
                 <Input 
                     style={{textAlign: 'center'}}
-                    placeholder='Enter Case Number'
+                    placeholder='Enter Incident Number'
+                    onChangeText={incidentNumber => this.setState({incidentNumber: incidentNumber.toUpperCase()})}
+                    errorMessage={this.state.incidentNumberErrorMessage}
                 />
 
                 <Input 
                     style={{textAlign: 'center'}}
                     placeholder='Enter Location of Incident'
+                    onChangeText={incidentLocation => this.setState({incidentLocation: incidentLocation.toUpperCase()})}
+                    errorMessage={this.state.incidentLocationErrorMessage}
+
                 />  
 
                 <Input 
                     style={{textAlign: 'center'}}
                     placeholder='Enter Nature of Incident'
+                    onChangeText={incidentNature => this.setState({incidentNature: incidentNature.toUpperCase()})}
+                    errorMessage={this.state.incidentNatureErrorMessage}
+
                 />      
                 
 
@@ -101,4 +196,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CreateCase;
+export default connect(mapStateToProps, mapDispatchToProps)(CreateCase);

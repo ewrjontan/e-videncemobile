@@ -30,3 +30,22 @@ export const incidentsFailed = errMess => ({
     type: ActionTypes.INCIDENTS_FAILED,
     payload: errMess
 });
+
+export const postIncident = (incidentNumber, incidentLocation, nature, date) => dispatch => {
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx made it to action creater');
+    const newIncident = {
+        incidentNumber,
+        incidentLocation,
+        nature,
+        date
+    };
+
+    setTimeout (() => {
+        dispatch(createIncident(newIncident));
+    }, 2000);
+};
+
+export const createIncident = incident =>({
+    type: ActionTypes.CREATE_INCIDENT,
+    payload: incident
+})

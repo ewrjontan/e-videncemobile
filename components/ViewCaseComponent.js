@@ -25,6 +25,9 @@ class ViewCase extends Component{
         };
     }
 
+    componentDidMount(){
+        console.log(this.props);
+    }
 
     static navigationOptions = {
         title: 'View Case',
