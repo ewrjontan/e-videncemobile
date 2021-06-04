@@ -3,12 +3,13 @@ import React, { Component } from 'react';
 import INCIDENTDATABASE from '../shared/incidentDatabase';
 
 import { SafeAreaView, View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
-import { ListItem, Avatar } from 'react-native-elements';
+import { ListItem, Avatar, Button } from 'react-native-elements';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-//import EditCaseScreen from './EditCaseComponent';
-//import AddItemScreen from './AddItemScreen';
+
+import EditCase from './EditCaseComponent';
+
 
 
 import { connect } from 'react-redux';
@@ -20,6 +21,8 @@ const mapStateToProps = state => {
 };
 
 
+
+
 class DisplayCase extends Component{
     constructor(props){
         super(props);
@@ -29,6 +32,7 @@ class DisplayCase extends Component{
     }
 
     componentDidMount(){
+
         console.log('xxxxxxxxxxxxxx params: ');
         console.log(this.props.navigation.state.params);
 
@@ -49,7 +53,6 @@ class DisplayCase extends Component{
             }        
         }
     };    
-
 
     render(){
 
@@ -89,14 +92,24 @@ class DisplayCase extends Component{
 
         return(
             <View>
-                <ScrollView>
-                    <View style={styles.caseInfo}>
-                        <Text>Nature of Incident: {incident.nature}</Text>
-                        <Text>Date of Incident: {incident.date}</Text>
-                        <Text>Location of Incident: {incident.incidentLocation}</Text>
-                    </View>
-                    
+                <View style={styles.caseInfo}>
+                    <Text>Nature of Incident: {incident.nature}</Text>
+                    <Text>Date of Incident: {incident.date}</Text>
+                    <Text>Location of Incident: {incident.incidentLocation}</Text>
 
+                    <View style={styles.buttonsContainer}>
+                        <Button
+                            title="Edit Case"
+                            type="outline"
+                        />
+                        <Button
+                            title="Add Item"
+                            type="outline"
+                        />
+                    </View>
+                </View>
+                    
+                <ScrollView>
                     <FlatList
                         data={incident.items}
                         renderItem={renderItem}
@@ -113,8 +126,18 @@ const styles = StyleSheet.create({
     caseInfo: {
         justifyContent: 'center',
         alignItems: 'center',
+        marginTop: 20,
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '100%',
         marginVertical: 20
     }
 });
 
+
 export default connect(mapStateToProps)(DisplayCase);
+
+

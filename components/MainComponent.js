@@ -94,7 +94,8 @@ const RecentCasesNavigator = createStackNavigator(
                 />
             })
         },
-        DisplayCase: { screen: DisplayCase }
+        DisplayCase: { screen: DisplayCase },
+        //TabNavigation: { screen: TabNavigation }
     },
     {
         initialRouteName: 'RecentCases',
