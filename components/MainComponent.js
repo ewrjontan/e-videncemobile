@@ -10,9 +10,6 @@ import DisplayCase from './DisplayCaseComponent';
 import TabNavigation from './TabNavigationComponent';
 
 
-
-
-
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';

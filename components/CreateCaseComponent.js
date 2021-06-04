@@ -70,13 +70,16 @@ class CreateCase extends Component {
     handleSubmit = () => {
         console.log("submit button clicked");
         console.log('length: ');
-        console.log(this.props.incidents.incidents.length);
+        
         console.log(this.state.incidentNumber, this.state.incidentLocation, this.state.incidentNature, this.state.incidentDateAndTime);
         
+        let newIncidentId = this.props.incidents.incidents.length;
         let inputIncidentNumber = this.state.incidentNumber.toUpperCase();
         let inputIncidentLocation = this.state.incidentLocation.toUpperCase();
         let inputIncidentNature = this.state.incidentNature.toUpperCase();
         let inputIncidentDateAndTime = this.state.incidentDateAndTime;
+
+        console.log(newIncidentId);
 
         const { navigate } = this.props.navigation;
 
@@ -133,10 +136,10 @@ class CreateCase extends Component {
         console.log('case created!');
 
         //reset state
-        this.setState({incidentNumber:'', incidentLocation: '', incidentNature: '', incidentDateAndTime: null})
+        this.setState({incidentNumber:'', incidentLocation: '', incidentNature: '', incidentDateAndTime: null});
 
         //navigate('TabNavigation', {incidentId: 'test'});
-        navigate('DisplayCase', {incidentId: incidentId, incidentNumber: inputIncidentNumber})
+        //navigate('DisplayCase', {incidentId: newIncidentId, incidentNumber: inputIncidentNumber});
 
     }
     

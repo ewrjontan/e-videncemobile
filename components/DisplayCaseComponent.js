@@ -61,8 +61,8 @@ class DisplayCase extends Component{
         const incident = this.props.incidents.incidents.filter(incident => incident.id === incidentId)[0];
 
         console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       display case works: ');
-        console.log('incident');
-        console.log(incident);
+        console.log('incident ID');
+        console.log(incidentId);
         console.log('params: ');
         console.log(this.props.navigation.state.params);
 
