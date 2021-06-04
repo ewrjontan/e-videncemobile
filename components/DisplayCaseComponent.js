@@ -91,7 +91,7 @@ class DisplayCase extends Component{
         };
 
         return(
-            <View>
+            <SafeAreaView style={{ flex: 1 }}>
                 <View style={styles.caseInfo}>
                     <Text>Nature of Incident: {incident.nature}</Text>
                     <Text>Date of Incident: {incident.date}</Text>
@@ -116,7 +116,7 @@ class DisplayCase extends Component{
                         keyExtractor={item => item.id.toString()}
                     />
                 </ScrollView>
-            </View>
+            </SafeAreaView>
         )
     }
 }
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     caseInfo: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 10,
     },
     buttonsContainer: {
         flexDirection: 'row',

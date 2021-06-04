@@ -65,7 +65,7 @@ const CreateCaseNavigator = createStackNavigator(
                 />
             })
         },
-        TabNavigation: { screen: TabNavigation }
+        DisplayCase: { screen: DisplayCase }
     },
     {
         initialRouteName: 'CreateCase',

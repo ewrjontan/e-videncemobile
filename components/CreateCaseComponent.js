@@ -62,18 +62,20 @@ class CreateCase extends Component {
     };
 
     handleDateConfirm = (date) => {
-        console.warn("A date has been picked: ", date);
+        //console.warn("A date has been picked: ", date);
         this.setState({incidentDateAndTime: date.toString() });
         this.hideDatePicker();
     };
 
     handleSubmit = () => {
         console.log("submit button clicked");
+        console.log('length: ');
+        console.log(this.props.incidents.incidents.length);
         console.log(this.state.incidentNumber, this.state.incidentLocation, this.state.incidentNature, this.state.incidentDateAndTime);
         
-        let inputIncidentNumber = this.state.incidentNumber;
-        let inputIncidentLocation = this.state.incidentLocation;
-        let inputIncidentNature = this.state.incidentNature;
+        let inputIncidentNumber = this.state.incidentNumber.toUpperCase();
+        let inputIncidentLocation = this.state.incidentLocation.toUpperCase();
+        let inputIncidentNature = this.state.incidentNature.toUpperCase();
         let inputIncidentDateAndTime = this.state.incidentDateAndTime;
 
         const { navigate } = this.props.navigation;
@@ -82,9 +84,7 @@ class CreateCase extends Component {
         const regExPattern = new RegExp(/^[A-Za-z0-9]+$/);
         
         //reset state of error message
-        this.setState({incidentNumberErrorMessage: ''});
-        this.setState({incidentLocationErrorMessage: ''});
-        this.setState({incidentNatureErrorMessage: ''});
+        this.setState({incidentNumberErrorMessage: '', incidentLocationErrorMessage: '', incidentNatureErrorMessage: ''});
 
         //error messages
         if ((inputIncidentNumber.length > 7) || (inputIncidentNumber.length < 6)){
@@ -129,10 +129,14 @@ class CreateCase extends Component {
             return this.setState({incidentNatureErrorMessage: 'Please select the date and time of incident'});
         }
 
-        //navigate('DisplayCase', {incidentId: incidentId, incidentNumber: inputIncidentNumber})
         this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
         console.log('case created!');
-        navigate('TabNavigation', {incidentId: 'test'});
+
+        //reset state
+        this.setState({incidentNumber:'', incidentLocation: '', incidentNature: '', incidentDateAndTime: null})
+
+        //navigate('TabNavigation', {incidentId: 'test'});
+        navigate('DisplayCase', {incidentId: incidentId, incidentNumber: inputIncidentNumber})
 
     }
     
@@ -144,22 +148,24 @@ class CreateCase extends Component {
                 <Input 
                     style={{textAlign: 'center'}}
                     placeholder='Enter Incident Number'
-                    onChangeText={incidentNumber => this.setState({incidentNumber: incidentNumber.toUpperCase()})}
+                    onChangeText={incidentNumber => this.setState({incidentNumber: incidentNumber})}
+                    value={this.state.incidentNumber}
                     errorMessage={this.state.incidentNumberErrorMessage}
                 />
 
                 <Input 
                     style={{textAlign: 'center'}}
                     placeholder='Enter Location of Incident'
-                    onChangeText={incidentLocation => this.setState({incidentLocation: incidentLocation.toUpperCase()})}
+                    onChangeText={incidentLocation => this.setState({incidentLocation: incidentLocation})}
+                    value={this.state.incidentLocation}
                     errorMessage={this.state.incidentLocationErrorMessage}
-
                 />  
 
                 <Input 
                     style={{textAlign: 'center'}}
                     placeholder='Enter Nature of Incident'
-                    onChangeText={incidentNature => this.setState({incidentNature: incidentNature.toUpperCase()})}
+                    onChangeText={incidentNature => this.setState({incidentNature: incidentNature})}
+                    value={this.state.incidentNature}
                     errorMessage={this.state.incidentNatureErrorMessage}
 
                 />      
