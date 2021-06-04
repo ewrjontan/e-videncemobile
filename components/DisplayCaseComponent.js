@@ -73,6 +73,22 @@ class DisplayCase extends Component{
         //console.log(incident);
         
 
+        const IncidentHasItems = () => {
+            if (incident.items.length !== 0){
+                return(
+                    <FlatList
+                        data={incident.items}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                )
+            }else{
+                return(
+                    <Text>No items are currently submitted under this incident.</Text>
+                )
+            }
+        }
+
         const renderItem = ({item}) => {
             console.log(item.id);
             return(
@@ -111,11 +127,8 @@ class DisplayCase extends Component{
                 </View>
                     
                 <ScrollView>
-                    <FlatList
-                        data={incident.items}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id.toString()}
-                    />
+                    <IncidentHasItems/>
+                    
                 </ScrollView>
             </SafeAreaView>
         )

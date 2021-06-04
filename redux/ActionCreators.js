@@ -37,7 +37,8 @@ export const postIncident = (incidentNumber, incidentLocation, nature, date) => 
         incidentNumber,
         incidentLocation,
         nature,
-        date
+        date, 
+        items: []
     };
 
     /*setTimeout (() => {
