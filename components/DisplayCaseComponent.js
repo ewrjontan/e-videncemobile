@@ -84,7 +84,7 @@ class DisplayCase extends Component{
                 )
             }else{
                 return(
-                    <Text>No items are currently submitted under this incident.</Text>
+                    <Text style={styles.noItems}>No items are currently submitted under this incident.</Text>
                 )
             }
         }
@@ -148,6 +148,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         marginVertical: 20
+    },
+    noItems: {
+        textAlign: 'center',
+        fontSize: 16,
+        paddingVertical: 30
     }
 });
 
