@@ -49,7 +49,7 @@ class ViewCase extends Component{
         //reset state of error message
         this.setState({inputErrorMessage: ''});
 
-        let inputIncidentNumber = this.state.inputIncidentNumber;
+        let inputIncidentNumber = this.state.inputIncidentNumber.toUpperCase();
         console.log(this.state.inputIncidentNumber);
 
         //error messages
@@ -72,6 +72,9 @@ class ViewCase extends Component{
             console.log('case exists!');
             let incidentId = incidentArray[0].id;
             console.log(incidentId);
+
+            //reset input values
+            this.setState({inputIncidentNumber: "",inputErrorMessage: ""})
             navigate('DisplayCase', {incidentId: incidentId, incidentNumber: inputIncidentNumber})
         }else{
             return this.setState({inputErrorMessage: 'Incident not found; create a new case or re-enter number'});
@@ -93,7 +96,8 @@ class ViewCase extends Component{
                         placeholder='Enter Case Number'
                         style={{textAlign: 'center'}}
                         errorMessage={this.state.inputErrorMessage}
-                        onChangeText={inputText => this.setState({inputIncidentNumber: inputText.toUpperCase()})}
+                        onChangeText={inputText => this.setState({inputIncidentNumber: inputText})}
+                        value={this.state.inputIncidentNumber}
                     />
                 </View>
                 <View style={{width: '90%', margin: 20}}>

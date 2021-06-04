@@ -68,7 +68,7 @@ class RecentCases extends Component {
             <View style={{marginTop: 30}}>
 
                 <FlatList
-                    data={this.props.incidents.incidents}
+                    data={this.props.incidents.incidents.slice(0,10)}
                     renderItem={renderIncidents}
                     keyExtractor={item => item.id.toString()}
                 />
