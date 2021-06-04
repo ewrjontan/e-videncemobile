@@ -20,9 +20,6 @@ const mapStateToProps = state => {
     };
 };
 
-
-
-
 class DisplayCase extends Component{
     constructor(props){
         super(props);
@@ -63,6 +60,10 @@ class DisplayCase extends Component{
         console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       display case works: ');
         console.log('incident ID');
         console.log(incidentId);
+
+        console.log('incident filtered');
+        console.log(incident);
+
         console.log('params: ');
         console.log(this.props.navigation.state.params);
 

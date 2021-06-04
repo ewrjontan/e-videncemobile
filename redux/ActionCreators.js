@@ -40,9 +40,38 @@ export const postIncident = (incidentNumber, incidentLocation, nature, date) => 
         date
     };
 
-    setTimeout (() => {
+    /*setTimeout (() => {
         dispatch(createIncident(newIncident));
-    }, 2000);
+    }, 2000);*/
+
+    return fetch(baseUrl + 'incidents', {
+        method: "POST",
+        body: JSON.stringify(newIncident),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+            if (response.ok){
+                //console.log("response successful");
+                //console.log(response);
+                return response;
+            }else{
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => { throw error; }
+    )
+    .then(response =>  response.json())
+    .then(response => dispatch(createIncident(response)))
+    .catch(error => {
+        //console.log('post incident', error.message);
+        alert('Your incident could not be created\nError: ' + error.message);
+    });
+
+
 };
 
 export const createIncident = incident =>({

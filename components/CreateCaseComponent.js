@@ -73,13 +73,13 @@ class CreateCase extends Component {
         
         console.log(this.state.incidentNumber, this.state.incidentLocation, this.state.incidentNature, this.state.incidentDateAndTime);
         
-        let newIncidentId = this.props.incidents.incidents.length;
+        let futureIncidentId = this.props.incidents.incidents.length;
         let inputIncidentNumber = this.state.incidentNumber.toUpperCase();
         let inputIncidentLocation = this.state.incidentLocation.toUpperCase();
         let inputIncidentNature = this.state.incidentNature.toUpperCase();
         let inputIncidentDateAndTime = this.state.incidentDateAndTime;
 
-        console.log(newIncidentId);
+        console.log(futureIncidentId);
 
         const { navigate } = this.props.navigation;
 
@@ -139,7 +139,11 @@ class CreateCase extends Component {
         this.setState({incidentNumber:'', incidentLocation: '', incidentNature: '', incidentDateAndTime: null});
 
         //navigate('TabNavigation', {incidentId: 'test'});
-        //navigate('DisplayCase', {incidentId: newIncidentId, incidentNumber: inputIncidentNumber});
+
+        setTimeout (() => {
+            navigate('DisplayCase', {incidentId: futureIncidentId, incidentNumber: inputIncidentNumber});
+        }, 10000);
+
 
     }
     
