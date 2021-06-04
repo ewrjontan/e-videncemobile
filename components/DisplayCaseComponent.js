@@ -7,10 +7,8 @@ import { ListItem, Avatar } from 'react-native-elements';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 
-import EditCaseScreen from './EditCaseComponent';
+//import EditCaseScreen from './EditCaseComponent';
 //import AddItemScreen from './AddItemScreen';
-
-import TabNavigator from './TabNavigatorComponent';
 
 
 import { connect } from 'react-redux';
@@ -31,7 +29,7 @@ class DisplayCase extends Component{
     }
 
     componentDidMount(){
-        console.log('params: ');
+        console.log('xxxxxxxxxxxxxx params: ');
         console.log(this.props.navigation.state.params);
 
         //for static navigation options, won't work unless passed as property due to loading slowly?
@@ -52,7 +50,6 @@ class DisplayCase extends Component{
         }
     };    
 
-    
 
     render(){
 
@@ -93,7 +90,6 @@ class DisplayCase extends Component{
         return(
             <View>
                 <ScrollView>
-                <TabNavigator />
                     <View style={styles.caseInfo}>
                         <Text>Nature of Incident: {incident.nature}</Text>
                         <Text>Date of Incident: {incident.date}</Text>
@@ -111,6 +107,7 @@ class DisplayCase extends Component{
         )
     }
 }
+
 
 const styles = StyleSheet.create({
     caseInfo: {

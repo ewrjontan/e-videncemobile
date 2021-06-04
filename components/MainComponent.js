@@ -7,6 +7,7 @@ import RecentCases from './RecentCasesComponent';
 
 import ViewCase from './ViewCaseComponent';
 import DisplayCase from './DisplayCaseComponent';
+import TabNavigation from './TabNavigationComponent';
 
 
 
@@ -53,25 +54,31 @@ const HomeNavigator = createStackNavigator(
 
 const CreateCaseNavigator = createStackNavigator(
     {
-        CreateCase: { screen: CreateCase }
+        CreateCase: {
+            screen: CreateCase,
+            navigationOptions: ({navigation}) => ({
+                headerLeft: <Icon
+                    name='list'
+                    type='font-awesome'
+                    iconStyle={styles.stackIcon}
+                    onPress={() => navigation.toggleDrawer()}
+                />
+            })
+        },
+        TabNavigation: { screen: TabNavigation }
     },
     {
-        defaultNavigationOptions:({navigation}) => ({
+        initialRouteName: 'CreateCase',
+        defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '#FFD600'
             },
             headerTintColor: '#fff',
             headerTitleStyle: {
                 color: '#fff'
-            },
-            headerLeft: <Icon
-                name='list'
-                type='font-awesome'
-                iconStyle={styles.stackIcon}
-                onPress={() => navigation.toggleDrawer()}
-            />
-        })
-    }       
+            }
+        }
+    }
 );
 
 const RecentCasesNavigator = createStackNavigator(

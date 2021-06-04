@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 
 import { postIncident } from '../redux/ActionCreators';
 
+
 const mapStateToProps = state => {
     return {
         incidents: state.incidents
@@ -131,6 +132,7 @@ class CreateCase extends Component {
         //navigate('DisplayCase', {incidentId: incidentId, incidentNumber: inputIncidentNumber})
         this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
         console.log('case created!');
+        navigate('TabNavigation', {incidentId: 'test'});
 
     }
     
