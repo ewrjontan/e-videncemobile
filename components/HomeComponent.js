@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import { View, Text, ScrollView, ImageBackground, StyleSheet, Button } from 'react-native';
-import { View, Text, ScrollView, ImageBackground, StyleSheet } from 'react-native';
-import { Card, Button } from 'react-native-elements';
+import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal } from 'react-native';
+import { Card, Button, Input } from 'react-native-elements';
 
 
 
@@ -9,7 +9,7 @@ class Home extends Component {
     constructor(props){
         super(props);
         this.state = {
-            
+            showModal: false
         };
     }
 
@@ -22,6 +22,16 @@ class Home extends Component {
             headerTitleStyle: {
                 fontWeight: 'bold',
             }
+    }
+
+    toggleModal() {
+        this.setState({showModal: !this.state.showModal});
+    }
+
+    resetForm() {
+        this.setState({
+            showModal: false
+        });
     }
 
     render(){
@@ -40,7 +50,7 @@ class Home extends Component {
                         <View style={styles.buttonContainer}>
                             <Button
                                 title="Login"
-                                onPress={() => console.log('login button pressed')}
+                                onPress={() => this.toggleModal()}
                             />
                         </View>
 
@@ -52,7 +62,30 @@ class Home extends Component {
                         </View>
                     </View>
 
-
+                    <Modal
+                        animationType={'slide'}
+                        transparent={false}
+                        visible={this.state.showModal}
+                        onRequestClose={() => this.toggleModal()}
+                >
+                        <View style={styles.modal}>
+                            <Text style={styles.modalTitle}>Login</Text>
+                            <Input
+                                placeholder='Username'
+                            />
+                            <Input
+                                placeholder='Password'
+                            />
+                            <Button
+                                onPress={() => {
+                                    this.toggleModal();
+                                    this.resetForm();
+                                }}
+                                color='#5637DD'
+                                title='Close'
+                            />
+                        </View>
+                    </Modal>
 
                 </ImageBackground>
             </View>
@@ -96,6 +129,22 @@ const styles = StyleSheet.create({
         width: "90%",
         marginHorizontal: 20,
         marginBottom: 10
+    },
+    modal: { 
+        justifyContent: 'center',
+        margin: 20
+    },
+    modalTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        backgroundColor: '#5637DD',
+        textAlign: 'center',
+        color: '#fff',
+        marginBottom: 20
+    },
+    modalText: {
+        fontSize: 18,
+        margin: 10
     }
   });
 
