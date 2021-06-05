@@ -13,6 +13,8 @@ class Home extends Component {
             showModalRegister: false,
             usernameLogin:'',
             passwordLogin:'',
+            firstNameRegister:'',
+            lastNameRegister:'',
             usernameRegister:'',
             passwordRegister:'',
             emailRegister:''
@@ -44,6 +46,8 @@ class Home extends Component {
             showModalRegister: false,
             usernameLogin:'',
             passwordLogin:'',
+            firstNameRegister:'',
+            lastNameRegister:'',
             usernameRegister:'',
             passwordRegister:'',
             emailRegister:''
@@ -126,6 +130,16 @@ class Home extends Component {
                     >
                         <View style={styles.modal}>
                             <Input
+                                placeholder='First Name'
+                                onChangeText={firstNameRegister => this.setState({firstNameRegister})}
+                                value={this.state.firstNameRegister}
+                            />
+                            <Input
+                                placeholder='Last Name'
+                                onChangeText={lastNameRegister => this.setState({lastNameRegister})}
+                                value={this.state.lastNameRegister}
+                            />
+                            <Input
                                 placeholder='Username'
                                 onChangeText={usernameRegister => this.setState({usernameRegister})}
                                 value={this.state.usernameRegister}
@@ -144,7 +158,7 @@ class Home extends Component {
                                 <Button
                                     onPress={() => {
                                         this.toggleModalRegister();
-                                        console.log(this.state.usernameRegister, this.state.passwordRegister, this.state.emailRegister);
+                                        console.log(this.state.firstNameRegister, this.state.lastNameRegister, this.state.usernameRegister, this.state.passwordRegister, this.state.emailRegister);
                                     }}
                                     title='Login'
                                 />

@@ -52,6 +52,7 @@ class DisplayCase extends Component{
     };    
 
     render(){
+        const { navigate } = this.props.navigation;
 
         //get incident from props 
         const incidentId = this.props.navigation.getParam('incidentId');
@@ -118,6 +119,9 @@ class DisplayCase extends Component{
                         <Button
                             title="Edit Case"
                             type="outline"
+                            onPress={() => navigate('EditCase', {
+                                incidentId: incident.id
+                            })}
                         />
                         <Button
                             title="Add Item"

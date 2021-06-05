@@ -8,6 +8,7 @@ import RecentCases from './RecentCasesComponent';
 import ViewCase from './ViewCaseComponent';
 import DisplayCase from './DisplayCaseComponent';
 import TabNavigation from './TabNavigationComponent';
+import EditCase from './EditCaseComponent';
 
 
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
@@ -92,7 +93,7 @@ const RecentCasesNavigator = createStackNavigator(
             })
         },
         DisplayCase: { screen: DisplayCase },
-        //TabNavigation: { screen: TabNavigation }
+        EditCase: { screen: EditCase }
     },
     {
         initialRouteName: 'RecentCases',
