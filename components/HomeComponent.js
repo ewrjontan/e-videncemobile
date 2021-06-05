@@ -9,7 +9,13 @@ class Home extends Component {
     constructor(props){
         super(props);
         this.state = {
-            showModal: false
+            showModalLogin: false,
+            showModalRegister: false,
+            usernameLogin:'',
+            passwordLogin:'',
+            usernameRegister:'',
+            passwordRegister:'',
+            emailRegister:''
         };
     }
 
@@ -24,13 +30,23 @@ class Home extends Component {
             }
     }
 
-    toggleModal() {
-        this.setState({showModal: !this.state.showModal});
+    toggleModalLogin() {
+        this.setState({showModalLogin: !this.state.showModalLogin});
+    }
+
+    toggleModalRegister() {
+        this.setState({showModalRegister: !this.state.showModalRegister});
     }
 
     resetForm() {
         this.setState({
-            showModal: false
+            showModalLogin: false,
+            showModalRegister: false,
+            usernameLogin:'',
+            passwordLogin:'',
+            usernameRegister:'',
+            passwordRegister:'',
+            emailRegister:''
         });
     }
 
@@ -50,14 +66,14 @@ class Home extends Component {
                         <View style={styles.buttonContainer}>
                             <Button
                                 title="Login"
-                                onPress={() => this.toggleModal()}
+                                onPress={() => this.toggleModalLogin()}
                             />
                         </View>
 
                         <View style={styles.buttonContainer}>
                             <Button
                                 title="Create Account"
-                                onPress={() => console.log('create account button pressed')}
+                                onPress={() => this.toggleModalRegister()}
                             />
                         </View>
                     </View>
@@ -65,27 +81,89 @@ class Home extends Component {
                     <Modal
                         animationType={'slide'}
                         transparent={false}
-                        visible={this.state.showModal}
-                        onRequestClose={() => this.toggleModal()}
-                >
+                        visible={this.state.showModalLogin}
+                        onRequestClose={() => this.toggleModalLogin()}
+                    >
                         <View style={styles.modal}>
-                            <Text style={styles.modalTitle}>Login</Text>
                             <Input
                                 placeholder='Username'
+                                onChangeText={usernameLogin => this.setState({usernameLogin})}
+                                value={this.state.usernameLogin}
                             />
                             <Input
                                 placeholder='Password'
+                                onChangeText={passwordLogin => this.setState({passwordLogin})}
+                                value={this.state.passwordLogin}
                             />
-                            <Button
-                                onPress={() => {
-                                    this.toggleModal();
-                                    this.resetForm();
-                                }}
-                                color='#5637DD'
-                                title='Close'
-                            />
+                            <View>
+                                <Button
+                                    onPress={() => {
+                                        this.toggleModalLogin();
+                                        console.log(this.state.usernameLogin, this.state.passwordLogin);
+                                    }}
+                                    title='Login'
+                                />
+                            </View>
+                            
+                            <View style={{marginTop: 10}}>
+                                <Button
+                                    onPress={() => {
+                                        this.toggleModalLogin();
+                                        this.resetForm();
+                                    }}
+                                    title='Cancel'
+                                />
+                            </View>                            
+                            
                         </View>
                     </Modal>
+
+                    <Modal
+                        animationType={'slide'}
+                        transparent={false}
+                        visible={this.state.showModalRegister}
+                        onRequestClose={() => this.toggleModalRegister()}
+                    >
+                        <View style={styles.modal}>
+                            <Input
+                                placeholder='Username'
+                                onChangeText={usernameRegister => this.setState({usernameRegister})}
+                                value={this.state.usernameRegister}
+                            />
+                            <Input
+                                placeholder='Password'
+                                onChangeText={passwordRegister => this.setState({passwordRegister})}
+                                value={this.state.passwordRegister}
+                            />
+                            <Input
+                                placeholder='Email'
+                                onChangeText={emailRegister => this.setState({emailRegister})}
+                                value={this.state.emailRegister}
+                            />
+                            <View>
+                                <Button
+                                    onPress={() => {
+                                        this.toggleModalRegister();
+                                        console.log(this.state.usernameRegister, this.state.passwordRegister, this.state.emailRegister);
+                                    }}
+                                    title='Login'
+                                />
+                            </View>
+                            
+                            <View style={{marginTop: 10}}>
+                                <Button
+                                    onPress={() => {
+                                        this.toggleModalRegister();
+                                        this.resetForm();
+                                    }}
+                                    title='Cancel'
+                                />
+                            </View>                            
+                            
+                        </View>
+                    </Modal>
+
+                    
 
                 </ImageBackground>
             </View>
@@ -137,7 +215,7 @@ const styles = StyleSheet.create({
     modalTitle: {
         fontSize: 24,
         fontWeight: 'bold',
-        backgroundColor: '#5637DD',
+        backgroundColor: '#FFD600',
         textAlign: 'center',
         color: '#fff',
         marginBottom: 20
