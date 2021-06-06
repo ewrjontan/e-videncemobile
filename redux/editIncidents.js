@@ -1,5 +1,8 @@
 import * as ActionTypes from './ActionTypes';
 
+export const incident = (state = {})
+
+
 export const incidents = (state = { isLoading: true, errMess: null, incidents: []}, action) => {
     switch (action.type) {
         case ActionTypes.ADD_INCIDENTS:
@@ -18,9 +21,7 @@ export const incidents = (state = { isLoading: true, errMess: null, incidents: [
             return {...state, incidents: state.incidents.concat(newIncident)};
 
         case ActionTypes.UPDATE_INCIDENT:
-            const updatedValues = action.payload;
-            console.log('made it to incident reducer');
-            console.log(updatedValues);
+            
 
         default:
             return state;

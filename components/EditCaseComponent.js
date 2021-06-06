@@ -1,11 +1,11 @@
 import React, { Component, useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native';
 import { Card, Input, Button, Picker } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
 import Loading from './LoadingComponent';
 
-import { postIncident } from '../redux/ActionCreators';
+import { getUpdatedIncidentValues } from '../redux/ActionCreators';
 
 
 const mapStateToProps = state => {
@@ -15,7 +15,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    postIncident: (incidentNumber, incidentLocation, nature, date) => (postIncident(incidentNumber, incidentLocation, nature, date))
+    getUpdatedIncidentValues: (incidentId, incidentLocation, nature, date) => (getUpdatedIncidentValues(incidentId, incidentLocation, nature, date))
+
 };
 
 
@@ -29,10 +30,14 @@ class EditCase extends Component {
             incidentLocation: '',
             incidentNature: '',
             incidentDateAndTime: null,
-            incidentNumberErrorMessage: '',
             incidentLocationErrorMessage: '',
             incidentNatureErrorMessage: '',
-            loading: false
+            loading: false,
+            currentLocation: '',
+            currentNature: '',
+            currentDateAndTime: '',
+            currentIncidentId: ''
+
         };
     }
 
@@ -60,8 +65,15 @@ class EditCase extends Component {
             incidentNumber: incident.incidentNumber,
             incidentLocation: incident.incidentLocation,
             incidentNature: incident.nature,
-            incidentDateAndTime: incident.date
+            incidentDateAndTime: incident.date,
+            currentLocation: incident.incidentLocation,
+            currentNature: incident.nature,
+            currentDateAndTime: incident.date,
+            currentIncidentId: incident.id
         });
+
+        
+
     }
 
     showDatePicker = () => {
@@ -82,49 +94,23 @@ class EditCase extends Component {
         this.hideDatePicker();
     };
 
-    handleSubmit = () => {
-        console.log("submit button clicked");
-        console.log('length: ');
+    handleSave = () => {
+        console.log("save button clicked");
         
-        console.log(this.state.incidentNumber, this.state.incidentLocation, this.state.incidentNature, this.state.incidentDateAndTime);
+        console.log('current values');
+        console.log(this.state.currentLocation, this.state.currentNature, this.state.currentDateAndTime);
         
-        let futureIncidentId = this.props.incidents.incidents.length;
-        let inputIncidentNumber = this.state.incidentNumber.toUpperCase();
         let inputIncidentLocation = this.state.incidentLocation.toUpperCase();
         let inputIncidentNature = this.state.incidentNature.toUpperCase();
         let inputIncidentDateAndTime = this.state.incidentDateAndTime;
 
-        console.log(futureIncidentId);
+        console.log('New values');    
+        console.log(inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
 
-        const { navigate } = this.props.navigation;
-
-        //for checking presence of special characters and spaces
-        const regExPattern = new RegExp(/^[A-Za-z0-9]+$/);
-        
         //reset state of error message
-        this.setState({incidentNumberErrorMessage: '', incidentLocationErrorMessage: '', incidentNatureErrorMessage: ''});
+        this.setState({incidentLocationErrorMessage: '', incidentNatureErrorMessage: ''});
 
         //error messages
-        if ((inputIncidentNumber.length > 7) || (inputIncidentNumber.length < 6)){
-            return this.setState({incidentNumberErrorMessage: 'Incident number must be between 6 and 7 characters long'}); 
-        }
-        
-        if (!regExPattern.test(inputIncidentNumber)){
-            return this.setState({incidentNumberErrorMessage: 'Incident number must consist of only letters and numbers'});
-        }
-
-        //check existance of incident
-        //console.log(this.props.incidents.incidents);
-
-        let incidentArray = this.props.incidents.incidents.filter(incident => incident.incidentNumber === inputIncidentNumber);
-
-        console.log(incidentArray);
-
-        if (incidentArray.length === 1){
-            console.log('case exists!');
-            return this.setState({incidentNumberErrorMessage: 'Incident already exists, please a enter new incident'});
-        }
-
         console.log('Checking location');
         //check location is entered    
         if (inputIncidentLocation !== '' ){
@@ -147,17 +133,45 @@ class EditCase extends Component {
             return this.setState({incidentNatureErrorMessage: 'Please select the date and time of incident'});
         }
 
-        this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
-        console.log('case created!');
+        //this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
 
         //reset state
-        this.setState({incidentNumber:'', incidentLocation: '', incidentNature: '', incidentDateAndTime: null, loading: true});
+        //this.setState({incidentNumber:'', incidentLocation: '', incidentNature: '', incidentDateAndTime: null, loading: true});
 
         //navigate('TabNavigation', {incidentId: 'test'});
 
-        setTimeout (() => {
+        /*setTimeout (() => {
             navigate('DisplayCase', {incidentId: futureIncidentId, incidentNumber: inputIncidentNumber});
-        }, 5000);
+        }, 5000);*/
+
+    
+
+        if (inputIncidentLocation !== this.state.currentLocation || inputIncidentNature !== this.state.currentNature || inputIncidentDateAndTime !== this.state.currentDateAndTime){
+            Alert.alert(
+                'Are you sure you want to save these changes?',
+                '',
+                [
+                    {
+                        text: 'No',
+                        onPress: () => console.log('Cancel pressed'),
+                        style:'cancel'
+                    },
+                    {text: 'Yes', onPress: () => {
+                        console.log('ok pressed');
+                        this.props.getUpdatedIncidentValues(this.state.currentIncidentId, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
+                        }
+                    }
+                ]
+            );    
+        }else{
+            Alert.alert(
+                'No Changes Have Been Made',
+                '',
+                [
+                    {text: 'Ok', onPress: () => console.log('ok pressed')}
+                ]
+            );      
+        }
 
 
     }
@@ -202,7 +216,7 @@ class EditCase extends Component {
                     </View>
 
                     <View style={{width: '90%', margin: 20}}>
-                        <Button title="Save" onPress={this.handleSubmit} />
+                        <Button title="Save" onPress={this.handleSave} />
                     </View>
                     
 

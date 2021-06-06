@@ -41,10 +41,6 @@ export const postIncident = (incidentNumber, incidentLocation, nature, date) => 
         items: []
     };
 
-    /*setTimeout (() => {
-        dispatch(createIncident(newIncident));
-    }, 2000);*/
-
     return fetch(baseUrl + 'incidents', {
         method: "POST",
         body: JSON.stringify(newIncident),
@@ -78,4 +74,47 @@ export const postIncident = (incidentNumber, incidentLocation, nature, date) => 
 export const createIncident = incident =>({
     type: ActionTypes.CREATE_INCIDENT,
     payload: incident
+})
+
+export const getUpdatedIncidentValues = (incidentId, updatedIncidentLocation, updatedNature, updatedDate) => dispatch => {
+    console.log('made it to action creators');
+
+    const updatedIncidentValues = {
+        incidentId,
+        updatedIncidentLocation,
+        updatedNature,
+        updatedDate
+    };
+
+    return fetch(baseUrl + 'incidents', {
+        method: "POST",
+        body: JSON.stringify(updatedIncidentValues),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+            if (response.ok){
+                //console.log("response successful");
+                //console.log(response);
+                return response;
+            }else{
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => { throw error; }
+    )
+    .then(response =>  response.json())
+    .then(response => dispatch(updateIncident(response)))
+    .catch(error => {
+        //console.log('post incident', error.message);
+        alert('Your incident could not be created\nError: ' + error.message);
+    });
+}
+
+export const updateIncident = updatedIncidentValues =>({
+    type: ActionTypes.UPDATE_INCIDENT,
+    payload: updatedIncidentValues
 })
