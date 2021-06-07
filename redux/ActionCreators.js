@@ -67,8 +67,6 @@ export const postIncident = (incidentNumber, incidentLocation, nature, date) => 
         //console.log('post incident', error.message);
         alert('Your incident could not be created\nError: ' + error.message);
     });
-
-
 };
 
 export const createIncident = incident =>({
@@ -76,26 +74,25 @@ export const createIncident = incident =>({
     payload: incident
 })
 
-export const getUpdatedIncidentValues = (incidentId, updatedIncidentLocation, updatedNature, updatedDate) => dispatch => {
+export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items) => dispatch => {
     console.log('made it to action creators');
 
-    const updatedIncidentValues = {
-        incidentId,
-        updatedIncidentLocation,
-        updatedNature,
-        updatedDate
-    };
-
-    return fetch(baseUrl + 'incidents', {
-        method: "POST",
-        body: JSON.stringify(updatedIncidentValues),
+    return fetch(baseUrl + 'incidents/' + incidentId, {
+        method: "PUT",
+        body: JSON.stringify({
+            incidentNumber: incidentNumber,
+            incidentLocation: newIncidentLocation,
+            nature: newIncidentNature,
+            date: newDate,
+            items: items
+        }),
         headers: {
             "Content-Type": "application/json"
         }
     })
     .then(response => {
             if (response.ok){
-                //console.log("response successful");
+                //console.log(" xxxx     response successful");
                 //console.log(response);
                 return response;
             }else{
@@ -112,9 +109,9 @@ export const getUpdatedIncidentValues = (incidentId, updatedIncidentLocation, up
         //console.log('post incident', error.message);
         alert('Your incident could not be created\nError: ' + error.message);
     });
-}
+};
 
-export const updateIncident = updatedIncidentValues =>({
+export const updateIncident = updatedIncident =>({
     type: ActionTypes.UPDATE_INCIDENT,
-    payload: updatedIncidentValues
+    payload: updatedIncident
 })

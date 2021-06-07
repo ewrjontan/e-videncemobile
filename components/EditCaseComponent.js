@@ -5,7 +5,7 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
 import Loading from './LoadingComponent';
 
-import { getUpdatedIncidentValues } from '../redux/ActionCreators';
+import { fetchUpdatedIncidentValues } from '../redux/ActionCreators';
 
 
 const mapStateToProps = state => {
@@ -15,7 +15,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    getUpdatedIncidentValues: (incidentId, incidentLocation, nature, date) => (getUpdatedIncidentValues(incidentId, incidentLocation, nature, date))
+    fetchUpdatedIncidentValues: (incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items) => (fetchUpdatedIncidentValues(incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items))
 
 };
 
@@ -36,7 +36,8 @@ class EditCase extends Component {
             currentLocation: '',
             currentNature: '',
             currentDateAndTime: '',
-            currentIncidentId: ''
+            currentIncidentId: '',
+            currentItems: ''
 
         };
     }
@@ -69,7 +70,8 @@ class EditCase extends Component {
             currentLocation: incident.incidentLocation,
             currentNature: incident.nature,
             currentDateAndTime: incident.date,
-            currentIncidentId: incident.id
+            currentIncidentId: incident.id,
+            currentItems: incident.items
         });
 
         
@@ -158,7 +160,8 @@ class EditCase extends Component {
                     },
                     {text: 'Yes', onPress: () => {
                         console.log('ok pressed');
-                        this.props.getUpdatedIncidentValues(this.state.currentIncidentId, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
+                        this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
+                        //add await and navigate back to main case page
                         }
                     }
                 ]
