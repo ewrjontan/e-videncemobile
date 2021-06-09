@@ -1,10 +1,8 @@
 import React, { Component, useState } from 'react';
-import { Text, View, StyleSheet, Alert } from 'react-native';
+import { Text, View, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import { Card, Input, Button, Picker } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
-import Loading from './LoadingComponent';
-
 import { fetchUpdatedIncidentValues } from '../redux/ActionCreators';
 
 
@@ -20,6 +18,16 @@ const mapDispatchToProps = {
 };
 
 
+function Saving(){
+    return (
+        <View style={styles.savingView}>
+            <ActivityIndicator size='large' color='black' />
+            <Text style={styles.savingText}>Saving . . .</Text>
+        </View>
+    );
+}
+
+
 class EditCase extends Component {
     constructor(props){
         super(props);
@@ -32,13 +40,12 @@ class EditCase extends Component {
             incidentDateAndTime: null,
             incidentLocationErrorMessage: '',
             incidentNatureErrorMessage: '',
-            loading: false,
+            saving: false,
             currentLocation: '',
             currentNature: '',
             currentDateAndTime: '',
             currentIncidentId: '',
-            currentItems: ''
-
+            currentItems: '',
         };
     }
 
@@ -160,8 +167,27 @@ class EditCase extends Component {
                     },
                     {text: 'Yes', onPress: () => {
                         console.log('ok pressed');
-                        this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
+                        
+                        /*async function fetchUpdatedValues(){
+                            await this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
+                        };*/
+                        
                         //add await and navigate back to main case page
+                        const { navigate } = this.props.navigation;
+
+                        /*fetchUpdatedValues().then(
+                            console.log('updated values yo')
+                            //navigate('DisplayCase', {incidentId: this.state.currentIncidentId, incidentNumber: this.state.incidentNumber})
+                        );*/
+                        this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
+
+                        this.setState({saving: true});
+                        
+                        //wait for props to get updated
+                        setTimeout(() => {                            
+                            navigate('DisplayCase', {incidentId: this.state.currentIncidentId, incidentNumber: this.state.incidentNumber}) 
+                        },5000);
+
                         }
                     }
                 ]
@@ -181,7 +207,7 @@ class EditCase extends Component {
     
     render(){
         
-        if (!this.state.loading){
+        if (!this.state.saving){
             return (
                 <View style={{marginTop: 30}}>
 
@@ -234,7 +260,7 @@ class EditCase extends Component {
                 </View>
             );
         }else{
-            return <Loading />
+            return <Saving />
         }
     }
 }
@@ -244,7 +270,16 @@ const styles = StyleSheet.create({
         height: 20,
         margin: 12,
         borderWidth: 1,
-
+    },
+    savingView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
+    },
+    savingText: {
+        color: 'black',
+        fontSize: 14,
+        fontWeight: 'bold'
     }
 })
 

@@ -160,7 +160,7 @@ class Home extends Component {
                                         this.toggleModalRegister();
                                         console.log(this.state.firstNameRegister, this.state.lastNameRegister, this.state.usernameRegister, this.state.passwordRegister, this.state.emailRegister);
                                     }}
-                                    title='Login'
+                                    title='Create Account'
                                 />
                             </View>
                             

@@ -104,14 +104,9 @@ export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncide
         error => { throw error; }
     )
     .then(response =>  response.json())
-    .then(response => dispatch(updateIncident(response)))
+    .then(response => dispatch(fetchIncidents()))
     .catch(error => {
         //console.log('post incident', error.message);
-        alert('Your incident could not be created\nError: ' + error.message);
+        alert('Your incident could not be modified\nError: ' + error.message);
     });
 };
-
-export const updateIncident = updatedIncident =>({
-    type: ActionTypes.UPDATE_INCIDENT,
-    payload: updatedIncident
-})

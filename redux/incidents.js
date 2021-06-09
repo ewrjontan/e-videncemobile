@@ -16,21 +16,6 @@ export const incidents = (state = { isLoading: true, errMess: null, incidents: [
             newIncident.id = state.incidents.length;
 
             return {...state, incidents: state.incidents.concat(newIncident)};
-
-        case ActionTypes.UPDATE_INCIDENT:
-            console.log(' xxxxx MY state is:');
-            console.log(state);
-            const updatedIncident = action.payload;
-            console.log('made it to reducer');
-            console.log(updatedIncident);
-
-            let removedIncidentArray = state.incidents.filter(incident => incident.id !== updatedIncident.id);
-
-            console.log('removing incident');
-            console.log(removedIncidentArray);
-
-            updatedIncident.id = state.incidents.length;
-            return {...state, incidents: state.incidents.concat(updatedIncident)};
         
         default:
             return state;
