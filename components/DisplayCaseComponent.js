@@ -9,6 +9,8 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 
 import EditCase from './EditCaseComponent';
+import AddItem from './AddItemComponent';
+
 
 
 
@@ -100,6 +102,7 @@ class DisplayCase extends Component{
                         <ListItem.Title>Description: {item.description}</ListItem.Title>
                         <ListItem.Subtitle>Type: {item.type}</ListItem.Subtitle>
                         <ListItem.Subtitle>Location Found: {item.locationFound}</ListItem.Subtitle>
+                        <ListItem.Subtitle>Collected: {item.date}</ListItem.Subtitle>
 
                     </ListItem.Content>
                 
@@ -126,6 +129,9 @@ class DisplayCase extends Component{
                         <Button
                             title="Add Item"
                             type="outline"
+                            onPress={() => navigate('AddItem', {
+                                incidentId: incident.id
+                            })}
                         />
                     </View>
                 </View>
