@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         borderColor: '#86939e',
         width: '95%',
+        height: 100
     },
     savingView: {
         alignItems: 'center',

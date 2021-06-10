@@ -136,10 +136,8 @@ class DisplayCase extends Component{
                     </View>
                 </View>
                     
-                <ScrollView>
-                    <IncidentHasItems/>
+                <IncidentHasItems/>
                     
-                </ScrollView>
             </SafeAreaView>
         )
     }

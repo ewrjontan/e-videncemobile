@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-//import { View, Text, ScrollView, ImageBackground, StyleSheet, Button } from 'react-native';
-import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal } from 'react-native';
+//import { View, Text, ScrollView, ImageBackground, StyleSheet, Button, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
 
@@ -88,7 +88,7 @@ class Home extends Component {
                         visible={this.state.showModalLogin}
                         onRequestClose={() => this.toggleModalLogin()}
                     >
-                        <View style={styles.modal}>
+                        <SafeAreaView style={styles.modal}>
                             <Input
                                 placeholder='Username'
                                 onChangeText={usernameLogin => this.setState({usernameLogin})}
@@ -99,7 +99,7 @@ class Home extends Component {
                                 onChangeText={passwordLogin => this.setState({passwordLogin})}
                                 value={this.state.passwordLogin}
                             />
-                            <View>
+                            <View style={styles.buttonContainer}>
                                 <Button
                                     onPress={() => {
                                         this.toggleModalLogin();
@@ -109,7 +109,7 @@ class Home extends Component {
                                 />
                             </View>
                             
-                            <View style={{marginTop: 10}}>
+                            <View style={styles.buttonContainer}>
                                 <Button
                                     onPress={() => {
                                         this.toggleModalLogin();
@@ -119,7 +119,7 @@ class Home extends Component {
                                 />
                             </View>                            
                             
-                        </View>
+                        </SafeAreaView>
                     </Modal>
 
                     <Modal
@@ -128,7 +128,7 @@ class Home extends Component {
                         visible={this.state.showModalRegister}
                         onRequestClose={() => this.toggleModalRegister()}
                     >
-                        <View style={styles.modal}>
+                        <SafeAreaView style={styles.modal}>
                             <Input
                                 placeholder='First Name'
                                 onChangeText={firstNameRegister => this.setState({firstNameRegister})}
@@ -154,7 +154,7 @@ class Home extends Component {
                                 onChangeText={emailRegister => this.setState({emailRegister})}
                                 value={this.state.emailRegister}
                             />
-                            <View>
+                            <View style={styles.buttonContainer}>
                                 <Button
                                     onPress={() => {
                                         this.toggleModalRegister();
@@ -164,7 +164,7 @@ class Home extends Component {
                                 />
                             </View>
                             
-                            <View style={{marginTop: 10}}>
+                            <View style={styles.buttonContainer}>
                                 <Button
                                     onPress={() => {
                                         this.toggleModalRegister();
@@ -174,7 +174,7 @@ class Home extends Component {
                                 />
                             </View>                            
                             
-                        </View>
+                        </SafeAreaView>
                     </Modal>
 
                     
@@ -224,7 +224,7 @@ const styles = StyleSheet.create({
     },
     modal: { 
         justifyContent: 'center',
-        margin: 20
+        marginTop: 200
     },
     modalTitle: {
         fontSize: 24,
