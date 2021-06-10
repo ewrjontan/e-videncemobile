@@ -186,7 +186,7 @@ class EditCase extends Component {
                         //wait for props to get updated
                         setTimeout(() => {                            
                             navigate('DisplayCase', {incidentId: this.state.currentIncidentId, incidentNumber: this.state.incidentNumber}) 
-                        },5000);
+                        },7500);
 
                         }
                     }

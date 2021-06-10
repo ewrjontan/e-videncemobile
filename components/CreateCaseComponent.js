@@ -38,8 +38,13 @@ class CreateCase extends Component {
 
     componentDidMount(){
         console.log(this.props);
+        //this.setState({loading: false});
+    }
+
+    componentWillUnmount(){
         this.setState({loading: false});
     }
+
 
     static navigationOptions = {
         title: 'Create New Case',

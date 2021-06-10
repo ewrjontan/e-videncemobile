@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import { Text, View, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, Alert, ActivityIndicator, TextInput } from 'react-native';
 import { Card, Input, Button, Picker } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
@@ -34,10 +34,10 @@ class AddItem extends Component {
         this.state = {
             isDatePickerVisible: false,
             setDatePickerVisibility: false,
-            incidentNumber: '',
-            incidentLocation: '',
-            incidentNature: '',
-            incidentDateAndTime: null,
+            itemType: '',
+            itemLocation: '',
+            itemDateAndTime: null,
+            itemDescription: '',
             incidentLocationErrorMessage: '',
             incidentNatureErrorMessage: '',
             saving: false,
@@ -51,7 +51,6 @@ class AddItem extends Component {
 
     componentDidMount(){
         console.log('xxxxx edit case component xxxxxxxxxxx');
-        this.setCurrentValues();
     }
 
     static navigationOptions = {
@@ -66,6 +65,7 @@ class AddItem extends Component {
     };
 
     setCurrentValues(){
+        /*
         const passedIncidentId = this.props.navigation.getParam('incidentId');
         const incident = this.props.incidents.incidents.filter(incident => incident.id === passedIncidentId)[0];
 
@@ -80,9 +80,7 @@ class AddItem extends Component {
             currentIncidentId: incident.id,
             currentItems: incident.items
         });
-
-        
-
+*/
     }
 
     showDatePicker = () => {
@@ -99,11 +97,11 @@ class AddItem extends Component {
 
     handleDateConfirm = (date) => {
         //console.warn("A date has been picked: ", date);
-        this.setState({incidentDateAndTime: date.toString() });
+        this.setState({itemDateAndTime: date.toString() });
         this.hideDatePicker();
     };
 
-    handleSave = () => {
+    handleAddItem = () => {
         console.log("save button clicked");
         
         console.log('current values');
@@ -209,42 +207,47 @@ class AddItem extends Component {
         
         if (!this.state.saving){
             return (
-                <View style={{marginTop: 30}}>
+                <View style={{marginTop: 30, alignItems: 'center'}}>
 
                     <Input 
-                        disabled
                         style={{textAlign: 'center'}}
                         placeholder='Enter Item Type'
-                        onChangeText={incidentNumber => this.setState({incidentNumber: incidentNumber})}
-                        value={this.state.incidentNumber}
-                        errorMessage={this.state.incidentNumberErrorMessage}
+                        onChangeText={input => this.setState({itemType: input})}
+                        value={this.state.itemType}
                     />
 
                     <Input 
                         style={{textAlign: 'center'}}
-                        placeholder='Enter Item Collection Location'
-                        onChangeText={incidentLocation => this.setState({incidentLocation: incidentLocation})}
-                        value={this.state.incidentLocation}
-                        errorMessage={this.state.incidentLocationErrorMessage}
-                    />  
+                        placeholder='Enter Location Found'
+                        onChangeText={input => this.setState({itemLocation: input})}
+                        value={this.state.itemLocation}
+                    />    
 
-                    <Input 
-                        style={{textAlign: 'center'}}
-                        placeholder='Enter Item Description'
-                        onChangeText={incidentNature => this.setState({incidentNature: incidentNature})}
-                        value={this.state.incidentNature}
-                        errorMessage={this.state.incidentNatureErrorMessage}
-                    />      
+                    <TextInput 
+                        style={styles.textInput}
+                        onChangeText={input => this.setState({itemDescription: input})}
+                        value={this.state.itemDescription}
+                        placeholder="Enter Item Description"
+                        placeholderTextColor='#86939e'
+                        multiline
+                        numberOfLines={4}
+                    >
+
+                    </TextInput>
                     
 
-                    <Text style={{textAlign: 'center', fontSize: 18}}>{this.state.incidentDateAndTime}</Text>
+                    <Text style={{textAlign: 'center', fontSize: 18}}>{this.state.itemDateAndTime}</Text>
 
                     <View style={{width: '90%', margin: 20}}>
                         <Button title="Select Date and Time of Collection" onPress={this.showDatePicker} type="outline" />
                     </View>
 
-                    <View style={{width: '90%', margin: 20}}>
-                        <Button title="Save" onPress={this.handleSave} />
+                    <View style={{width: '90%', marginVertical: 20}}>
+                        <Button title="Add Item" onPress={this.handleAddItem} />
+                    </View>
+
+                    <View style={{width: '90%'}}>
+                        <Button title="Save and Add Another" onPress={this.handleSaveAndAddItem} />
                     </View>
                     
 
@@ -254,8 +257,6 @@ class AddItem extends Component {
                         onConfirm={this.handleDateConfirm}
                         onCancel={this.hideDatePicker}
                     />
-
-
                 </View>
             );
         }else{
@@ -265,10 +266,12 @@ class AddItem extends Component {
 }
 
 const styles = StyleSheet.create({
-    input:{
-        height: 20,
-        margin: 12,
+    textInput:{
+        textAlign: 'center',
         borderWidth: 1,
+        fontSize: 18,
+        borderColor: '#86939e',
+        width: '95%',
     },
     savingView: {
         alignItems: 'center',
