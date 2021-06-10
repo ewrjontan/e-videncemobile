@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Alert, ActivityIndicator, TextInput } from 'rea
 import { Card, Input, Button, Picker } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
-import { fetchUpdatedIncidentValues } from '../redux/ActionCreators';
+import { postItem } from '../redux/ActionCreators';
 
 
 const mapStateToProps = state => {
@@ -13,7 +13,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    fetchUpdatedIncidentValues: (incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items) => (fetchUpdatedIncidentValues(incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items))
+    postItem: (incidentId, itemType, itemLocation, itemDescription, itemDate) => (postItem(incidentId, itemType, itemLocation, itemDescription, itemDate))
 
 };
 
@@ -38,19 +38,17 @@ class AddItem extends Component {
             itemLocation: '',
             itemDateAndTime: null,
             itemDescription: '',
-            incidentLocationErrorMessage: '',
-            incidentNatureErrorMessage: '',
+            itemTypeErrorMessage: '',
+            itemLocationErrorMessage: '',
+            itemDescriptionAndDateErrorMessage: '',
             saving: false,
-            currentLocation: '',
-            currentNature: '',
-            currentDateAndTime: '',
-            currentIncidentId: '',
-            currentItems: '',
+            incidentId: this.props.navigation.getParam('incidentId'),
+            incidentNumber: this.props.navigation.getParam('incidentNumber')
         };
     }
 
     componentDidMount(){
-        console.log('xxxxx edit case component xxxxxxxxxxx');
+        console.log('xxxxx add item component xxxxxxxxxxx');
     }
 
     static navigationOptions = {
@@ -63,25 +61,6 @@ class AddItem extends Component {
                 fontWeight: 'bold',
             }
     };
-
-    setCurrentValues(){
-        /*
-        const passedIncidentId = this.props.navigation.getParam('incidentId');
-        const incident = this.props.incidents.incidents.filter(incident => incident.id === passedIncidentId)[0];
-
-        this.setState({
-            incidentNumber: incident.incidentNumber,
-            incidentLocation: incident.incidentLocation,
-            incidentNature: incident.nature,
-            incidentDateAndTime: incident.date,
-            currentLocation: incident.incidentLocation,
-            currentNature: incident.nature,
-            currentDateAndTime: incident.date,
-            currentIncidentId: incident.id,
-            currentItems: incident.items
-        });
-*/
-    }
 
     showDatePicker = () => {
         console.log("show date picker works");
@@ -104,103 +83,62 @@ class AddItem extends Component {
     handleAddItem = () => {
         console.log("save button clicked");
         
-        console.log('current values');
-        console.log(this.state.currentLocation, this.state.currentNature, this.state.currentDateAndTime);
-        
-        let inputIncidentLocation = this.state.incidentLocation.toUpperCase();
-        let inputIncidentNature = this.state.incidentNature.toUpperCase();
-        let inputIncidentDateAndTime = this.state.incidentDateAndTime;
+        let itemType = this.state.itemType;
+        let itemLocation = this.state.itemLocation;
+        let itemDate = this.state.itemDateAndTime;
+        let itemDescription = this.state.itemDescription;
 
-        console.log('New values');    
-        console.log(inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
+        console.log('current values');
+
+        console.log(itemType, itemLocation, itemDate, itemDescription);
+        
 
         //reset state of error message
-        this.setState({incidentLocationErrorMessage: '', incidentNatureErrorMessage: ''});
+        this.setState({itemTypeErrorMessage: '', itemLocationErrorMessage: '', itemDescriptionAndDateErrorMessage: ''});
 
         //error messages
-        console.log('Checking location');
-        //check location is entered    
-        if (inputIncidentLocation !== '' ){
-            console.log('location is valid');
+
+        //check type is entered    
+        if (itemType !== '' ){
+            console.log('type is valid');
         }else{
-            return this.setState({incidentLocationErrorMessage: 'Please enter incident location'});
+            return this.setState({itemTypeErrorMessage: 'Please enter item type'});
         }
 
-        //check nature is entered    
-        if (inputIncidentNature !== '' ){
-            console.log('Nature is valid');
+        //check location is entered    
+        if (itemLocation !== '' ){
+            console.log('location is valid');
         }else{
-            return this.setState({incidentNatureErrorMessage: 'Please enter incident nature'});
+            return this.setState({itemLocationErrorMessage: 'Please enter location found'});
+        }
+
+        //check description is entered    
+        if (itemDescription !== '' ){
+            console.log('description is valid');
+        }else{
+            return this.setState({itemDescriptionAndDateErrorMessage: 'Please enter item description'});
         }
 
         //check date and time is selected    
-        if (inputIncidentDateAndTime !== null ){
+        if (itemDate !== null ){
             console.log('date and time is selected');
         }else{
-            return this.setState({incidentNatureErrorMessage: 'Please select the date and time of incident'});
+            return this.setState({itemDescriptionAndDateErrorMessage: 'Please select the date and time of collection'});
         }
 
-        //this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
+        //incidentId, itemType, itemLocation, itemDescription, itemDate
 
-        //reset state
-        //this.setState({incidentNumber:'', incidentLocation: '', incidentNature: '', incidentDateAndTime: null, loading: true});
+        const { navigate } = this.props.navigation;
 
-        //navigate('TabNavigation', {incidentId: 'test'});
+        this.props.postItem(this.state.incidentId, itemType, itemLocation, itemDescription, itemDate);
 
-        /*setTimeout (() => {
-            navigate('DisplayCase', {incidentId: futureIncidentId, incidentNumber: inputIncidentNumber});
-        }, 5000);*/
-
-    
-
-        if (inputIncidentLocation !== this.state.currentLocation || inputIncidentNature !== this.state.currentNature || inputIncidentDateAndTime !== this.state.currentDateAndTime){
-            Alert.alert(
-                'Are you sure you want to save these changes?',
-                '',
-                [
-                    {
-                        text: 'No',
-                        onPress: () => console.log('Cancel pressed'),
-                        style:'cancel'
-                    },
-                    {text: 'Yes', onPress: () => {
-                        console.log('ok pressed');
-                        
-                        /*async function fetchUpdatedValues(){
-                            await this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
-                        };*/
-                        
-                        //add await and navigate back to main case page
-                        const { navigate } = this.props.navigation;
-
-                        /*fetchUpdatedValues().then(
-                            console.log('updated values yo')
-                            //navigate('DisplayCase', {incidentId: this.state.currentIncidentId, incidentNumber: this.state.incidentNumber})
-                        );*/
-                        this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
-
-                        this.setState({saving: true});
-                        
-                        //wait for props to get updated
-                        setTimeout(() => {                            
-                            navigate('DisplayCase', {incidentId: this.state.currentIncidentId, incidentNumber: this.state.incidentNumber}) 
-                        },5000);
-
-                        }
-                    }
-                ]
-            );    
-        }else{
-            Alert.alert(
-                'No Changes Have Been Made',
-                '',
-                [
-                    {text: 'Ok', onPress: () => console.log('ok pressed')}
-                ]
-            );      
-        }
-
-
+        this.setState({saving: true});
+        
+        //wait for props to get updated
+        setTimeout(() => {                            
+            navigate('DisplayCase', {incidentId: this.state.incidentId, incidentNumber: this.state.incidentNumber}) 
+        },5000);
+        
     }
     
     render(){
@@ -214,6 +152,8 @@ class AddItem extends Component {
                         placeholder='Enter Item Type'
                         onChangeText={input => this.setState({itemType: input})}
                         value={this.state.itemType}
+                        errorMessage={this.state.itemTypeErrorMessage}
+
                     />
 
                     <Input 
@@ -221,6 +161,7 @@ class AddItem extends Component {
                         placeholder='Enter Location Found'
                         onChangeText={input => this.setState({itemLocation: input})}
                         value={this.state.itemLocation}
+                        errorMessage={this.state.itemLocationErrorMessage}
                     />    
 
                     <TextInput 
@@ -231,10 +172,12 @@ class AddItem extends Component {
                         placeholderTextColor='#86939e'
                         multiline
                         numberOfLines={4}
+                        autoCorrect={false}
                     >
 
                     </TextInput>
-                    
+            
+                    <Text style={styles.errorMessage}>{this.state.itemDescriptionAndDateErrorMessage}</Text>
 
                     <Text style={{textAlign: 'center', fontSize: 18}}>{this.state.itemDateAndTime}</Text>
 
@@ -282,6 +225,11 @@ const styles = StyleSheet.create({
         color: 'black',
         fontSize: 14,
         fontWeight: 'bold'
+    },
+    errorMessage: {
+        fontSize: 12,
+        color: 'red',
+        marginVertical: 10
     }
 })
 

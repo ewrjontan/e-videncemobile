@@ -110,3 +110,49 @@ export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncide
         alert('Your incident could not be modified\nError: ' + error.message);
     });
 };
+
+export const postItem = (incidentId, itemType, itemLocation, itemDescription, itemDate) => dispatch => {
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx made it to action creater');
+    /*const newItem = {
+        incidentId,
+        itemType,
+        itemLocation,
+        itemDescription, 
+        itemDate
+    };*/
+
+    return fetch(baseUrl + 'incidents/' + incidentId, {
+        method: "PUT",
+        body: JSON.stringify({
+            items: {
+                itemType,
+                itemLocation,
+                itemDescription,
+                itemDate
+            }
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(response => {
+            if (response.ok){
+                //console.log("response successful");
+                //console.log(response);
+                return response;
+            }else{
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => { throw error; }
+    )
+    .then(response =>  response.json())
+    .then(response => dispatch(fetchIncidents()))
+    .catch(error => {
+        //console.log('post incident', error.message);
+        alert('Your item could not be added\nError: ' + error.message);
+    });
+};
+
