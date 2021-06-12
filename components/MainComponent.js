@@ -22,10 +22,12 @@ import SafeAreaView from 'react-native-safe-area-view';
 
 //react-redux
 import { connect } from 'react-redux';
-import { fetchIncidents } from '../redux/ActionCreators';
+import { fetchIncidents, fetchItems } from '../redux/ActionCreators';
 
 const mapDispatchToProps = {
-    fetchIncidents
+    fetchItems,
+    fetchIncidents,
+    
 };
 
 
@@ -283,6 +285,8 @@ class Main extends Component {
 
     componentDidMount() {
         this.props.fetchIncidents();
+        this.props.fetchItems();
+
     }
 
     render(){

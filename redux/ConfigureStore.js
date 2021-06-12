@@ -2,6 +2,8 @@ import {createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { incidents } from './incidents';
+import { items } from './items';
+
 
 // add persistance support for reducers
 //import { persistStore, persistCombineReducers } from 'redux-persist';
@@ -19,7 +21,8 @@ export const ConfigureStore = () => {
     const store = createStore(
         combineReducers({
         //persistCombineReducers(config, {
-            incidents
+            incidents,
+            items
         }),
         applyMiddleware(thunk, logger)
     );

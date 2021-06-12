@@ -111,6 +111,42 @@ export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncide
     });
 };
 
+
+// xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Items xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+export const fetchItems = () => dispatch => {
+    return fetch(baseUrl + 'items')
+        .then(response => {
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message);
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(items => dispatch(addItems(items)))
+        .catch(error => dispatch(itemsFailed(error.message)));
+};
+
+export const addItems = items => ({
+    type: ActionTypes.ADD_ITEMS,
+    payload: items
+});
+
+export const itemsFailed = errMess => ({
+    type: ActionTypes.ITEMS_FAILED,
+    payload: errMess
+});
+
+
+
+
 export const postItem = (incidentId, itemType, itemLocation, itemDescription, itemDate) => dispatch => {
     console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx made it to action creater');
     /*const newItem = {

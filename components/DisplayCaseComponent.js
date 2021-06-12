@@ -18,7 +18,8 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        incidents: state.incidents
+        incidents: state.incidents,
+        items: state.items
     };
 };
 
@@ -26,17 +27,19 @@ class DisplayCase extends Component{
     constructor(props){
         super(props);
         this.state = {
-            //incidentNumber : this.props.navigation.getParam('incidentNumber')
+            incidentNumber: ''
         };
     }
 
     componentDidMount(){
 
+        console.log('displayCase Component running');
         console.log('xxxxxxxxxxxxxx params: ');
         console.log(this.props.navigation.state.params);
 
         //for static navigation options, won't work unless passed as property due to loading slowly?
         const incidentNumber = this.props.navigation.getParam('incidentNumber');
+        this.setState({incidentNumber: incidentNumber });
         this.props.navigation.setParams(incidentNumber);
     }
 
@@ -70,17 +73,38 @@ class DisplayCase extends Component{
         console.log('params: ');
         console.log(this.props.navigation.state.params);
 
-        //console.log('incident id: ' + incidentId);
-        //console.log(this.props.navigation.state.params);
-        //console.log("this is the active incident object");
-        //console.log(incident);
         
 
-        const IncidentHasItems = () => {
+        //used for items in incidents json object
+        /*const IncidentHasItems = () => {
             if (incident.items.length !== 0){
                 return(
                     <FlatList
                         data={incident.items}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id.toString()}
+                    />
+                )
+            }else{
+                return(
+                    <Text style={styles.noItems}>No items are currently submitted under this incident.</Text>
+                )
+            }
+        }*/
+
+        //user for items in items json object
+        const IncidentHasItems = () => {
+            console.log("display case test");
+            console.log(this.props.items);
+            let incidentItems = this.props.items.items.filter(item => item.incidentNumber === this.state.incidentNumber);
+
+            console.log("items in DB with matchin incident number");
+            console.log(incidentItems);
+
+            if (incidentItems.length !== 0){
+                return(
+                    <FlatList
+                        data={incidentItems}
                         renderItem={renderItem}
                         keyExtractor={item => item.id.toString()}
                     />
