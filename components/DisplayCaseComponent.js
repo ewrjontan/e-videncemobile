@@ -10,9 +10,14 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 
 import EditCase from './EditCaseComponent';
 import AddItem from './AddItemComponent';
+import Loading from './LoadingComponent';
 
 
+import { fetchItems } from '../redux/ActionCreators';
 
+const mapDispatchToProps = {
+    fetchItems,    
+};
 
 import { connect } from 'react-redux';
 
@@ -32,6 +37,8 @@ class DisplayCase extends Component{
     }
 
     componentDidMount(){
+
+        this.props.fetchItems();
 
         console.log('displayCase Component running');
         console.log('xxxxxxxxxxxxxx params: ');
@@ -98,9 +105,21 @@ class DisplayCase extends Component{
             console.log(this.props.items);
             let incidentItems = this.props.items.items.filter(item => item.incidentNumber === this.state.incidentNumber);
 
-            console.log("items in DB with matchin incident number");
+            console.log("items in DB with matching incident number");
             console.log(incidentItems);
 
+            if (this.props.items.isLoading) {
+                return <Loading />;
+            }
+    
+            if (this.props.items.errMess) {
+                return (
+                    <View style={styles.errMess}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>{this.props.items.errMess}</Text>
+                    </View>
+                );
+            }
+    
             if (incidentItems.length !== 0){
                 return(
                     <FlatList
@@ -185,10 +204,15 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         paddingVertical: 30
+    },
+    errMess: {
+        justifyContent: 'center',
+        marginTop: 200,
+        alignItems: 'center'
     }
 });
 
 
-export default connect(mapStateToProps)(DisplayCase);
+export default connect(mapStateToProps, mapDispatchToProps)(DisplayCase);
 
 

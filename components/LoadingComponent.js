@@ -15,7 +15,8 @@ const styles = StyleSheet.create(
         loadingView: {
             alignItems: 'center',
             justifyContent: 'center',
-            flex: 1
+            flex: 1,
+            marginTop: -100
         },
         loadingText: {
             color: 'black',

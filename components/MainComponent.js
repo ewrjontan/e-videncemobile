@@ -25,7 +25,7 @@ import { connect } from 'react-redux';
 import { fetchIncidents, fetchItems } from '../redux/ActionCreators';
 
 const mapDispatchToProps = {
-    fetchItems,
+    //fetchItems,
     fetchIncidents,
     
 };
@@ -285,7 +285,7 @@ class Main extends Component {
 
     componentDidMount() {
         this.props.fetchIncidents();
-        this.props.fetchItems();
+        //this.props.fetchItems();
 
     }
 
