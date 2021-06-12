@@ -11,12 +11,13 @@ export const items = (state = { isLoading: true, errMess: null, items: []}, acti
         case ActionTypes.ITEMS_FAILED:
             return {...state, isLoading: false, errMess: action.payload};
         
-        /*case ActionTypes.ADD_ITEM:
+        case ActionTypes.CREATE_ITEM:
+
             const newItem = action.payload;
-            newItem.id = state.items.length;
+            //newItem.id = state.items.length;
 
             return {...state, items: state.items.concat(newItem)};
-        */
+        
         default:
             return state;
     }

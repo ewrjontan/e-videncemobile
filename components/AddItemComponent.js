@@ -8,12 +8,13 @@ import { postItem } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
-        incidents: state.incidents
+        incidents: state.incidents,
+        items: state.items
     };
 };
 
 const mapDispatchToProps = {
-    postItem: (incidentId, itemType, itemLocation, itemDescription, itemDate) => (postItem(incidentId, itemType, itemLocation, itemDescription, itemDate))
+    postItem: (incidentNumber, type, locationFound, description, date, itemNumber) => (postItem(incidentNumber, type, locationFound, description, date, itemNumber))
 
 };
 
@@ -88,9 +89,15 @@ class AddItem extends Component {
         let itemDate = this.state.itemDateAndTime;
         let itemDescription = this.state.itemDescription;
 
+        let incidentItems = this.props.items.items.filter(item => item.incidentNumber === this.state.incidentNumber);
+        let itemNumber = incidentItems.length + 1;
+
+        console.log('item Number: ' + itemNumber);
+
+
         console.log('current values');
 
-        console.log(itemType, itemLocation, itemDate, itemDescription);
+        console.log(itemType, itemLocation, itemDate, itemDescription, itemNumber);
         
 
         //reset state of error message
@@ -130,7 +137,7 @@ class AddItem extends Component {
 
         const { navigate } = this.props.navigation;
 
-        this.props.postItem(this.state.incidentId, itemType, itemLocation, itemDescription, itemDate);
+        this.props.postItem(this.state.incidentNumber, itemType, itemLocation, itemDescription, itemDate, itemNumber);
 
         this.setState({saving: true});
         
