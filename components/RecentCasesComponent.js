@@ -44,7 +44,7 @@ class RecentCases extends Component {
                 //<Text>{item.incidentNumber}</Text>
                 <View style={styles.button}>
                     <Button title={item.incidentNumber}
-                    onPress={() => navigate('DisplayCase', {incidentId: item.id, incidentNumber: item.incidentNumber})}
+                    onPress={() => navigate('DisplayCase', {incidentId: item._id, incidentNumber: item.incidentNumber})}
                     //onPress={() => navigate('TabNavigation', {incidentId: item.id, incidentNumber: item.incidentNumber})}
                     />
                 </View>
@@ -70,7 +70,9 @@ class RecentCases extends Component {
                 <FlatList
                     data={this.props.incidents.incidents.slice(0,10)}
                     renderItem={renderIncidents}
-                    keyExtractor={item => item.id.toString()}
+                    //keyExtractor={item => item.id.toString()} for json server
+                    keyExtractor={item => item._id.toString()} //for mongodb server
+
                 />
                 
 
