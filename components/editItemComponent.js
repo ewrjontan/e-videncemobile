@@ -28,7 +28,7 @@ function Saving(){
 }
 
 
-class AddItem extends Component {
+class EditItem extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -50,11 +50,12 @@ class AddItem extends Component {
     }
 
     componentDidMount(){
-        console.log('xxxxx edit case component xxxxxxxxxxx');
+        console.log('xxxxx edit item component xxxxxxxxxxx');
+        this.setCurrentValues();
     }
 
     static navigationOptions = {
-        title: 'Add Item',
+        title: 'Edit Item',
         headerStyle: {
             backgroundColor: '#FFD600',
         },
@@ -65,7 +66,6 @@ class AddItem extends Component {
     };
 
     setCurrentValues(){
-        /*
         const passedIncidentId = this.props.navigation.getParam('incidentId');
         const incident = this.props.incidents.incidents.filter(incident => incident.id === passedIncidentId)[0];
 
@@ -80,7 +80,6 @@ class AddItem extends Component {
             currentIncidentId: incident.id,
             currentItems: incident.items
         });
-*/
     }
 
     showDatePicker = () => {
@@ -285,4 +284,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddItem);
+export default connect(mapStateToProps, mapDispatchToProps)(EditItem);

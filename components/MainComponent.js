@@ -10,7 +10,7 @@ import DisplayCase from './DisplayCaseComponent';
 import TabNavigation from './TabNavigationComponent';
 import EditCase from './EditCaseComponent';
 import AddItem from './AddItemComponent';
-
+import EditItem from './EditItemComponent';
 
 
 import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
@@ -67,7 +67,10 @@ const CreateCaseNavigator = createStackNavigator(
                 />
             })
         },
-        DisplayCase: { screen: DisplayCase }
+        DisplayCase: { screen: DisplayCase },
+        EditCase: { screen: EditCase },
+        AddItem: { screen: AddItem },
+        EditItem: { screen: EditItem }
     },
     {
         initialRouteName: 'CreateCase',
@@ -99,6 +102,7 @@ const RecentCasesNavigator = createStackNavigator(
         DisplayCase: { screen: DisplayCase },
         EditCase: { screen: EditCase },
         AddItem: { screen: AddItem },
+        EditItem: { screen: EditItem }
     },
     {
         initialRouteName: 'RecentCases',
@@ -153,7 +157,8 @@ const ViewCaseNavigator = createStackNavigator(
         },
         DisplayCase: { screen: DisplayCase },
         EditCase: { screen: EditCase },
-        AddItem: { screen: AddItem }
+        AddItem: { screen: AddItem },
+        EditItem: { screen: EditItem }
     },
     {
         initialRouteName: 'ViewCase',

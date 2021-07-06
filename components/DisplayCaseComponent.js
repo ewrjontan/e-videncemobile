@@ -12,6 +12,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import EditCase from './EditCaseComponent';
 import AddItem from './AddItemComponent';
+import EditItem from './EditItemComponent';
 import Loading from './LoadingComponent';
 
 
@@ -146,24 +147,9 @@ class DisplayCase extends Component{
                     <View style={styles.editView}>
                         <TouchableOpacity
                             style={styles.editTouchable}
-                            onPress={() => 
-                                Alert.alert(
-                                    'Edit Item?',
-                                    'Are you sure you wish to edit this item',
-                                    [
-                                        {
-                                            text: 'Cancel',
-                                            onPress: () => console.log('item Not edited'),
-                                            style: 'cancel'
-                                        },
-                                        {
-                                            text: 'Ok',
-                                            onPress: () => console.log('go to edit screen')
-                                        }
-                                    ],
-                                    { cancelable: false }
-                                )
-                            }
+                            onPress={() => navigate('EditItem', {
+                                incidentId: incident.id, incidentNumber: this.props.navigation.getParam('incidentNumber')
+                            })}
                         >
                             <Text style={styles.editText}>Edit</Text>
                         </TouchableOpacity>

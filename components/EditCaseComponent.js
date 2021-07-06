@@ -80,9 +80,6 @@ class EditCase extends Component {
             currentIncidentId: incident.id,
             currentItems: incident.items
         });
-
-        
-
     }
 
     showDatePicker = () => {
