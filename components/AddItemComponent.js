@@ -147,6 +147,11 @@ class AddItem extends Component {
         },5000);
         
     }
+
+    handleSaveAndAddItem = () => {
+        console.log('Will allow you to save item, and continue entering more items.');
+
+    }
     
     render(){
         

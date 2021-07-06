@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 
 import INCIDENTDATABASE from '../shared/incidentDatabase';
 
-import { SafeAreaView, View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, FlatList, ScrollView, StyleSheet, Alert } from 'react-native';
 import { ListItem, Avatar, Button } from 'react-native-elements';
 import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { SwipeRow } from 'react-native-swipe-list-view';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 import EditCase from './EditCaseComponent';
@@ -68,7 +70,8 @@ class DisplayCase extends Component{
 
         //get incident from props 
         const incidentId = this.props.navigation.getParam('incidentId');
-        const incident = this.props.incidents.incidents.filter(incident => incident._id === incidentId)[0];
+        //const incident = this.props.incidents.incidents.filter(incident => incident._id === incidentId)[0];
+        const incident = this.props.incidents.incidents.filter(incident => incident.id === incidentId)[0];
 
         console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       display case works: ');
         console.log('incident ID');
@@ -138,18 +141,46 @@ class DisplayCase extends Component{
         const renderItem = ({item}) => {
             console.log(item.id);
             return(
-                
-                <ListItem bottomDivider style={{marginBottom: 10}}>
-                    <ListItem.Content>
-                        <ListItem.Title>Item: {item.itemNumber} </ListItem.Title>
-                        <ListItem.Title>Description: {item.description}</ListItem.Title>
-                        <ListItem.Subtitle>Type: {item.type}</ListItem.Subtitle>
-                        <ListItem.Subtitle>Location Found: {item.locationFound}</ListItem.Subtitle>
-                        <ListItem.Subtitle>Collected: {item.date}</ListItem.Subtitle>
 
-                    </ListItem.Content>
+                <SwipeRow rightOpenValue={-100}>
+                    <View style={styles.editView}>
+                        <TouchableOpacity
+                            style={styles.editTouchable}
+                            onPress={() => 
+                                Alert.alert(
+                                    'Edit Item?',
+                                    'Are you sure you wish to edit this item',
+                                    [
+                                        {
+                                            text: 'Cancel',
+                                            onPress: () => console.log('item Not edited'),
+                                            style: 'cancel'
+                                        },
+                                        {
+                                            text: 'Ok',
+                                            onPress: () => console.log('go to edit screen')
+                                        }
+                                    ],
+                                    { cancelable: false }
+                                )
+                            }
+                        >
+                            <Text style={styles.editText}>Edit</Text>
+                        </TouchableOpacity>
+                    </View>
                 
-                </ListItem>
+                    <ListItem bottomDivider style={{marginBottom: 0}}>
+                        <ListItem.Content>
+                            <ListItem.Title>Item: {item.itemNumber} </ListItem.Title>
+                            <ListItem.Title>Description: {item.description}</ListItem.Title>
+                            <ListItem.Subtitle>Type: {item.type}</ListItem.Subtitle>
+                            <ListItem.Subtitle>Location Found: {item.locationFound}</ListItem.Subtitle>
+                            <ListItem.Subtitle>Collected: {item.date}</ListItem.Subtitle>
+
+                        </ListItem.Content>
+                    
+                    </ListItem>
+                </SwipeRow>
                     
             );
         };
@@ -209,6 +240,24 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 200,
         alignItems: 'center'
+    },
+    editView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        flex: 1
+    },
+    editTouchable: {
+        backgroundColor: '#007bff',
+        height: '100%',
+        justifyContent: 'center'
+    },
+    editText: {
+        color: 'white',
+        fontWeight: '700',
+        textAlign: 'center',
+        fontSize: 16,
+        width: 100
     }
 });
 
