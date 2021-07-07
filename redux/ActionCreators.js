@@ -37,8 +37,8 @@ export const postIncident = (incidentNumber, incidentLocation, nature, date) => 
         incidentNumber,
         incidentLocation,
         nature,
-        date, 
-        items: []
+        date/*, 
+        items: [] dont need*/
     };
 
     return fetch(baseUrl + 'incidents', {

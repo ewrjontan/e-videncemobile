@@ -70,12 +70,14 @@ class ViewCase extends Component{
 
         if (incidentArray.length === 1){
             console.log('case exists!');
-            let incidentId = incidentArray[0].id;
+            //let incidentId = incidentArray[0].id;//for json server
+            let incidentId = incidentArray[0]._id;//for mongodb server
             console.log(incidentId);
 
             //reset input values
             this.setState({inputIncidentNumber: "",inputErrorMessage: ""})
             navigate('DisplayCase', {incidentId: incidentId, incidentNumber: inputIncidentNumber})
+
         }else{
             return this.setState({inputErrorMessage: 'Incident not found; create a new case or re-enter number'});
         }

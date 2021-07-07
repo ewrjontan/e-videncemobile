@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 
-import INCIDENTDATABASE from '../shared/incidentDatabase';
+//import INCIDENTDATABASE from '../shared/incidentDatabase';
 
 import { SafeAreaView, View, Text, FlatList, ScrollView, StyleSheet, Alert } from 'react-native';
 import { ListItem, Avatar, Button } from 'react-native-elements';
-import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';
+/*import { createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';*/
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-import EditCase from './EditCaseComponent';
-import AddItem from './AddItemComponent';
-import EditItem from './EditItemComponent';
+//import EditCase from './EditCaseComponent';
+//import AddItem from './AddItemComponent';
+//import EditItem from './EditItemComponent';
 import Loading from './LoadingComponent';
 
 
 import { fetchItems } from '../redux/ActionCreators';
 
 const mapDispatchToProps = {
-    fetchItems,    
+    //fetchItems,    
 };
 
 import { connect } from 'react-redux';
@@ -35,13 +35,15 @@ class DisplayCase extends Component{
     constructor(props){
         super(props);
         this.state = {
+            incident: '',
             incidentNumber: ''
         };
     }
 
     componentDidMount(){
 
-        this.props.fetchItems();
+        //for separate item db
+        //this.props.fetchItems();
 
         console.log('displayCase Component running');
         console.log('xxxxxxxxxxxxxx params: ');
@@ -50,7 +52,9 @@ class DisplayCase extends Component{
         //for static navigation options, won't work unless passed as property due to loading slowly?
         const incidentNumber = this.props.navigation.getParam('incidentNumber');
         this.setState({incidentNumber: incidentNumber });
-        this.props.navigation.setParams(incidentNumber);
+        //this.props.navigation.setParams(incidentNumber);
+        console.log('incidentnumber' + this.state.incidentNumber);
+
     }
 
     static navigationOptions = ({navigation}) => {
@@ -70,30 +74,51 @@ class DisplayCase extends Component{
         const { navigate } = this.props.navigation;
 
         //get incident from props 
-        const incidentId = this.props.navigation.getParam('incidentId');
+
+        //added to remove use of id
+        
+
+        
+
+        //removed for not using id's
+        //const incidentId = this.props.navigation.getParam('incidentId');
+        
+        const incidentNumber = this.props.navigation.getParam('incidentNumber');
+
+        
+        //for mongodb server
         //const incident = this.props.incidents.incidents.filter(incident => incident._id === incidentId)[0];
-        const incident = this.props.incidents.incidents.filter(incident => incident.id === incidentId)[0];
+        
+        const incident = this.props.incidents.incidents.filter(incident => incident.incidentNumber === incidentNumber)[0];
 
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       display case works: ');
-        console.log('incident ID');
-        console.log(incidentId);
 
-        console.log('incident filtered');
-        console.log(incident);
 
-        console.log('params: ');
-        console.log(this.props.navigation.state.params);
+        //for json server
+        //const incident = this.props.incidents.incidents.filter(incident => incident.id === incidentId)[0];
+
+        //console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       display case works: ');
+        //console.log('incident ID');
+        //console.log(incidentId);
+
+        //console.log('incident filtered');
+        //console.log(incident);
+
+        //console.log('params: ');
+        //console.log(this.props.navigation.state.params);
 
         
 
         //used for items in incidents json object
-        /*const IncidentHasItems = () => {
+        const IncidentHasItems = () => {
+            console.log('xxx Itemsxxxx');
+            console.log(incident);
             if (incident.items.length !== 0){
                 return(
                     <FlatList
                         data={incident.items}
                         renderItem={renderItem}
-                        keyExtractor={item => item.id.toString()}
+                        //keyExtractor={item => item.id.toString()}//for json server
+                        keyExtractor={item => item._id.toString()}//for mongodb server
                     />
                 )
             }else{
@@ -101,10 +126,10 @@ class DisplayCase extends Component{
                     <Text style={styles.noItems}>No items are currently submitted under this incident.</Text>
                 )
             }
-        }*/
+        }
 
         //user for items in items json object
-        const IncidentHasItems = () => {
+        /*const IncidentHasItems = () => {
             console.log("display case test");
             console.log(this.props.items);
             let incidentItems = this.props.items.items.filter(item => item.incidentNumber === this.state.incidentNumber);
@@ -137,7 +162,7 @@ class DisplayCase extends Component{
                     <Text style={styles.noItems}>No items are currently submitted under this incident.</Text>
                 )
             }
-        }
+        }*/
 
         const renderItem = ({item}) => {
             console.log(item.id);
@@ -197,8 +222,9 @@ class DisplayCase extends Component{
                 </View>
                     
                 <IncidentHasItems/>
-                    
+
             </SafeAreaView>
+
         )
     }
 }
