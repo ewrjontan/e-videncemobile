@@ -3,7 +3,15 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
+import { login } from '../redux/ActionCreators';
+import { connect } from 'react-redux';
 
+
+
+const mapDispatchToProps = {
+    login: (username, password) => (login(username, password))
+    //login
+};
 
 class Home extends Component {
     constructor(props){
@@ -103,7 +111,8 @@ class Home extends Component {
                                 <Button
                                     onPress={() => {
                                         this.toggleModalLogin();
-                                        console.log(this.state.usernameLogin, this.state.passwordLogin);
+                                        console.log(`input ${this.state.usernameLogin} and ${this.state.passwordLogin} in login fields`);
+                                        this.props.login(this.state.usernameLogin, this.state.passwordLogin);
                                     }}
                                     title='Login'
                                 />
@@ -240,4 +249,5 @@ const styles = StyleSheet.create({
     }
   });
 
-export default Home;
+//export default Home;
+export default connect(null, mapDispatchToProps)(Home);

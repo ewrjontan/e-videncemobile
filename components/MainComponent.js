@@ -289,8 +289,8 @@ const AppNavigator = createAppContainer(MainNavigator);
 class Main extends Component {
 
     componentDidMount() {
+        //for testing without login, loads on main page
         this.props.fetchIncidents();
-        //this.props.fetchItems();
 
     }
 

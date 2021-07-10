@@ -1,6 +1,70 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 
+//For login
+
+//return fetch(baseUrl + 'users/login';
+
+export const login = (username, password) => {
+    console.log('action creator login input');
+    console.log(`username: ${username}`);
+    console.log(`password: ${password}`);
+
+
+    return (dispatch) => {  // don't forget to use dispatch here!
+
+    return fetch(baseUrl + 'users/login', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(username, password),
+      })
+      .then(response => {
+        if (response.ok) {
+            return response;
+        } else {
+            const error = new Error(`Error ${response.status}: ${response.statusText}`);
+            error.response = response;
+            throw error;
+        }
+    },
+    error => {
+        const errMess = new Error(error.message);
+        throw errMess;
+    })
+    .then(response => response.json())
+    .then(json => dispatch(setLoginState({ ...json, token: token })))
+    .catch(error => dispatch(incidentsFailed(error.message)));
+
+
+
+
+        /*.then((response) => response.json())
+        .then((json) => {
+          if (json.msg === 'success') { // response success checking logic could differ
+            dispatch(setLoginState({ ...json, token: token })); // our action is called here
+          } else {
+            console.log('Login Failed', 'Username or Password is incorrect');
+          }
+        })
+        .catch((err) => {
+            console.log('Login Failed', 'Some error occured, please retry');
+          console.log(err);
+        });*/
+    };
+};
+
+const setLoginState = (loginData) => {
+    return {
+        type: ActionTypes.SET_LOGIN_STATE,
+        payload: loginData,
+    };
+};
+
+//For incidents
+
 export const fetchIncidents = () => dispatch => {
     return fetch(baseUrl + 'incidents')
         .then(response => {

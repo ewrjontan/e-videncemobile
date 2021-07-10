@@ -10,11 +10,15 @@ import Loading from './LoadingComponent';
 
 import { INCIDENTDATABASE } from '../shared/incidentDatabase';
 
+import { fetchIncidents } from '../redux/ActionCreators';
+
+
 const mapStateToProps = state => {
     return {
         incidents: state.incidents
     };
 }
+
 
 
 class RecentCases extends Component {
