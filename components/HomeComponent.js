@@ -113,6 +113,9 @@ class Home extends Component {
                                         this.toggleModalLogin();
                                         console.log(`input ${this.state.usernameLogin} and ${this.state.passwordLogin} in login fields`);
                                         this.props.login(this.state.usernameLogin, this.state.passwordLogin);
+                                        
+                                        //navigates to main app stack
+                                        this.props.navigation.navigate('App');
                                     }}
                                     title='Login'
                                 />

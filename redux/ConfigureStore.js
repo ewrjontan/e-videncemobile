@@ -4,6 +4,8 @@ import logger from 'redux-logger';
 import { incidents } from './incidents';
 import { items } from './items';
 import { loginReducer } from './loginReducer';
+//added for authloading
+import { initialState } from './initialState';
 
 
 
@@ -25,7 +27,8 @@ export const ConfigureStore = () => {
         //persistCombineReducers(config, {
             incidents,
             items,
-            loginReducer
+            loginReducer,
+            initialState
         }),
         applyMiddleware(thunk, logger)
     );
