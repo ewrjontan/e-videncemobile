@@ -4,9 +4,9 @@ import logger from 'redux-logger';
 import { incidents } from './incidents';
 import { items } from './items';
 import { loginReducer } from './loginReducer';
+
 //added for authloading
 import { initialState } from './initialState';
-
 
 
 // add persistance support for reducers

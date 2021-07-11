@@ -24,11 +24,18 @@ import SafeAreaView from 'react-native-safe-area-view';
 import { connect } from 'react-redux';
 import { fetchIncidents, fetchItems } from '../redux/ActionCreators';
 
+const mapStateToProps = state => {
+    return {
+        initialState: state.loginReducer,
+        incidents: state.incidents
+    };
+};
+
 const mapDispatchToProps = {
     //fetchItems,
     fetchIncidents,
-    
 };
+
 
 
 const HomeNavigator = createStackNavigator(
@@ -290,7 +297,9 @@ class Main extends Component {
 
     componentDidMount() {
         //for testing without login, loads on main page
-        this.props.fetchIncidents();
+        console.log('Here is the initialState:');
+        console.log(this.props);
+        //this.props.fetchIncidents();
 
     }
 
@@ -337,5 +346,9 @@ const styles = StyleSheet.create({
     }
 });
 
-export default connect(null, mapDispatchToProps)(Main);
+//export default connect(null, mapDispatchToProps)(Main);
+
+//addded to get initialState for logging in
+export default connect(mapStateToProps, mapDispatchToProps)(Main);
+
 

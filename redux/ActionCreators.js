@@ -1,14 +1,20 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
+import { Alert } from 'react-native';
 
 //For login
 
 //return fetch(baseUrl + 'users/login';
 
-export const login = (username, password) => {
+export const login = (loginInput) => {
     console.log('action creator login input');
-    console.log(`username: ${username}`);
-    console.log(`password: ${password}`);
+    const { username, password } = loginInput;
+
+    console.log(`username: ${loginInput.username}`);
+    console.log(`password: ${loginInput.password}`);
+
+    console.log('sending this to server');
+    console.log(JSON.stringify(loginInput));
 
 
     return (dispatch) => {  // don't forget to use dispatch here!
@@ -19,40 +25,20 @@ export const login = (username, password) => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(username, password),
-      })
-      .then(response => {
-        if (response.ok) {
-            return response;
-        } else {
-            const error = new Error(`Error ${response.status}: ${response.statusText}`);
-            error.response = response;
-            throw error;
-        }
-    },
-    error => {
-        const errMess = new Error(error.message);
-        throw errMess;
-    })
-    .then(response => response.json())
-    .then(json => dispatch(setLoginState({ ...json, token: token })))
-    .catch(error => dispatch(incidentsFailed(error.message)));
-
-
-
-
-        /*.then((response) => response.json())
+        body: JSON.stringify(loginInput),
+        })
+        .then((response) => response.json())
         .then((json) => {
-          if (json.msg === 'success') { // response success checking logic could differ
-            dispatch(setLoginState({ ...json, token: token })); // our action is called here
+          if (json.success === true) { // response success checking logic could differ
+            dispatch(setLoginState({ ...json, token: json.token })); // our action is called here
           } else {
-            console.log('Login Failed', 'Username or Password is incorrect');
+            Alert.alert('Login Failed', 'Username or Password is incorrect');
           }
         })
         .catch((err) => {
-            console.log('Login Failed', 'Some error occured, please retry');
-          console.log(err);
-        });*/
+            Alert.alert('Login Failed', 'Some error occured, please retry');
+            console.log(err);
+        });
     };
 };
 

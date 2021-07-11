@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 
 const mapDispatchToProps = {
-    login: (username, password) => (login(username, password))
+    login: (input) => (login(input))
     //login
 };
 
@@ -112,10 +112,13 @@ class Home extends Component {
                                     onPress={() => {
                                         this.toggleModalLogin();
                                         console.log(`input ${this.state.usernameLogin} and ${this.state.passwordLogin} in login fields`);
-                                        this.props.login(this.state.usernameLogin, this.state.passwordLogin);
+                                        this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
                                         
                                         //navigates to main app stack
-                                        this.props.navigation.navigate('App');
+                                        setTimeout (() => {
+                                            this.props.navigation.navigate('App');
+                                        }, 5000);
+                                        //this.props.navigation.navigate('App');
                                     }}
                                     title='Login'
                                 />
