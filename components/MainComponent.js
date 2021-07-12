@@ -297,7 +297,7 @@ class Main extends Component {
 
     componentDidMount() {
         //for testing without login, loads on main page
-        console.log('Here is the initialState:');
+        console.log('Here is the initial Props:');
         console.log(this.props);
         //this.props.fetchIncidents();
 

@@ -1,6 +1,8 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 import { Alert } from 'react-native';
+import { AsyncStorage } from '@react-native-community/async-storage';
+
 
 //For login
 
@@ -31,6 +33,7 @@ export const login = (loginInput) => {
         .then((json) => {
           if (json.success === true) { // response success checking logic could differ
             dispatch(setLoginState({ ...json, token: json.token })); // our action is called here
+            return 'Hello this is from action creaters';
           } else {
             Alert.alert('Login Failed', 'Username or Password is incorrect');
           }

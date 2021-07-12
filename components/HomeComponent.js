@@ -5,6 +5,7 @@ import { Card, Button, Input } from 'react-native-elements';
 
 import { login } from '../redux/ActionCreators';
 import { connect } from 'react-redux';
+import { loginReducer } from '../redux/loginReducer';
 
 
 
@@ -12,6 +13,14 @@ const mapDispatchToProps = {
     login: (input) => (login(input))
     //login
 };
+
+const mapStateToProps = state => {
+    return {
+        loginReducer: state.loginReducer,
+        incidents: state.incidents
+    };
+};
+
 
 class Home extends Component {
     constructor(props){
@@ -62,7 +71,13 @@ class Home extends Component {
         });
     }
 
+    componentDidMount() {
+        
+    }
+
+
     render(){
+
         return (
             <View style={styles.mainContainer}>
                 <ImageBackground source={require('./images/homecrimescene.jpg')} style={styles.image}>
@@ -112,11 +127,20 @@ class Home extends Component {
                                     onPress={() => {
                                         this.toggleModalLogin();
                                         console.log(`input ${this.state.usernameLogin} and ${this.state.passwordLogin} in login fields`);
-                                        this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
                                         
+                                        //this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
+                                        
+                                        
+                                        this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
+
+
+
+
                                         //navigates to main app stack
                                         setTimeout (() => {
-                                            this.props.navigation.navigate('App');
+                                            //this.props.navigation.navigate('App');
+                                            this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
+
                                         }, 5000);
                                         //this.props.navigation.navigate('App');
                                     }}
@@ -256,4 +280,5 @@ const styles = StyleSheet.create({
   });
 
 //export default Home;
-export default connect(null, mapDispatchToProps)(Home);
+//export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

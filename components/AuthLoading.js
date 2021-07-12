@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { setLoginState } from '../redux/ActionCreators';
+import { AsyncStorage } from '@react-native-community/async-storage';
+
 
 const mapDispatchToProps = {
     setLoginState    
@@ -9,24 +11,30 @@ const mapDispatchToProps = {
 
 const mapStateToProps = state => {
     return {
-        initialState: state.initialState
+        initialState: state.initialState,
+        loginReducer: state.loginReducer
     };
 }
 
 class AuthLoadingScreen extends React.Component {
 
     componentDidMount() {
-        this.props.setLoginState;
+        /*this.props.setLoginState;
         console.log('initialState:');
-        console.log(initialState);
+        console.log(initialState);*/
+        
+        //this._bootstrapAsync();
     }
     
     _bootstrapAsync = async () => {
-        //const userToken = await AsyncStorage.getItem('userToken');
+        //const userToken = await AsyncStorage.GetItem('userToken');
     
+        console.log('usertoken is true!');
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
-        this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+        //this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+
+
     };
 
     

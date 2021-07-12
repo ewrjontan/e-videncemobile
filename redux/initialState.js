@@ -1,5 +1,5 @@
 
 export const initialState = {
     isLoggedIn: false,
-    token: ''
+    token: null
 };
