@@ -7,6 +7,7 @@ import { login } from '../redux/ActionCreators';
 import { connect } from 'react-redux';
 import { loginReducer } from '../redux/loginReducer';
 
+//import AsyncStorage from '@react-native-community/async-storage';
 
 
 const mapDispatchToProps = {
@@ -72,7 +73,7 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        
+        //this._bootstrapAsync();    
     }
 
 
@@ -128,9 +129,7 @@ class Home extends Component {
                                         this.toggleModalLogin();
                                         console.log(`input ${this.state.usernameLogin} and ${this.state.passwordLogin} in login fields`);
                                         
-                                        //this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
-                                        
-                                        
+                                        //this works, uncomment
                                         this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
 
 
@@ -139,10 +138,14 @@ class Home extends Component {
                                         //navigates to main app stack
                                         setTimeout (() => {
                                             //this.props.navigation.navigate('App');
+                                            
+                                            //this works, uncomment
+                                            console.log('xxx my token');
+                                            console.log(this.props.loginReducer.token);
                                             this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
 
-                                        }, 5000);
-                                        //this.props.navigation.navigate('App');
+                                        }, 2000);
+                                        //this.props.navigation.navigate('App');*/
                                     }}
                                     title='Login'
                                 />

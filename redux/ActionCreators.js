@@ -1,7 +1,8 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 import { Alert } from 'react-native';
-import { AsyncStorage } from '@react-native-community/async-storage';
+//import AsyncStorage from @react-native-community/async-storage;
+
 
 
 //For login
@@ -33,7 +34,20 @@ export const login = (loginInput) => {
         .then((json) => {
           if (json.success === true) { // response success checking logic could differ
             dispatch(setLoginState({ ...json, token: json.token })); // our action is called here
-            return 'Hello this is from action creaters';
+            
+            //added for asyncstorage
+            /*const storeData = async (value) => {
+                try {
+                    console.log('storing token actioncreator');
+                    console.log(value.token);
+                    AsyncStorage.setItem('userToken', value.token)
+                } catch (e) {
+                  // saving error
+                }
+            };
+
+            storeData(json);*/
+
           } else {
             Alert.alert('Login Failed', 'Username or Password is incorrect');
           }
@@ -54,8 +68,15 @@ const setLoginState = (loginData) => {
 
 //For incidents
 
-export const fetchIncidents = () => dispatch => {
-    return fetch(baseUrl + 'incidents')
+export const fetchIncidents = (userData) => dispatch => {
+    console.log('token at incident action creater');
+    console.log(userData.userToken);
+    return fetch(baseUrl + 'incidents', {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + userData.userToken
+        }
+    })
         .then(response => {
                 if (response.ok) {
                     return response;

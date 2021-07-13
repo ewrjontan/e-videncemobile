@@ -1,20 +1,21 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, ActivityIndicator, StatusBar } from 'react-native';
 import { connect } from 'react-redux';
 import { setLoginState } from '../redux/ActionCreators';
 import { AsyncStorage } from '@react-native-community/async-storage';
+//import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 
-const mapDispatchToProps = {
+/*const mapDispatchToProps = {
     setLoginState    
-};
+};*/
 
-const mapStateToProps = state => {
+/*const mapStateToProps = state => {
     return {
         initialState: state.initialState,
         loginReducer: state.loginReducer
     };
-}
+}*/
 
 class AuthLoadingScreen extends React.Component {
 
@@ -23,16 +24,17 @@ class AuthLoadingScreen extends React.Component {
         console.log('initialState:');
         console.log(initialState);*/
         
-        //this._bootstrapAsync();
+        this._bootstrapAsync();
     }
     
     _bootstrapAsync = async () => {
-        //const userToken = await AsyncStorage.GetItem('userToken');
+        const userToken = await AsyncStorage.getItem('userToken');
     
-        console.log('usertoken is true!');
+        console.log('usertoken:');
+        console.log(userToken);
         // This will switch to the App screen or Auth screen and this loading
         // screen will be unmounted and thrown away.
-        //this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+        this.props.navigation.navigate(userToken ? 'App' : 'Auth');
 
 
     };
@@ -43,10 +45,14 @@ class AuthLoadingScreen extends React.Component {
   render() {
     return (
       <View>
+        
         <Text>Auth landing page</Text>
+        <ActivityIndicator size="large" color="#0000ff" />
+
       </View>
     );
   }
 }
 
-export default connect(mapStateToProps)(AuthLoadingScreen);
+//export default connect(mapStateToProps)(AuthLoadingScreen);
+export default AuthLoadingScreen;

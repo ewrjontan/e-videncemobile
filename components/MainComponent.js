@@ -27,7 +27,8 @@ import { fetchIncidents, fetchItems } from '../redux/ActionCreators';
 const mapStateToProps = state => {
     return {
         initialState: state.loginReducer,
-        incidents: state.incidents
+        incidents: state.incidents,
+        loginReducer: state.loginReducer
     };
 };
 
@@ -297,9 +298,10 @@ class Main extends Component {
 
     componentDidMount() {
         //for testing without login, loads on main page
-        console.log('Here is the initial Props:');
-        console.log(this.props);
-        //this.props.fetchIncidents();
+        console.log('Here is the token');
+        console.log(this.props.loginReducer.token);
+        this.props.fetchIncidents({'userToken': this.props.loginReducer.token});
+
 
     }
 
