@@ -4,6 +4,8 @@ import logger from 'redux-logger';
 import { incidents } from './incidents';
 import { items } from './items';
 import { loginReducer } from './loginReducer';
+import { user } from './userReducer';
+
 
 //added for authloading
 import { initialState } from './initialState';
@@ -28,7 +30,8 @@ export const ConfigureStore = () => {
             incidents,
             items,
             loginReducer,
-            initialState
+            initialState,
+            user
         }),
         applyMiddleware(thunk, logger)
     );

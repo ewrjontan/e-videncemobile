@@ -132,12 +132,15 @@ export const fetchUser = (userData) => dispatch => {
                 } else {
                     const error = new Error(`Error ${response.status}: ${response.statusText}`);
                     error.response = response;
-                    throw error;
+                    //throw error;
+                    console.log(error);
                 }
             },
             error => {
                 const errMess = new Error(error.message);
-                throw errMess;
+                //throw errMess;
+                console.log(errMess);
+
             })
         .then(response => response.json())
         .then(userInfo => dispatch(addUser(userInfo)))

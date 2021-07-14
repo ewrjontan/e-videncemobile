@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import { ScrollView, Text } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { fetchUser } from '../redux/ActionCreators';
+
+import Loading from './LoadingComponent';
+
 
 
 const mapStateToProps = state => {
     return {
         loginReducer: state.loginReducer,
+        user: state.user
     };
 };
 
@@ -43,24 +47,48 @@ class Account extends Component {
     }
     
     render(){
+
+        const DisplayUserInfo = () => {
+            if (this.props.user.userInfo.length !== 0){
+                console.log('User info is filled');
+            }else{
+                console.log('User info is not filled');
+            }
+
+            if (this.props.user.isLoading) {
+                return <Loading />;
+            }
     
+            if (this.props.user.errMess) {
+                return (
+                    <View style={styles.errMess}>
+                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>{this.props.user.errMess}</Text>
+                    </View>
+                );
+            }
+
+            console.log('Account component props:');
+            
+            let userInfo = this.props.user.userInfo;
+            console.log(userInfo);
+
+            
+            return (
+                <View>
+                    <Text style={{fontSize: 20}}>Username: {userInfo.username}</Text>
+                    <Text style={{fontSize: 20}}>Firstname: {userInfo.firstname}</Text>
+                    <Text style={{fontSize: 20}}>Lastname: {userInfo.lastname}</Text>
+                    <Text style={{fontSize: 20}}>Agency: {userInfo.agency}</Text>
+                    <Text style={{fontSize: 20}}>Email: {userInfo.email}</Text>
+                </View>
+            )
+        };
+
         return (
             <ScrollView>
-                <Card
-                    title="Contact Information"
-                    wrapperStyle={{margin: 20}}
-                >
-                    <Text>1 Nucamp Way</Text>
-                    <Text>Seattle, WA 98001</Text>
-                    <Text style={{marginBottom: 10}}>U.S.A.</Text>
 
-                    <Text>Phone: 1-206-555-1234</Text>
-                    <Text>Email: campsites@nucamp.co</Text>
-
-                    
-
-                </Card>
-
+                <DisplayUserInfo />
+                
             </ScrollView>
         );
     }
