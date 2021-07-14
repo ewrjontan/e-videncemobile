@@ -12,3 +12,7 @@ export const ITEMS_LOADING = 'ITEMS_LOADING';
 export const CREATE_ITEM = 'CREATE_ITEM';
 
 export const SET_LOGIN_STATE = "SET_LOGIN_STATE";
+
+export const ADD_USER = 'ADD_USER';
+export const USER_FAILED = 'USER_FAILED';
+export const USER_LOADING = 'USER_LOADING';

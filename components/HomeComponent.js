@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
-import { login } from '../redux/ActionCreators';
+import { login, register } from '../redux/ActionCreators';
 import { connect } from 'react-redux';
 import { loginReducer } from '../redux/loginReducer';
 
@@ -11,7 +11,8 @@ import { loginReducer } from '../redux/loginReducer';
 
 
 const mapDispatchToProps = {
-    login: (input) => (login(input))
+    login: (input) => (login(input)),
+    register: (input) => {register(input)}
     //login
 };
 
@@ -31,10 +32,11 @@ class Home extends Component {
             showModalRegister: false,
             usernameLogin:'',
             passwordLogin:'',
-            firstNameRegister:'',
-            lastNameRegister:'',
+            firstnameRegister:'',
+            lastnameRegister:'',
             usernameRegister:'',
             passwordRegister:'',
+            agencyRegister:'',
             emailRegister:''
         };
     }
@@ -80,7 +82,7 @@ class Home extends Component {
     render(){
 
         return (
-            <View style={styles.mainContainer}>
+            <SafeAreaView style={styles.mainContainer}>
                 <ImageBackground source={require('./images/homecrimescene.jpg')} style={styles.image}>
                     <View style={styles.textContainer}>
                         <Text style={styles.mainText}>Your solution for timely and accurate evidence field submissions.</Text>
@@ -112,7 +114,7 @@ class Home extends Component {
                         visible={this.state.showModalLogin}
                         onRequestClose={() => this.toggleModalLogin()}
                     >
-                        <SafeAreaView style={styles.modal}>
+                        <SafeAreaView style={styles.modalLogin}>
                             <Input
                                 placeholder='Username'
                                 onChangeText={usernameLogin => this.setState({usernameLogin})}
@@ -131,9 +133,6 @@ class Home extends Component {
                                         
                                         //this works, uncomment
                                         this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
-
-
-
 
                                         //navigates to main app stack
                                         setTimeout (() => {
@@ -170,27 +169,37 @@ class Home extends Component {
                         visible={this.state.showModalRegister}
                         onRequestClose={() => this.toggleModalRegister()}
                     >
-                        <SafeAreaView style={styles.modal}>
-                            <Input
-                                placeholder='First Name'
-                                onChangeText={firstNameRegister => this.setState({firstNameRegister})}
-                                value={this.state.firstNameRegister}
-                            />
-                            <Input
-                                placeholder='Last Name'
-                                onChangeText={lastNameRegister => this.setState({lastNameRegister})}
-                                value={this.state.lastNameRegister}
-                            />
+                        <SafeAreaView style={styles.modalRegister}>
                             <Input
                                 placeholder='Username'
                                 onChangeText={usernameRegister => this.setState({usernameRegister})}
                                 value={this.state.usernameRegister}
                             />
+
                             <Input
                                 placeholder='Password'
                                 onChangeText={passwordRegister => this.setState({passwordRegister})}
                                 value={this.state.passwordRegister}
                             />
+
+                            <Input
+                                placeholder='First Name'
+                                onChangeText={firstnameRegister => this.setState({firstnameRegister})}
+                                value={this.state.firstnameRegister}
+                            />
+
+                            <Input
+                                placeholder='Last Name'
+                                onChangeText={lastnameRegister => this.setState({lastnameRegister})}
+                                value={this.state.lastnameRegister}
+                            />
+
+                            <Input
+                                placeholder='Agency'
+                                onChangeText={agencyRegister => this.setState({agencyRegister})}
+                                value={this.state.agencyRegister}
+                            />
+                            
                             <Input
                                 placeholder='Email'
                                 onChangeText={emailRegister => this.setState({emailRegister})}
@@ -200,7 +209,20 @@ class Home extends Component {
                                 <Button
                                     onPress={() => {
                                         this.toggleModalRegister();
-                                        console.log(this.state.firstNameRegister, this.state.lastNameRegister, this.state.usernameRegister, this.state.passwordRegister, this.state.emailRegister);
+                                        console.log(this.state.usernameRegister, this.state.passwordRegister, this.state.firstnameRegister, this.state.lastnameRegister, this.state.agencyRegister, this.state.emailRegister);
+
+                                        this.props.register({'username': this.state.usernameRegister, 'password': this.state.passwordRegister, 'firstname': this.state.firstnameRegister, 'lastname': this.state.lastnameRegister, 'agency': this.state.agencyRegister, 'email': this.state.emailRegister});
+
+                                        //navigates to main app stack
+                                        /*setTimeout (() => {
+                                            //this.props.navigation.navigate('App');
+                                            
+                                            //this works, uncomment
+                                            console.log('xxx my token');
+                                            console.log(this.props.loginReducer.token);
+                                            this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
+
+                                        }, 2000);*/
                                     }}
                                     title='Create Account'
                                 />
@@ -222,7 +244,7 @@ class Home extends Component {
                     
 
                 </ImageBackground>
-            </View>
+            </SafeAreaView>
 
             
         );
@@ -264,9 +286,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 20,
         marginBottom: 10
     },
-    modal: { 
+    modalLogin: { 
         justifyContent: 'center',
         marginTop: 200
+    },
+    modalRegister: { 
+        justifyContent: 'center',
+        marginTop: 100
     },
     modalTitle: {
         fontSize: 24,

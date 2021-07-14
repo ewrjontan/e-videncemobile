@@ -5,7 +5,7 @@ import { Alert } from 'react-native';
 
 
 
-//For login
+//xxxxxxxxxxx For Users
 
 //return fetch(baseUrl + 'users/login';
 
@@ -33,7 +33,7 @@ export const login = (loginInput) => {
         .then((response) => response.json())
         .then((json) => {
           if (json.success === true) { // response success checking logic could differ
-            dispatch(setLoginState({ ...json, token: json.token })); // our action is called here
+            dispatch(setLoginState({ ...json, token: json.token, userId: json.userId })); // our action is called here
             
             //added for asyncstorage
             /*const storeData = async (value) => {
@@ -65,6 +65,94 @@ const setLoginState = (loginData) => {
         payload: loginData,
     };
 };
+
+//for registration
+export const register = (registrationInput) => {
+    console.log('action creator registration input');
+    const { username, password, firstname, lastname, agency, email } = registrationInput;
+
+    console.log(`username: ${registrationInput.username}`);
+    console.log(`password: ${registrationInput.password}`);
+    console.log(`firstname: ${registrationInput.firstname}`);
+    console.log(`lastname: ${registrationInput.lastname}`);
+    console.log(`agency: ${registrationInput.agency}`);
+    console.log(`email: ${registrationInput.email}`);
+
+    console.log('sending this to server');
+    console.log(JSON.stringify(registrationInput));
+
+    return (dispatch) => {  // don't forget to use dispatch here!
+
+    return fetch(baseUrl + 'users/register', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationInput),
+        })
+        .then((response) => response.json())
+        .then((json) => {
+            console.log('here is my json');
+            console.log(json);
+          if (json.success === true) { // response success checking logic could differ
+            Alert.alert('Registration Successful', 'Welcome to E-Vidence! Please login to your account to get started.');
+            //dispatch(login({ ...json, token: json.token })); // our action is called here
+          } else {
+            Alert.alert('Login Failed', 'Username already exists, please login to your account.');
+          }
+        })
+        .catch((err) => {
+            Alert.alert('Login Failed', 'Some error occured, please retry');
+            console.log(err);
+        });
+    };
+};
+
+/*const setLoginState = (loginData) => {
+    return {
+        type: ActionTypes.SET_LOGIN_STATE,
+        payload: loginData,
+    };
+};*/
+
+export const fetchUser = (userData) => dispatch => {
+    console.log("this is my action creator passed userId");
+    console.log(userData.userId, userData.userToken);
+    return fetch(baseUrl + 'users/' + userData.userId, {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + userData.userToken
+        }
+    })
+        .then(response => {
+            console.log(response);
+                if (response.ok) {
+                    return response;
+                } else {
+                    const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                    error.response = response;
+                    throw error;
+                }
+            },
+            error => {
+                const errMess = new Error(error.message);
+                throw errMess;
+            })
+        .then(response => response.json())
+        .then(userInfo => dispatch(addUser(userInfo)))
+        .catch(error => dispatch(userFailed(error.message)));
+};
+
+export const addUser = userInfo => ({
+    type: ActionTypes.ADD_USER,
+    payload: userInfo
+});
+
+export const userFailed = errMess => ({
+    type: ActionTypes.USER_FAILED,
+    payload: errMess
+});
 
 //For incidents
 
@@ -259,3 +347,6 @@ export const CREATE_ITEM = newItem => ({
     type: ActionTypes.CREATE_ITEM,
     payload: newItem
 });
+
+
+

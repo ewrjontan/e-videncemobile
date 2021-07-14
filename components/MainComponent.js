@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import Home from './HomeComponent';
+//prior to adding welcome screen after login
+//import Home from './HomeComponent';
+import Home from './WelcomeComponent';
 import Account from './AccountComponent';
 import CreateCase from './CreateCaseComponent';
 import RecentCases from './RecentCasesComponent';
@@ -310,7 +312,6 @@ class Main extends Component {
             <View 
                 style={{
                     flex:1,
-                    paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight
                 }}
             >
                 <AppNavigator />
@@ -354,3 +355,5 @@ const styles = StyleSheet.create({
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
 
 
+//add this to view style if needed
+//paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight

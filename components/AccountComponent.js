@@ -1,6 +1,21 @@
 import React, { Component } from 'react';
 import { ScrollView, Text } from 'react-native';
 import { Card } from 'react-native-elements';
+import { connect } from 'react-redux';
+import { fetchUser } from '../redux/ActionCreators';
+
+
+const mapStateToProps = state => {
+    return {
+        loginReducer: state.loginReducer,
+    };
+};
+
+const mapDispatchToProps = {
+    fetchUser: (userId) => (fetchUser(userId))
+
+};
+
 
 class Account extends Component {
     constructor(props){
@@ -20,6 +35,12 @@ class Account extends Component {
             }
     }
 
+    componentDidMount(){
+        console.log('xxxxx account component xxxxxxxxxxx');
+        console.log('my user id');
+        console.log(this.props.loginReducer.userId);
+        this.props.fetchUser({'userId': this.props.loginReducer.userId, 'userToken': this.props.loginReducer.token});
+    }
     
     render(){
     
@@ -46,4 +67,5 @@ class Account extends Component {
 }
 
 
-export default Account;
+//export default Account;
+export default connect(mapStateToProps, mapDispatchToProps)(Account);
