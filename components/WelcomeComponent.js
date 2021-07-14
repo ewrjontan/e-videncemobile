@@ -60,7 +60,7 @@ class Welcome extends Component {
 
                     <View style={styles.containerTwo}>
                         <Text style={styles.buttonTitleText}>
-                            text placeholder 
+                            Use the side menu to add, view and modify your cases!.      
                         </Text>
                     </View>
 

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 //import { View, Text, ScrollView, ImageBackground, StyleSheet, Button, SafeAreaView } from 'react-native';
-import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView, ActivityIndicator } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
 import { login, register } from '../redux/ActionCreators';
 import { connect } from 'react-redux';
 import { loginReducer } from '../redux/loginReducer';
+//import Loading from './LoadingComponent';
+
 
 //import AsyncStorage from '@react-native-community/async-storage';
 
@@ -37,7 +39,8 @@ class Home extends Component {
             usernameRegister:'',
             passwordRegister:'',
             agencyRegister:'',
-            emailRegister:''
+            emailRegister:'',
+            loggingIn: false,
         };
     }
 
@@ -78,8 +81,21 @@ class Home extends Component {
         //this._bootstrapAsync();    
     }
 
-
     render(){
+        LoggingIn = () => {
+            if (this.state.loggingIn){
+                return (
+                    <View style={styles.loadingView}>
+                        <ActivityIndicator size='large' color='white' />
+                        <Text style={styles.loadingText}>Logging In . . .</Text>
+                    </View>
+                );
+            }else{
+                return(
+                    <View/>
+                )
+            }
+        }
 
         return (
             <SafeAreaView style={styles.mainContainer}>
@@ -87,6 +103,8 @@ class Home extends Component {
                     <View style={styles.textContainer}>
                         <Text style={styles.mainText}>Your solution for timely and accurate evidence field submissions.</Text>
                     </View>
+
+                    <LoggingIn />
 
                     <View style={styles.containerTwo}>
                         <Text style={styles.buttonTitleText}>
@@ -133,6 +151,7 @@ class Home extends Component {
                                         
                                         //this works, uncomment
                                         this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
+                                        this.setState({loggingIn: true});
 
                                         //navigates to main app stack
                                         setTimeout (() => {
@@ -141,6 +160,7 @@ class Home extends Component {
                                             //this works, uncomment
                                             console.log('xxx my token');
                                             console.log(this.props.loginReducer.token);
+                                            this.setState({loggingIn: false});
                                             this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
 
                                         }, 2000);
@@ -305,6 +325,17 @@ const styles = StyleSheet.create({
     modalText: {
         fontSize: 18,
         margin: 10
+    },
+    loadingView: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        marginTop: 0,
+    },
+    loadingText: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: 'bold'
     }
   });
 

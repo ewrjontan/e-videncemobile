@@ -120,7 +120,7 @@ export const register = (registrationInput) => {
     console.log('sending this to server');
     console.log(JSON.stringify(registrationInput));
 
-    return (dispatch) => {  // don't forget to use dispatch here!
+    //return (dispatch) => {  // don't forget to use dispatch here!
 
     return fetch(baseUrl + 'users/register', {
         method: 'POST',
@@ -138,11 +138,11 @@ export const register = (registrationInput) => {
             Alert.alert('Registration Successful', 'Welcome to E-Vidence! Please login to your account to get started.');
             //dispatch(login({ ...json, token: json.token })); // our action is called here
           } else {
-            Alert.alert('Login Failed', 'Username already exists, please login to your account.');
+            Alert.alert('Registration Failed', 'Username already exists, please login to your account.');
           }
         })
         .catch((err) => {
-            Alert.alert('Login Failed', 'Some error occured, please retry');
+            Alert.alert('Registration Failed', 'Some error occured, please retry');
             console.log(err);
         });
     };
