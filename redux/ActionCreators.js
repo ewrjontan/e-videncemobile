@@ -9,6 +9,7 @@ import { Alert } from 'react-native';
 
 //return fetch(baseUrl + 'users/login';
 
+// Login
 export const login = (loginInput) => {
     console.log('action creator login input');
     const { username, password } = loginInput;
@@ -59,12 +60,50 @@ export const login = (loginInput) => {
     };
 };
 
+//logout
+export const logout = () => {
+    
+    return (dispatch) => {  // don't forget to use dispatch here!
+
+    return fetch(baseUrl + 'users/logout'
+       )
+        .then((response) => response.json())
+        .then((json) => {
+          if (json.success === true) { // response success checking logic could differ
+            dispatch(setLoginState({ ...json, token: null, userId: null })); // our action is called here
+            
+            //added for asyncstorage
+            /*const storeData = async (value) => {
+                try {
+                    console.log('storing token actioncreator');
+                    console.log(value.token);
+                    AsyncStorage.setItem('userToken', value.token)
+                } catch (e) {
+                  // saving error
+                }
+            };
+
+            storeData(json);*/
+
+          } else {
+            Alert.alert('Login Failed', 'Username or Password is incorrect');
+          }
+        })
+        .catch((err) => {
+            Alert.alert('Login Failed', 'Some error occured, please retry');
+            console.log(err);
+        });
+    };
+};
+
+
 const setLoginState = (loginData) => {
     return {
         type: ActionTypes.SET_LOGIN_STATE,
         payload: loginData,
     };
 };
+
 
 //for registration
 export const register = (registrationInput) => {

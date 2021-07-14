@@ -182,7 +182,7 @@ class DisplayCase extends Component{
                 
                     <ListItem bottomDivider style={{marginBottom: 0}}>
                         <ListItem.Content>
-                            <ListItem.Title>Item: {item.itemNumber} </ListItem.Title>
+                            <ListItem.Title>Item: {incident.items.indexOf(item) + 1} </ListItem.Title>
                             <ListItem.Title>Description: {item.description}</ListItem.Title>
                             <ListItem.Subtitle>Type: {item.type}</ListItem.Subtitle>
                             <ListItem.Subtitle>Location Found: {item.locationFound}</ListItem.Subtitle>

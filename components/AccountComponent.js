@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text, View, StyleSheet } from 'react-native';
 import { Card } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { fetchUser } from '../redux/ActionCreators';
@@ -74,7 +74,7 @@ class Account extends Component {
 
             
             return (
-                <View>
+                <View style={styles.accountInfo}>
                     <Text style={{fontSize: 20}}>Username: {userInfo.username}</Text>
                     <Text style={{fontSize: 20}}>Firstname: {userInfo.firstname}</Text>
                     <Text style={{fontSize: 20}}>Lastname: {userInfo.lastname}</Text>
@@ -94,6 +94,13 @@ class Account extends Component {
     }
 }
 
+const styles = StyleSheet.create({
+    accountInfo: {
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginTop: 10,
+    },
+});
 
 //export default Account;
 export default connect(mapStateToProps, mapDispatchToProps)(Account);

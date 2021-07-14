@@ -3,16 +3,15 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
-import { login, register } from '../redux/ActionCreators';
+import { logout } from '../redux/ActionCreators';
 import { connect } from 'react-redux';
 import { loginReducer } from '../redux/loginReducer';
 
 //import AsyncStorage from '@react-native-community/async-storage';
 
 
-/*const mapDispatchToProps = {
-    login: (input) => (login(input)),
-    register: (input) => {register(input)}
+const mapDispatchToProps = {
+    logout: () => (logout()),
     //login
 };
 
@@ -21,7 +20,7 @@ const mapStateToProps = state => {
         loginReducer: state.loginReducer,
         incidents: state.incidents
     };
-};*/
+};
 
 
 class Welcome extends Component {
@@ -65,6 +64,29 @@ class Welcome extends Component {
                         </Text>
                     </View>
 
+                    <View style={styles.buttonContainer}>
+                                <Button
+                                    onPress={() => {
+                                        //this.logOut();
+                                        console.log('Logging out');
+
+                                        //this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
+                                        this.props.logout();
+                                        //navigates to main app stack
+                                        setTimeout (() => {
+                                            //this.props.navigation.navigate('App');
+                                            
+                                            //this works, uncomment
+                                            //console.log('xxx my token');
+                                            //console.log(this.props.loginReducer.token);
+                                            this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
+
+                                        }, 2000);
+                                    }}
+                                    title='Log Out'
+                                />
+                            </View>     
+
                 </ImageBackground>
             </SafeAreaView>
 
@@ -107,29 +129,9 @@ const styles = StyleSheet.create({
         width: "90%",
         marginHorizontal: 20,
         marginBottom: 10
-    },
-    modalLogin: { 
-        justifyContent: 'center',
-        marginTop: 200
-    },
-    modalRegister: { 
-        justifyContent: 'center',
-        marginTop: 100
-    },
-    modalTitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        backgroundColor: '#FFD600',
-        textAlign: 'center',
-        color: '#fff',
-        marginBottom: 20
-    },
-    modalText: {
-        fontSize: 18,
-        margin: 10
     }
   });
 
-export default Welcome;
+//export default Welcome;
 //export default connect(null, mapDispatchToProps)(Home);
-//export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);
