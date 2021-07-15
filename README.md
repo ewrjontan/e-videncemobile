@@ -5,7 +5,7 @@
 This is my first React-Native application created for my Nucamp class. It is a mobile application for streamlined evidence collection and tracking. 
 
 Working as a crime scene investigator, I am not thrilled with our current software/database. My colleagues and I constantly wish for different things, or discuss how it would
-be nice if we could do this and that. So I decided to build an application that I could cater to our exact needs. Maybe I can convince my department to use it someday. 
+be nice if we could do this and that. So I decided to build an application that I could cater to our exact needs. The application is meant to provide simplified and efficient evidence booking while in the field; saving investigators from having to enter everything upon returning to their "office." Perhaps I can convince my department to use it someday. 
 
 ## Usage
 
