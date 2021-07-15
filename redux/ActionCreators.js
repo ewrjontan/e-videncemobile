@@ -3,11 +3,7 @@ import { baseUrl } from '../shared/baseUrl';
 import { Alert } from 'react-native';
 //import AsyncStorage from @react-native-community/async-storage;
 
-
-
 //xxxxxxxxxxx For Users
-
-//return fetch(baseUrl + 'users/login';
 
 // Login
 export const login = (loginInput) => {
@@ -120,7 +116,7 @@ export const register = (registrationInput) => {
     console.log('sending this to server');
     console.log(JSON.stringify(registrationInput));
 
-    //return (dispatch) => {  // don't forget to use dispatch here!
+    return (dispatch) => {  // don't forget to use dispatch here!
 
     return fetch(baseUrl + 'users/register', {
         method: 'POST',
@@ -236,7 +232,7 @@ export const incidentsFailed = errMess => ({
 });
 
 export const postIncident = (incidentNumber, incidentLocation, nature, date) => dispatch => {
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx made it to action creater');
+    console.log(' made it to action creater');
     const newIncident = {
         incidentNumber,
         incidentLocation,

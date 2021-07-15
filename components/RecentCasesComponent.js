@@ -1,16 +1,17 @@
 import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet, FlatList } from 'react-native';
-import { Card, Input, Button, Picker } from 'react-native-elements';
-
-import { createStackNavigator } from 'react-navigation-stack';
+import { Button } from 'react-native-elements';
 
 import { connect } from 'react-redux';
-import { baseUrl } from '../shared/baseUrl';
 import Loading from './LoadingComponent';
 
+/** 
+ * for json server testing
 import { INCIDENTDATABASE } from '../shared/incidentDatabase';
-
+import { baseUrl } from '../shared/baseUrl';
 import { fetchIncidents } from '../redux/ActionCreators';
+*/
+
 
 
 const mapStateToProps = state => {
@@ -18,8 +19,6 @@ const mapStateToProps = state => {
         incidents: state.incidents
     };
 }
-
-
 
 class RecentCases extends Component {
 
@@ -35,17 +34,12 @@ class RecentCases extends Component {
     };
 
     
-    /*handleSubmit = () => {
-        console.log("submit button clicked");
-    }*/
-    
     render(){
 
         const { navigate } = this.props.navigation;
 
         const renderIncidents = ({item}) => {
             return(
-                //<Text>{item.incidentNumber}</Text>
                 <View style={styles.button}>
                     <Button title={item.incidentNumber}
 

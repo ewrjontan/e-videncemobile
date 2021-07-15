@@ -1,28 +1,21 @@
 import React, { Component } from 'react';
-
-//import INCIDENTDATABASE from '../shared/incidentDatabase';
-
 import { SafeAreaView, View, Text, FlatList, ScrollView, StyleSheet, Alert } from 'react-native';
-import { ListItem, Avatar, Button } from 'react-native-elements';
-/*import { createAppContainer } from 'react-navigation';
-import { createBottomTabNavigator } from 'react-navigation-tabs';*/
+import { ListItem, Button } from 'react-native-elements';
 import { SwipeRow } from 'react-native-swipe-list-view';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-
-
-//import EditCase from './EditCaseComponent';
-//import AddItem from './AddItemComponent';
-//import EditItem from './EditItemComponent';
 import Loading from './LoadingComponent';
-
-
 import { fetchItems } from '../redux/ActionCreators';
+import { connect } from 'react-redux';
+
+
+//for json server testing
+//import INCIDENTDATABASE from '../shared/incidentDatabase';
+
 
 const mapDispatchToProps = {
     //fetchItems,    
 };
 
-import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
@@ -42,12 +35,9 @@ class DisplayCase extends Component{
 
     componentDidMount(){
 
-        //for separate item db
-        //this.props.fetchItems();
-
         console.log('displayCase Component running');
-        console.log('xxxxxxxxxxxxxx params: ');
-        console.log(this.props.navigation.state.params);
+        //console.log('xxxxxxxxxxxxxx params: ');
+        //console.log(this.props.navigation.state.params);
 
         //for static navigation options, won't work unless passed as property due to loading slowly?
         const incidentNumber = this.props.navigation.getParam('incidentNumber');
@@ -72,16 +62,6 @@ class DisplayCase extends Component{
 
     render(){
         const { navigate } = this.props.navigation;
-
-        //get incident from props 
-
-        //added to remove use of id
-        
-
-        
-
-        //removed for not using id's
-        //const incidentId = this.props.navigation.getParam('incidentId');
         
         const incidentNumber = this.props.navigation.getParam('incidentNumber');
 
@@ -91,22 +71,8 @@ class DisplayCase extends Component{
         
         const incident = this.props.incidents.incidents.filter(incident => incident.incidentNumber === incidentNumber)[0];
 
-
-
         //for json server
         //const incident = this.props.incidents.incidents.filter(incident => incident.id === incidentId)[0];
-
-        //console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       display case works: ');
-        //console.log('incident ID');
-        //console.log(incidentId);
-
-        //console.log('incident filtered');
-        //console.log(incident);
-
-        //console.log('params: ');
-        //console.log(this.props.navigation.state.params);
-
-        
 
         //used for items in incidents json object
         const IncidentHasItems = () => {
@@ -127,42 +93,6 @@ class DisplayCase extends Component{
                 )
             }
         }
-
-        //user for items in items json object
-        /*const IncidentHasItems = () => {
-            console.log("display case test");
-            console.log(this.props.items);
-            let incidentItems = this.props.items.items.filter(item => item.incidentNumber === this.state.incidentNumber);
-
-            console.log("items in DB with matching incident number");
-            console.log(incidentItems);
-
-            if (this.props.items.isLoading) {
-                return <Loading />;
-            }
-    
-            if (this.props.items.errMess) {
-                return (
-                    <View style={styles.errMess}>
-                        <Text style={{fontSize: 20, fontWeight: 'bold'}}>{this.props.items.errMess}</Text>
-                    </View>
-                );
-            }
-    
-            if (incidentItems.length !== 0){
-                return(
-                    <FlatList
-                        data={incidentItems}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id.toString()}
-                    />
-                )
-            }else{
-                return(
-                    <Text style={styles.noItems}>No items are currently submitted under this incident.</Text>
-                )
-            }
-        }*/
 
         const renderItem = ({item}) => {
             console.log(item.id);

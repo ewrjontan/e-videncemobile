@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-//import { View, Text, ScrollView, ImageBackground, StyleSheet, Button, SafeAreaView } from 'react-native';
 import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
@@ -12,7 +11,6 @@ import { loginReducer } from '../redux/loginReducer';
 
 const mapDispatchToProps = {
     logout: () => (logout()),
-    //login
 };
 
 const mapStateToProps = state => {
@@ -70,13 +68,12 @@ class Welcome extends Component {
                                         //this.logOut();
                                         console.log('Logging out');
 
-                                        //this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
                                         this.props.logout();
+
                                         //navigates to main app stack
                                         setTimeout (() => {
                                             //this.props.navigation.navigate('App');
                                             
-                                            //this works, uncomment
                                             //console.log('xxx my token');
                                             //console.log(this.props.loginReducer.token);
                                             this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
@@ -132,6 +129,4 @@ const styles = StyleSheet.create({
     }
   });
 
-//export default Welcome;
-//export default connect(null, mapDispatchToProps)(Home);
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

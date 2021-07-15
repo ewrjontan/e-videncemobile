@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet, Alert, ActivityIndicator, TextInput } from 'react-native';
-import { Card, Input, Button, Picker } from 'react-native-elements';
+import { Input, Button } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
 import { postItem } from '../redux/ActionCreators';

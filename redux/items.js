@@ -14,7 +14,6 @@ export const items = (state = { isLoading: true, errMess: null, items: []}, acti
         case ActionTypes.CREATE_ITEM:
 
             const newItem = action.payload;
-            //newItem.id = state.items.length;
 
             return {...state, items: state.items.concat(newItem)};
         

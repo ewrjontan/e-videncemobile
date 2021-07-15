@@ -9,7 +9,6 @@ class TabNavigator extends Component{
   constructor(props){
     super(props);
     this.state = {
-        //incidentNumber : this.props.navigation.getParam('incidentNumber')
     };
   }
   
@@ -37,17 +36,9 @@ class TabNavigator extends Component{
 }
 
 
-
-
-/*export default createBottomTabNavigator({
-  DisplayCase: DisplayCase,
-  EditCase: EditCase
-});*/
-
 const TabNavigation = createBottomTabNavigator(
   {
     TabNavigator: TabNavigator,
-    //DisplayCase: DisplayCase,
     EditCase: EditCase,
   },
   {

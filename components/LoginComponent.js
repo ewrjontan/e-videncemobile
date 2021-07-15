@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { SafeAreaView, View, Text, FlatList, ScrollView, StyleSheet } from 'react-native';
-import { ListItem, Avatar, Button } from 'react-native-elements';
+import { ListItem, Button } from 'react-native-elements';
 
 import { connect } from 'react-redux';
 
@@ -36,21 +36,6 @@ class Login extends Component{
         //get incident from props 
         const incidentId = this.props.navigation.getParam('incidentId');
         const incident = this.props.incidents.incidents.filter(incident => incident.id === incidentId)[0];
-
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx       display case works: ');
-        console.log('incident ID');
-        console.log(incidentId);
-
-        console.log('incident filtered');
-        console.log(incident);
-
-        console.log('params: ');
-        console.log(this.props.navigation.state.params);
-
-        //console.log('incident id: ' + incidentId);
-        //console.log(this.props.navigation.state.params);
-        //console.log("this is the active incident object");
-        //console.log(incident);
         
 
         const IncidentHasItems = () => {

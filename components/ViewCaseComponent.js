@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 
-import INCIDENTDATABASE from '../shared/incidentDatabase';
+//for json server testing
+//import INCIDENTDATABASE from '../shared/incidentDatabase';
 
 import { View, Text } from 'react-native';
 import { Input, Button } from 'react-native-elements';
-
 import { connect } from 'react-redux';
+
+
 
 const mapStateToProps = state => {
     return {
@@ -13,13 +15,10 @@ const mapStateToProps = state => {
     };
 };
 
-
-
 class ViewCase extends Component{
     constructor(props){
         super(props);
         this.state = {
-            //incidentNumber : this.props.navigation.getParam('incidentNumber')
             inputIncidentNumber:"",
             inputErrorMessage: ""
         };
@@ -62,7 +61,6 @@ class ViewCase extends Component{
         }
 
         //check existance of incident
-        //console.log(this.props.incidents.incidents);
 
         let incidentArray = this.props.incidents.incidents.filter(incident => incident.incidentNumber === inputIncidentNumber);
 
@@ -105,8 +103,6 @@ class ViewCase extends Component{
                 <View style={{width: '90%', margin: 20}}>
                     <Button 
                         title="Go"  
-                        //nmake sure value is required
-                        //onPress={() => navigate('DisplayCase', {incidentId: 'hello', incidentNumber: 'bye'})}
                         onPress={() => this.handleOnPress()}
                     />
                 </View>
@@ -114,7 +110,5 @@ class ViewCase extends Component{
         )
     }
 }
-
-
 
 export default connect(mapStateToProps)(ViewCase);

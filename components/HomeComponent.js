@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-//import { View, Text, ScrollView, ImageBackground, StyleSheet, Button, SafeAreaView } from 'react-native';
 import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView, ActivityIndicator } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
 import { login, register } from '../redux/ActionCreators';
 import { connect } from 'react-redux';
 import { loginReducer } from '../redux/loginReducer';
+
 //import Loading from './LoadingComponent';
-
-
 //import AsyncStorage from '@react-native-community/async-storage';
 
 
 const mapDispatchToProps = {
     login: (input) => (login(input)),
     register: (input) => {register(input)}
-    //login
 };
 
 const mapStateToProps = state => {
@@ -158,13 +155,12 @@ class Home extends Component {
                                             //this.props.navigation.navigate('App');
                                             
                                             //this works, uncomment
-                                            console.log('xxx my token');
-                                            console.log(this.props.loginReducer.token);
+                                            //console.log('xxx my token');
+                                            //console.log(this.props.loginReducer.token);
                                             this.setState({loggingIn: false});
                                             this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
 
                                         }, 2000);
-                                        //this.props.navigation.navigate('App');*/
                                     }}
                                     title='Login'
                                 />
@@ -339,6 +335,4 @@ const styles = StyleSheet.create({
     }
   });
 
-//export default Home;
-//export default connect(null, mapDispatchToProps)(Home);
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

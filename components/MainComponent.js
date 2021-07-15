@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 //prior to adding welcome screen after login
 //import Home from './HomeComponent';
+
 import Home from './WelcomeComponent';
 import Account from './AccountComponent';
 import CreateCase from './CreateCaseComponent';
@@ -15,7 +16,7 @@ import AddItem from './AddItemComponent';
 import EditItem from './EditItemComponent';
 
 
-import { View, Platform, StyleSheet, Text, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, Text, ScrollView } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator, DrawerItems } from 'react-navigation-drawer';
 import { createAppContainer } from 'react-navigation';
@@ -35,11 +36,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    //fetchItems,
     fetchIncidents,
 };
-
-
 
 const HomeNavigator = createStackNavigator(
     {
@@ -300,8 +298,8 @@ class Main extends Component {
 
     componentDidMount() {
         //for testing without login, loads on main page
-        console.log('Here is the token');
-        console.log(this.props.loginReducer.token);
+        //console.log('Here is the token');
+        //console.log(this.props.loginReducer.token);
         this.props.fetchIncidents({'userToken': this.props.loginReducer.token});
 
 
@@ -349,11 +347,9 @@ const styles = StyleSheet.create({
     }
 });
 
-//export default connect(null, mapDispatchToProps)(Main);
 
 //addded to get initialState for logging in
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
-
 
 //add this to view style if needed
 //paddingTop: Platform.OS === 'ios' ? 0 : Expo.Constants.statusBarHeight

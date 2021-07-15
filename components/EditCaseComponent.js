@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { Text, View, StyleSheet, Alert, ActivityIndicator } from 'react-native';
-import { Card, Input, Button, Picker } from 'react-native-elements';
+import { Input, Button } from 'react-native-elements';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { connect } from 'react-redux';
 import { fetchUpdatedIncidentValues } from '../redux/ActionCreators';
@@ -138,18 +138,6 @@ class EditCase extends Component {
         }else{
             return this.setState({incidentNatureErrorMessage: 'Please select the date and time of incident'});
         }
-
-        //this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
-
-        //reset state
-        //this.setState({incidentNumber:'', incidentLocation: '', incidentNature: '', incidentDateAndTime: null, loading: true});
-
-        //navigate('TabNavigation', {incidentId: 'test'});
-
-        /*setTimeout (() => {
-            navigate('DisplayCase', {incidentId: futureIncidentId, incidentNumber: inputIncidentNumber});
-        }, 5000);*/
-
     
 
         if (inputIncidentLocation !== this.state.currentLocation || inputIncidentNature !== this.state.currentNature || inputIncidentDateAndTime !== this.state.currentDateAndTime){
@@ -165,17 +153,9 @@ class EditCase extends Component {
                     {text: 'Yes', onPress: () => {
                         console.log('ok pressed');
                         
-                        /*async function fetchUpdatedValues(){
-                            await this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
-                        };*/
-                        
                         //add await and navigate back to main case page
                         const { navigate } = this.props.navigation;
 
-                        /*fetchUpdatedValues().then(
-                            console.log('updated values yo')
-                            //navigate('DisplayCase', {incidentId: this.state.currentIncidentId, incidentNumber: this.state.incidentNumber})
-                        );*/
                         this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
 
                         this.setState({saving: true});
