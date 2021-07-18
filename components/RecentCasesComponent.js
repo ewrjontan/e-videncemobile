@@ -20,6 +20,8 @@ const mapStateToProps = state => {
     };
 }
 
+
+
 class RecentCases extends Component {
 
     static navigationOptions = {
@@ -70,10 +72,11 @@ class RecentCases extends Component {
             <View style={{marginTop: 30}}>
 
                 <FlatList
-                    data={this.props.incidents.incidents.slice(0,10)}
+                    data={this.props.incidents.incidents.reverse().slice(0,10)}
                     renderItem={renderIncidents}
                     //keyExtractor={item => item.id.toString()} //for json server
                     keyExtractor={item => item._id.toString()} //for mongodb server
+                    extraData={this.state}
 
                 />
                 

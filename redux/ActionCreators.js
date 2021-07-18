@@ -100,46 +100,57 @@ const setLoginState = (loginData) => {
 
 //for registration
 export const register = (registrationInput) => {
-    //console.log('action creator registration input');
-    //const { username, password, firstname, lastname, agency, email } = registrationInput;
-    //console.log('sending this to server');
-    //console.log(JSON.stringify(registrationInput));
-    
+
+    console.log('action creator registration input');
+    const { username, password, firstname, lastname, agency, email } = registrationInput;
+    console.log('sending this to server');
+    console.log(JSON.stringify(registrationInput));
 
     //return (dispatch) => {  // don't forget to use dispatch here!
 
     //return (dispatch) => {console.log('hello!')}
 
-    /*return fetch(baseUrl + 'users/register', {
+    return fetch(baseUrl + 'users/register', {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(registrationInput),
         })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => { throw error; }
+        )
         .then((response) => response.json())
         .then((json) => {
         //console.log('my json');
         //console.log(json);  
           if (json.success === true) { // response success checking logic could differ
-            //console.log('my json2');
-            //console.log(json); 
-            Alert.alert('Registration Successful', 'Welcome to E-Vidence! Please login to your account to get started.');
+            console.log('my json2');
+            console.log(json); 
+            //Alert.alert('Registration Successful', 'Welcome to E-Vidence! Please login to your account to get started.');
             
             //dispatch(login({ ...json, token: json.token })); // our action is called here
             //dispatch(login({ username: registrationInput.username, password: registrationInput.password})); // our action is called here
             //dispatch(message('hello this is the dispatch function!'));    
           } else {
-            Alert.alert('Registration Failed', 'Username already exists, please login to your account.');
+            //Alert.alert('Registration Failed', 'Username already exists, please login to your account.');
+            console.log('error, username already exists');
           }
         })
         .catch((err) => {
-            Alert.alert('Registration Failed', 'Some error occured, please retry' + err);
-            //console.log(err);
+            //Alert.alert('Registration Failed', 'Some error occured, please retry' + err);
+            console.log(err);
         });
-    };*/
-};
+    };
+//};
 
 function message(message) {
     Alert.alert(message);
@@ -233,7 +244,7 @@ export const incidentsFailed = errMess => ({
     payload: errMess
 });
 
-export const postIncident = (incidentNumber, incidentLocation, nature, date) => dispatch => {
+export const postIncident = (incidentNumber, incidentLocation, nature, date, userToken) => dispatch => {
     console.log(' made it to action creater');
     const newIncident = {
         incidentNumber,
@@ -247,7 +258,8 @@ export const postIncident = (incidentNumber, incidentLocation, nature, date) => 
         method: "POST",
         body: JSON.stringify(newIncident),
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + userToken
         }
     })
     .then(response => {

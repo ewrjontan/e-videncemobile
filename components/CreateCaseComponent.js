@@ -10,12 +10,15 @@ import { postIncident } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
-        incidents: state.incidents
+        incidents: state.incidents,
+        loginReducer: state.loginReducer
+
     };
 };
 
 const mapDispatchToProps = {
-    postIncident: (incidentNumber, incidentLocation, nature, date) => (postIncident(incidentNumber, incidentLocation, nature, date))
+    //postIncident: (incidentNumber, incidentLocation, nature, date) => (postIncident(incidentNumber, incidentLocation, nature, date))
+    postIncident
 };
 
 
@@ -42,7 +45,7 @@ class CreateCase extends Component {
     }
 
     componentWillUnmount(){
-        this.setState({loading: false});
+        //this.setState({loading: false});
     }
 
 
@@ -140,7 +143,8 @@ class CreateCase extends Component {
             return this.setState({incidentNatureErrorMessage: 'Please select the date and time of incident'});
         }
 
-        this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime);
+        this.props.postIncident(inputIncidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.props.loginReducer.token);
+        //'userToken': this.props.loginReducer.token
         console.log('case created!');
 
         //reset state
@@ -149,8 +153,9 @@ class CreateCase extends Component {
         //navigate('TabNavigation', {incidentId: 'test'});
 
         setTimeout (() => {
+            this.setState({loading: false});
             navigate('DisplayCase', {incidentId: futureIncidentId, incidentNumber: inputIncidentNumber});
-        }, 5000);
+        }, 2000);
 
 
     }
