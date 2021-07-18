@@ -22,29 +22,26 @@ export const login = (loginInput) => {
     return fetch(baseUrl + 'users/login', {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(loginInput),
         })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => { throw error; }
+        )
         .then((response) => response.json())
         .then((json) => {
           if (json.success === true) { // response success checking logic could differ
             dispatch(setLoginState({ ...json, token: json.token, userId: json.userId })); // our action is called here
-            
-            //added for asyncstorage
-            /*const storeData = async (value) => {
-                try {
-                    console.log('storing token actioncreator');
-                    console.log(value.token);
-                    AsyncStorage.setItem('userToken', value.token)
-                } catch (e) {
-                  // saving error
-                }
-            };
-
-            storeData(json);*/
-
+            dispatch(fetchIncidents({ ...json, userToken: json.token}));
           } else {
             Alert.alert('Login Failed', 'Username or Password is incorrect');
           }
@@ -103,22 +100,17 @@ const setLoginState = (loginData) => {
 
 //for registration
 export const register = (registrationInput) => {
-    console.log('action creator registration input');
-    const { username, password, firstname, lastname, agency, email } = registrationInput;
+    //console.log('action creator registration input');
+    //const { username, password, firstname, lastname, agency, email } = registrationInput;
+    //console.log('sending this to server');
+    //console.log(JSON.stringify(registrationInput));
+    
 
-    console.log(`username: ${registrationInput.username}`);
-    console.log(`password: ${registrationInput.password}`);
-    console.log(`firstname: ${registrationInput.firstname}`);
-    console.log(`lastname: ${registrationInput.lastname}`);
-    console.log(`agency: ${registrationInput.agency}`);
-    console.log(`email: ${registrationInput.email}`);
+    //return (dispatch) => {  // don't forget to use dispatch here!
 
-    console.log('sending this to server');
-    console.log(JSON.stringify(registrationInput));
+    //return (dispatch) => {console.log('hello!')}
 
-    return (dispatch) => {  // don't forget to use dispatch here!
-
-    return fetch(baseUrl + 'users/register', {
+    /*return fetch(baseUrl + 'users/register', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -128,21 +120,30 @@ export const register = (registrationInput) => {
         })
         .then((response) => response.json())
         .then((json) => {
-            console.log('here is my json');
-            console.log(json);
+        //console.log('my json');
+        //console.log(json);  
           if (json.success === true) { // response success checking logic could differ
+            //console.log('my json2');
+            //console.log(json); 
             Alert.alert('Registration Successful', 'Welcome to E-Vidence! Please login to your account to get started.');
+            
             //dispatch(login({ ...json, token: json.token })); // our action is called here
+            //dispatch(login({ username: registrationInput.username, password: registrationInput.password})); // our action is called here
+            //dispatch(message('hello this is the dispatch function!'));    
           } else {
             Alert.alert('Registration Failed', 'Username already exists, please login to your account.');
           }
         })
         .catch((err) => {
-            Alert.alert('Registration Failed', 'Some error occured, please retry');
-            console.log(err);
+            Alert.alert('Registration Failed', 'Some error occured, please retry' + err);
+            //console.log(err);
         });
-    };
+    };*/
 };
+
+function message(message) {
+    Alert.alert(message);
+}
 
 /*const setLoginState = (loginData) => {
     return {
@@ -201,6 +202,7 @@ export const fetchIncidents = (userData) => dispatch => {
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + userData.userToken
+
         }
     })
         .then(response => {

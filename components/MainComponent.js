@@ -300,7 +300,8 @@ class Main extends Component {
         //for testing without login, loads on main page
         //console.log('Here is the token');
         //console.log(this.props.loginReducer.token);
-        this.props.fetchIncidents({'userToken': this.props.loginReducer.token});
+        
+        //this.props.fetchIncidents({'userToken': this.props.loginReducer.token});
 
 
     }

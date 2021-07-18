@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView, ActivityIndicator } from 'react-native';
+import { View, Text, ScrollView, ImageBackground, StyleSheet, Modal, SafeAreaView, ActivityIndicator, Alert } from 'react-native';
 import { Card, Button, Input } from 'react-native-elements';
 
 import { login, register } from '../redux/ActionCreators';
@@ -96,7 +96,7 @@ class Home extends Component {
 
         return (
             <SafeAreaView style={styles.mainContainer}>
-                <ImageBackground source={require('./images/homecrimescene.jpg')} style={styles.image}>
+                <ImageBackground source={require('./images/csi1.jpg')} style={styles.image}>
                     <View style={styles.textContainer}>
                         <Text style={styles.mainText}>Your solution for timely and accurate evidence field submissions.</Text>
                     </View>
@@ -229,14 +229,18 @@ class Home extends Component {
 
                                         this.props.register({'username': this.state.usernameRegister, 'password': this.state.passwordRegister, 'firstname': this.state.firstnameRegister, 'lastname': this.state.lastnameRegister, 'agency': this.state.agencyRegister, 'email': this.state.emailRegister});
 
+                                        //this.props.login({'username': this.state.usernameRegister, 'password': this.state.passwordRegister});
+
                                         //navigates to main app stack
                                         /*setTimeout (() => {
-                                            //this.props.navigation.navigate('App');
+                                            this.props.navigation.navigate('App');
                                             
                                             //this works, uncomment
-                                            console.log('xxx my token');
-                                            console.log(this.props.loginReducer.token);
-                                            this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
+                                            //console.log('xxx my token');
+                                            //console.log(this.props.loginReducer.token);
+                                            //this.props.navigation.navigate(this.props.loginReducer.isLoggedIn ? 'App' : 'Auth');
+                                            //Alert.alert('Registration Successful', 'Welcome to E-Vidence! Please login to your account to get started.');
+
 
                                         }, 2000);*/
                                     }}

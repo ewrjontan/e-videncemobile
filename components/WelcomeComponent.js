@@ -51,7 +51,7 @@ class Welcome extends Component {
 
         return (
             <SafeAreaView style={styles.mainContainer}>
-                <ImageBackground source={require('./images/homecrimescene.jpg')} style={styles.image}>
+                <ImageBackground source={require('./images/csi2.jpg')} style={styles.image}>
                     <View style={styles.textContainer}>
                         <Text style={styles.mainText}>Welcome to E-Vidence</Text>
                     </View>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     buttonContainer: {
         width: "90%",
         marginHorizontal: 20,
-        marginBottom: 10
+        marginBottom: 20
     }
   });
 
