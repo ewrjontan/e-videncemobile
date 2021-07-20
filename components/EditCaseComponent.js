@@ -8,12 +8,14 @@ import { fetchUpdatedIncidentValues } from '../redux/ActionCreators';
 
 const mapStateToProps = state => {
     return {
-        incidents: state.incidents
+        incidents: state.incidents,
+        loginReducer: state.loginReducer
     };
 };
 
 const mapDispatchToProps = {
-    fetchUpdatedIncidentValues: (incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items) => (fetchUpdatedIncidentValues(incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items))
+    /*fetchUpdatedIncidentValues: (incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items) => (fetchUpdatedIncidentValues(incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items))*/
+    fetchUpdatedIncidentValues
 
 };
 
@@ -67,7 +69,9 @@ class EditCase extends Component {
 
     setCurrentValues(){
         const passedIncidentId = this.props.navigation.getParam('incidentId');
-        const incident = this.props.incidents.incidents.filter(incident => incident.id === passedIncidentId)[0];
+        const incident = this.props.incidents.incidents.filter(incident => incident._id === passedIncidentId)[0];
+        console.log('My incident:');
+        console.log(incident);
 
         this.setState({
             incidentNumber: incident.incidentNumber,
@@ -77,8 +81,8 @@ class EditCase extends Component {
             currentLocation: incident.incidentLocation,
             currentNature: incident.nature,
             currentDateAndTime: incident.date,
-            currentIncidentId: incident.id,
-            currentItems: incident.items
+            currentIncidentId: incident._id,
+            //currentItems: incident.items
         });
     }
 
@@ -156,14 +160,17 @@ class EditCase extends Component {
                         //add await and navigate back to main case page
                         const { navigate } = this.props.navigation;
 
-                        this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
+                        //this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.state.currentItems);
+
+                        this.props.fetchUpdatedIncidentValues(this.state.currentIncidentId, this.state.incidentNumber, inputIncidentLocation, inputIncidentNature, inputIncidentDateAndTime, this.props.loginReducer.token);
+
 
                         this.setState({saving: true});
                         
                         //wait for props to get updated
                         setTimeout(() => {                            
                             navigate('DisplayCase', {incidentId: this.state.currentIncidentId, incidentNumber: this.state.incidentNumber}) 
-                        },7500);
+                        },2000);
 
                         }
                     }

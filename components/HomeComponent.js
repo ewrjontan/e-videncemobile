@@ -139,6 +139,7 @@ class Home extends Component {
                                 placeholder='Password'
                                 onChangeText={passwordLogin => this.setState({passwordLogin})}
                                 value={this.state.passwordLogin}
+                                secureTextEntry={true}
                             />
                             <View style={styles.buttonContainer}>
                                 <Button

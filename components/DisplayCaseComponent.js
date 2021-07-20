@@ -78,6 +78,8 @@ class DisplayCase extends Component{
         const IncidentHasItems = () => {
             console.log('xxx Itemsxxxx');
             console.log(incident);
+            console.log('incident id is: ' + incident._id);
+
             if (incident.items.length !== 0){
                 return(
                     <FlatList
@@ -85,6 +87,7 @@ class DisplayCase extends Component{
                         renderItem={renderItem}
                         //keyExtractor={item => item.id.toString()}//for json server
                         keyExtractor={item => item._id.toString()}//for mongodb server
+                        extraData={this.state}
                     />
                 )
             }else{
@@ -138,7 +141,7 @@ class DisplayCase extends Component{
                             title="Edit Case"
                             type="outline"
                             onPress={() => navigate('EditCase', {
-                                incidentId: incident.id
+                                incidentId: incident._id
                             })}
                         />
                         <Button

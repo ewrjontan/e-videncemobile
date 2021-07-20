@@ -208,7 +208,7 @@ export const userFailed = errMess => ({
 
 export const fetchIncidents = (userData) => dispatch => {
     console.log('token at incident action creater');
-    console.log(userData.userToken);
+    console.log(userData);
     return fetch(baseUrl + 'incidents', {
         headers: {
             "Content-Type": "application/json",
@@ -288,7 +288,9 @@ export const createIncident = incident =>({
     payload: incident
 })
 
-export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items) => dispatch => {
+//export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, items) => dispatch => {
+export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncidentLocation, newIncidentNature, newDate, userToken) => dispatch => {
+
     console.log('made it to action creators');
 
     return fetch(baseUrl + 'incidents/' + incidentId, {
@@ -298,10 +300,11 @@ export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncide
             incidentLocation: newIncidentLocation,
             nature: newIncidentNature,
             date: newDate,
-            items: items
+            //items: items
         }),
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + userToken
         }
     })
     .then(response => {
@@ -318,7 +321,8 @@ export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncide
         error => { throw error; }
     )
     .then(response =>  response.json())
-    .then(response => dispatch(fetchIncidents()))
+    //.then(response => dispatch(fetchIncidents()))
+    .then(json => dispatch(fetchIncidents({ ...json, userToken: userToken})))
     .catch(error => {
         //console.log('post incident', error.message);
         alert('Your incident could not be modified\nError: ' + error.message);
