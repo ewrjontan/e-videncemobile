@@ -412,5 +412,42 @@ export const CREATE_ITEM = newItem => ({
     payload: newItem
 });
 
+export const updateItem = (incidentId, itemId, newItemType, newItemLocation, newItemDescription, newItemDate, userToken) => dispatch => {
 
+    console.log('made it to action creators');
+
+    return fetch(baseUrl + 'incidents/' + incidentId + '/items/' + itemId, {
+        method: "PUT",
+        body: JSON.stringify({
+            type: newItemType,
+            locationFound: newItemLocation,
+            description: newItemDescription,
+            date: newItemDate,
+            //items: items
+        }),
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + userToken
+        }
+    })
+    .then(response => {
+            if (response.ok){
+                //console.log(" xxxx     response successful");
+                //console.log(response);
+                return response;
+            }else{
+                const error = new Error(`Error ${response.status}: ${response.statusText}`);
+                error.response = response;
+                throw error;
+            }
+        },
+        error => { throw error; }
+    )
+    .then(response =>  response.json())
+    .then(json => dispatch(fetchItems(incidentId, userToken)))
+    .catch(error => {
+        //console.log('post incident', error.message);
+        alert('Your item could not be modified\nError: ' + error.message);
+    });
+};
 

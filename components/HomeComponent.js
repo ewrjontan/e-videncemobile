@@ -148,7 +148,7 @@ class Home extends Component {
                                         console.log(`input ${this.state.usernameLogin} and ${this.state.passwordLogin} in login fields`);
                                         
                                         //this works, uncomment
-                                        this.props.login({'username': this.state.usernameLogin, 'password': this.state.passwordLogin});
+                                        this.props.login({'username': this.state.usernameLogin.toLowerCase(), 'password': this.state.passwordLogin});
                                         this.setState({loggingIn: true});
 
                                         //navigates to main app stack

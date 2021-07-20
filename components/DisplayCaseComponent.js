@@ -98,7 +98,7 @@ class DisplayCase extends Component{
         }
 
         const renderItem = ({item}) => {
-            console.log(item.id);
+            console.log('item: ' + item._id);
             return(
 
                 <SwipeRow rightOpenValue={-100}>
@@ -106,7 +106,7 @@ class DisplayCase extends Component{
                         <TouchableOpacity
                             style={styles.editTouchable}
                             onPress={() => navigate('EditItem', {
-                                incidentId: incident.id, incidentNumber: this.props.navigation.getParam('incidentNumber')
+                                incidentId: incident._id, incidentNumber: this.props.navigation.getParam('incidentNumber'), itemId: item._id
                             })}
                         >
                             <Text style={styles.editText}>Edit</Text>
