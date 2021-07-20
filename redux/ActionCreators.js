@@ -40,8 +40,10 @@ export const login = (loginInput) => {
         .then((response) => response.json())
         .then((json) => {
           if (json.success === true) { // response success checking logic could differ
+            let userToken = json.token;
             dispatch(setLoginState({ ...json, token: json.token, userId: json.userId })); // our action is called here
-            dispatch(fetchIncidents({ ...json, userToken: json.token}));
+            //dispatch(fetchIncidents({ ...json, userToken: json.token}));
+            dispatch(fetchIncidents(userToken));
           } else {
             Alert.alert('Login Failed', 'Username or Password is incorrect');
           }
@@ -206,13 +208,16 @@ export const userFailed = errMess => ({
 
 //For incidents
 
-export const fetchIncidents = (userData) => dispatch => {
+//export const fetchIncidents = (userData) => dispatch => {
+export const fetchIncidents = (userToken) => dispatch => {
+
     console.log('token at incident action creater');
-    console.log(userData);
+    //console.log(userData);
     return fetch(baseUrl + 'incidents', {
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + userData.userToken
+            //"Authorization": "Bearer " + userData.userToken
+            "Authorization": "Bearer " + userToken
         }
     })
         .then(response => {
@@ -399,8 +404,8 @@ export const postItem = (incidentId, incidentNumber, type, locationFound, descri
     )
     .then(response =>  response.json())
     .then(response => dispatch(CREATE_ITEM(response)))
-    .then(response => dispatch(fetchItems(incidentId, userToken)))
-
+    //.then(response => dispatch(fetchItems(incidentId, userToken)))
+    .then(() => dispatch(fetchIncidents(userToken)))
     .catch(error => {
         //console.log('post incident', error.message);
         alert('Your item could not be added\nError: ' + error.message);
@@ -444,7 +449,8 @@ export const updateItem = (incidentId, itemId, newItemType, newItemLocation, new
         error => { throw error; }
     )
     .then(response =>  response.json())
-    .then(json => dispatch(fetchItems(incidentId, userToken)))
+    //.then(json => dispatch(fetchItems(incidentId, userToken)))
+    .then(() => dispatch(fetchIncidents(userToken)))
     .catch(error => {
         //console.log('post incident', error.message);
         alert('Your item could not be modified\nError: ' + error.message);
