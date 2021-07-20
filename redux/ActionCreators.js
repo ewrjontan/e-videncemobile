@@ -65,7 +65,7 @@ export const logout = () => {
         .then((response) => response.json())
         .then((json) => {
           if (json.success === true) { // response success checking logic could differ
-            dispatch(setLoginState({ ...json, token: null, userId: null })); // our action is called here
+            dispatch(setLoginState({ ...json, token: null, userId: null, isLoggedIn: false })); // our action is called here
             
             //added for asyncstorage
             /*const storeData = async (value) => {
@@ -81,11 +81,11 @@ export const logout = () => {
             storeData(json);*/
 
           } else {
-            Alert.alert('Login Failed', 'Username or Password is incorrect');
+            Alert.alert('Logout Failed', 'Username or Password is incorrect');
           }
         })
         .catch((err) => {
-            Alert.alert('Login Failed', 'Some error occured, please retry');
+            Alert.alert('Logout Failed', 'Some error occured, please retry');
             console.log(err);
         });
     };

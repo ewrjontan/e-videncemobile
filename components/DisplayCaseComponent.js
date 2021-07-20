@@ -13,14 +13,16 @@ import { connect } from 'react-redux';
 
 
 const mapDispatchToProps = {
-    //fetchItems,    
+    fetchItems,    
 };
 
 
 const mapStateToProps = state => {
     return {
         incidents: state.incidents,
-        items: state.items
+        items: state.items,
+        loginReducer: state.loginReducer
+
     };
 };
 
@@ -76,9 +78,11 @@ class DisplayCase extends Component{
 
         //used for items in incidents json object
         const IncidentHasItems = () => {
-            console.log('xxx Itemsxxxx');
+            console.log('Loading Itemsxxxx');
             console.log(incident);
             console.log('incident id is: ' + incident._id);
+
+            //this.props.fetchItems(incident._id, this.props.loginReducer.token );
 
             if (incident.items.length !== 0){
                 return(
