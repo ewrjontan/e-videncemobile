@@ -213,7 +213,6 @@ export const fetchIncidents = (userData) => dispatch => {
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + userData.userToken
-
         }
     })
         .then(response => {
@@ -332,8 +331,16 @@ export const fetchUpdatedIncidentValues = (incidentId, incidentNumber, newIncide
 
 // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx Items xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-export const fetchItems = () => dispatch => {
-    return fetch(baseUrl + 'items')
+export const fetchItems = (incidentId, userToken) => dispatch => {
+
+    return fetch(baseUrl + 'incidents/' + incidentId + '/items', {
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + userToken
+        }
+    })
+    
+    //return fetch(baseUrl + 'items')
         .then(response => {
                 if (response.ok) {
                     return response;
@@ -362,22 +369,21 @@ export const itemsFailed = errMess => ({
     payload: errMess
 });
 
-export const postItem = (incidentNumber, type, locationFound, description, date, itemNumber) => dispatch => {
-    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx made it to action creater');
+export const postItem = (incidentId, incidentNumber, type, locationFound, description, date, userToken) => dispatch => {
+    console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx made it to action creator');
     const newItem = {
-        incidentNumber,
         type,
         locationFound,
         description, 
-        date,
-        itemNumber
+        date
     };
 
-    return fetch(baseUrl + 'items/', {
+    return fetch(baseUrl + 'incidents/' + incidentId + '/items', {
         method: "POST",
         body: JSON.stringify(newItem),
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + userToken
         }
     })
     .then(response => {
@@ -393,6 +399,8 @@ export const postItem = (incidentNumber, type, locationFound, description, date,
     )
     .then(response =>  response.json())
     .then(response => dispatch(CREATE_ITEM(response)))
+    .then(response => dispatch(fetchItems(incidentId, userToken)))
+
     .catch(error => {
         //console.log('post incident', error.message);
         alert('Your item could not be added\nError: ' + error.message);

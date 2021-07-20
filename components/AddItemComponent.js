@@ -9,12 +9,14 @@ import { postItem } from '../redux/ActionCreators';
 const mapStateToProps = state => {
     return {
         incidents: state.incidents,
-        items: state.items
+        items: state.items,
+        loginReducer: state.loginReducer
     };
 };
 
 const mapDispatchToProps = {
-    postItem: (incidentNumber, type, locationFound, description, date, itemNumber) => (postItem(incidentNumber, type, locationFound, description, date, itemNumber))
+    //postItem: (incidentNumber, type, locationFound, description, date, itemNumber) => (postItem(incidentNumber, type, locationFound, description, date, itemNumber))
+    postItem
 
 };
 
@@ -89,15 +91,15 @@ class AddItem extends Component {
         let itemDate = this.state.itemDateAndTime;
         let itemDescription = this.state.itemDescription;
 
-        let incidentItems = this.props.items.items.filter(item => item.incidentNumber === this.state.incidentNumber);
-        let itemNumber = incidentItems.length + 1;
+        /*let incidentItems = this.props.items.items.filter(item => item.incidentNumber === this.state.incidentNumber);
+        let itemNumber = incidentItems.length + 1;*/
 
-        console.log('item Number: ' + itemNumber);
+        //console.log('item Number: ' + itemNumber);
 
 
         console.log('current values');
 
-        console.log(itemType, itemLocation, itemDate, itemDescription, itemNumber);
+        console.log(itemType, itemLocation, itemDate, itemDescription);
         
 
         //reset state of error message
@@ -137,14 +139,14 @@ class AddItem extends Component {
 
         const { navigate } = this.props.navigation;
 
-        this.props.postItem(this.state.incidentNumber, itemType, itemLocation, itemDescription, itemDate, itemNumber);
+        this.props.postItem(this.state.incidentId, this.state.incidentNumber, itemType, itemLocation, itemDescription, itemDate, this.props.loginReducer.token);
 
         this.setState({saving: true});
         
         //wait for props to get updated
         setTimeout(() => {                            
             navigate('DisplayCase', {incidentId: this.state.incidentId, incidentNumber: this.state.incidentNumber}) 
-        },5000);
+        },2000);
         
     }
 

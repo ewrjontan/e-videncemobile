@@ -148,7 +148,7 @@ class DisplayCase extends Component{
                             title="Add Item"
                             type="outline"
                             onPress={() => navigate('AddItem', {
-                                incidentId: incident.id, incidentNumber: this.props.navigation.getParam('incidentNumber')
+                                incidentId: incident._id, incidentNumber: this.props.navigation.getParam('incidentNumber')
                             })}
                         />
                     </View>
